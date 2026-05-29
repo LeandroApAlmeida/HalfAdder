@@ -50,7 +50,7 @@
 
  Um sistema quântico não precisa estar em apenas um desses estados. Ele pode 
  existir em uma superposição de vários estados ao mesmo tempo (ou todos os estados).
- O sistema tem uma amplitude de probabilidade associada a cada estado. Ao medí-lo,
+ O sistema tem uma amplitude de probabilidade (α) associada a cada estado. Ao medí-lo,
  ele colapsa para um único estado de forma probabilística (colapso da função de
  onda). 
 
@@ -96,49 +96,44 @@
  A tabela verdade para o circuito é a seguinte:
 
 
-   ┌───┬───┬─────┬───────┬───────────────────────┐
-   │ A │ B │ SUM │ CARRY │ OPERAÇÃO              │                                                         │         
-   ╞═══╪═══╪═════╪═══════╪═══════════════════════╡
-   │ 0 │ 0 │  0  │   0   │ 0 + 0 = 0 → CARRY 0   │
-   ├───┼───┼─────┼───────┼───────────────────────┤  
-   │ 0 │ 1 │  1  │   0   │ 0 + 1 = 1 → CARRY 0   │
-   ├───┼───┼─────┼───────┼───────────────────────┤    
-   │ 1 │ 0 │  1  │   0   │ 1 + 0 = 1 → CARRY 0   │
-   ├───┼───┼─────┼───────┼───────────────────────┤ 
-   │ 1 │ 1 │  0  │   1   │ 1 + 1 = 0 → CARRY 1 * │ 
-   └───┴───┴─────┴───────┴───────────────────────┘
-   * Em binário, 1 + 1 = 10. Como na soma comum em 
-     decimal, mantém-se o 0 e "sobe" 1. O carry é 
-     o valor que "sobe" na soma binária pelo meio-
-     somador.
+   ┌─────┬─────┬─────┬───────┬───────────────────────────────┐
+   │  A  │  B  │ SUM │ CARRY │ OPERAÇÃO                      │                                                         │         
+   ╞═════╪═════╪═════╪═══════╪═══════════════════════════════╡
+   │ |0⟩ │ |0⟩ │ |0⟩ │  |0⟩  │ |0⟩ + |0⟩ = |0⟩ → CARRY |0⟩   │
+   ├─────┼─────┼─────┼───────┼───────────────────────────────┤  
+   │ |0⟩ │ |1⟩ │ |1⟩ │  |0⟩  │ |0⟩ + |1⟩ = |1⟩ → CARRY |0⟩   │
+   ├─────┼─────┼─────┼───────┼───────────────────────────────┤    
+   │ |1⟩ │ |0⟩ │ |1⟩ │  |0⟩  │ |1⟩ + |0⟩ = |1⟩ → CARRY |0⟩   │
+   ├─────┼─────┼─────┼───────┼───────────────────────────────┤ 
+   │ |1⟩ │ |1⟩ │ |0⟩ │  |1⟩  │ |1⟩ + |1⟩ = |0⟩ → CARRY |1⟩ * │ 
+   └─────┴─────┴─────┴───────┴───────────────────────────────┘
+   * 1₂ + 1₂ = 10₂. Como na soma em decimal, mantém-se o 0 e 
+     "sobe" 1. O carry é o valor que "sobe" na soma binária pelo
+     meio-somador.
 
 
  Observe que se trata da mesma tabela de um circuito Half Adder clássico. Mas
  diferentemente de um Half Adder clássico, este circuito não é hardwired (impresso
  no chip), e sim programado temporalmente durante a execução.
  
- Representando em um Diagrama de Circuito Quântico:
+ Representando o circuito em um Diagrama de Circuito Quântico:
 
 
-             ┌───┐ 
-   q0(A)  ───┤ H ├─────■─────────────────■──────
-             └───┘     │                 │
-             ┌───┐     │                 │
-   q1(B)  ───┤ X ├─────┼─────────■───────■──────
-             └───┘     │         │       │
-                     ┌─┴─┐     ┌─┴─┐     │
-   q2(S)  ───────────┤ X ├─────┤ X ├─────┼──────
-                     └───┘     └───┘     │
-                       ▲         ▲       │
-                       │         │       │
-                     SUM=A    SUM=A⊕B    │
-                                         │
-                                       ┌─┴─┐
-   q3(C)  ─────────────────────────────┤ X ├────
-                                       └───┘
-                                         ▲
-                                         │
-                                     CARRY=A⋅B
+             ┌───┐                              ┌─┐
+   q0(A)  ───┤ H ├─────■─────────────────■──────┤M├──────────────
+             └───┘     │                 │      └╥┘
+             ┌───┐     │                 │       ║  ┌─┐
+   q1(B)  ───┤ X ├─────┼─────────■───────■───────╫──┤M├──────────
+             └───┘     │         │       │       ║  └╥┘ 
+                     ┌─┴─┐     ┌─┴─┐     │       ║   ║  ┌─┐
+   q2(S)  ───────────┤ X ├─────┤ X ├─────┼───────╫───╫──┤M├──────
+                     └───┘     └───┘     │       ║   ║  └╥┘
+                                       ┌─┴─┐     ║   ║   ║  ┌─┐
+   q3(C)  ─────────────────────────────┤ X ├─────╫───╫───╫──┤M├──
+                                       └───┘     ║   ║   ║  └╥┘
+                                                 ║   ║   ║   ║
+   c:   4/═══════════════════════════════════════╩═══╩═══╩═══╩═══
+                                                 0   1   2   3
 
 
  Com A em superposição (∣A⟩ = α∣0⟩ + β∣1⟩), B = |1⟩, SUM = |0⟩ e CARRY = |0⟩ 
@@ -151,22 +146,22 @@
  Onde:
  
  
-   α: Amplitude de probabilidade do primeiro estado (∣0,1,0,0⟩).
+   α: Amplitude de probabilidade do primeiro estado (∣0,1,1,0⟩).
    
-   β: Amplitude de probabilidade do segundo estado (∣1,1,0,0⟩).
+   β: Amplitude de probabilidade do segundo estado (∣1,1,0,1⟩).
    
    
- Como A está em superposição uniforme (∣A⟩ = (∣0⟩ + ∣1⟩) ​/ √2), então:
+ Como A está em superposição uniforme (∣A⟩ = (∣0⟩ + ∣1⟩)/√2), então:
 
 
    ∣ψ⟩ = 1/√2 (|0,1,1,0⟩ + |1,1,0,1⟩)
 
 
- Isso significa que se medir o sistema em um determinado instante, terá 50% de 
- chance de colapsar em |0,1,1,0⟩ e 50% de chance de colapsar em |1,1,0,1⟩. 
+ Isso significa que se medir o sistema em um determinado instante, terá 50% de
+ chance de colapsar em |0,1,1,0⟩ e 50% de chance de colapsar em |1,1,0,1⟩.
  
  Como não vamos aplicar interferência no circuito para selecionar o estado de
- interesse (exemplo, |1,1,0,1⟩), a cada execução do programa poderemos ter um 
+ interesse (exemplo, |1,1,0,1⟩), a cada execução do programa poderemos ter um
  destes dois estados como resultado.
  
  Neste circuito não será simulado decoerência por uma questão de simplificação 
@@ -222,12 +217,12 @@ from qiskit.visualization import plot_histogram
 # definem a estrutura e o tamanho do circuito:
 #
 # O primeiro 4: Aloca 4 qubits de registradores quânticos. Eles são inicializados 
-# automaticamente no estado  padrão |0⟩ e são indexados como 0, 1, 2 e 3 (q0, q1, 
+# automaticamente no estado padrão |0⟩ e são indexados como 0, 1, 2 e 3 (q0, q1, 
 # q2 e q3).
 #
-# O segundo 4: Aloca 4 bits clássicos de registradores clássicos, também indexados
-# de 0 a 3. Eles servem para armazenar os resultados numéricos (0 ou 1) quando 
-# medir os qubits, cada um representando o valor do qubit no respectivo índice.
+# O segundo 4: Aloca 4 bits de registradores clássicos, também indexados de 0 a
+# 3. Eles servem para armazenar os resultados numéricos (0 ou 1) quando medir os
+# qubits, cada um representando o valor do qubit no respectivo índice.
 #
 # No contexto deste programa, que implementa um Half Adder quântico, os 4 qubits 
 # representam:
@@ -243,15 +238,15 @@ from qiskit.visualization import plot_histogram
 qc = QuantumCircuit(4, 4)
 
 
-# Aplica uma porta lógica quântica X (também conhecida como porta NOT quântica 
-# ou Bit-Flip) em q1. Isso inverte o estado do qubit de |0⟩ para |1⟩, fixando a
+# Aplica uma porta lógica quântica X, também conhecida como porta NOT quântica 
+# ou Bit-Flip, em q1. Isso inverte o estado do qubit de |0⟩ para |1⟩, fixando a
 # entrada B do circuito neste valor.
 
 qc.x(1)
 
 
 # Aplica a porta Hadamard (H) em q0 (A). Isso transforma |0⟩ em (|0⟩ + |1⟩)/√2, 
-# colocando a entrada A nos estados |0⟩ e |1⟩, em superposição.
+# colocando a entrada A nos estados |0⟩ e |1⟩ em superposição.
 #
 # O estado global passa então a ser uma superposição de duas entradas:
 #
@@ -262,15 +257,11 @@ qc.x(1)
 #
 #   Ramo 1:
 #
-#   A = |0⟩, B = |1⟩ ⇒
-#   SUM = |0⟩⊕|1⟩ = |1⟩, CARRY = |0⟩⋅|1⟩ = |0⟩ ⇒
-#   |0,1,1,0⟩
+#   A = |0⟩, B = |1⟩ ⇒ SUM = |0⟩⊕|1⟩ = |1⟩, CARRY = |0⟩⋅|1⟩ = |0⟩ ⇒ |0,1,1,0⟩
 #
 #   Ramo 2: 
 #
-#   A = |1⟩, B = |1⟩ ⇒
-#   SUM = |1⟩⊕|1⟩ = |0⟩, CARRY = |1⟩⋅|1⟩ = |1⟩ ⇒
-#   |1,1,0,1⟩
+#   A = |1⟩, B = |1⟩ ⇒ SUM = |1⟩⊕|1⟩ = |0⟩, CARRY = |1⟩⋅|1⟩ = |1⟩ ⇒ |1,1,0,1⟩
 #
 # O estado final esperado no espaço de Hilbert é definido como: 
 #
@@ -292,19 +283,15 @@ qc.h(0)
 # para implementação do circuito Half Adder quântico.
 
 
-# Aplica a operação CNOT(A → SUM):
+# 1. Aplica a operação CNOT(A → SUM):
 #
 # Matematicamente:
 #
 #   |A,SUM⟩ → |A,SUM⊕A⟩
 #
-# Como inicialmente:
+# Como inicialmente SUM = |0⟩, então:
 #
-#   SUM = |0⟩
-#
-# Então:
-#
-#   SUM=|0⟩⊕A=A ⇒
+#   SUM = |0⟩⊕A = A ⇒
 #   SUM = A
 #
 # Após esta etapa, o estado fica:
@@ -314,17 +301,13 @@ qc.h(0)
 qc.cx(0, 2) 
 
 
-# Aplica a operação CNOT(B → SUM):
+# 2. Aplica a operação CNOT(B → SUM):
 #
 # Matematicamente:
 #
 #   |B,SUM⟩ → |B,SUM⊕B⟩
 #
-# Como:
-#
-#   SUM = A
-#
-# Então:
+# Como SUM = A, então:
 #
 #   SUM = A⊕B
 #
@@ -338,13 +321,13 @@ qc.cx(0, 2)
 qc.cx(1, 2)
 
 
-# Aplica a operação CCX(A,B → CARRY):
+# 3. Aplica a operação CCX(A,B → CARRY):
 #
 # Matematicamente:
 # 
 #   |A,B,C⟩ → |A,B,C⊕(A⋅B)⟩
 #
-# Como CARRY = |0⟩:
+# Como CARRY = |0⟩, então:
 #
 #   CARRY = A⋅B
 #
@@ -367,14 +350,14 @@ qc.ccx(0, 1, 3)
 # qubits A, B, SUM e CARRY projeta o sistema em um dos dois ramos correlacionados
 # da superposição.
 
-qc.measure(0, 0)
-qc.measure(1, 1)
-qc.measure(2, 2)
-qc.measure(3, 3)
+qc.measure(0, 0)  # Mede A. Isso força o sistema a escolher o Ramo 1 ou Ramo 2.
+qc.measure(1, 1)  # Mede B. Lê o valor que foi fixado pelo colapso de A.
+qc.measure(2, 2)  # Mede SUM. Lê o valor que foi fixado pelo colapso de A. 
+qc.measure(3, 3)  # Mede CARRY. Lê o valor que foi fixado pelo colapso de A.
 
 
 # =============================================================================
-# Impressão do estado do sistema quântico
+# Impressão do estado do sistema quântico no prompt
 # =============================================================================
 
 
@@ -461,5 +444,3 @@ print("B     :", B)
 print("SUM   :", SUM)
 print("CARRY :", CARRY)
 print(line)
-
-# input("Pressione Enter para sair...")
