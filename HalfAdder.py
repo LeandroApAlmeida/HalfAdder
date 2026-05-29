@@ -1,13 +1,13 @@
 """
 ===============================================================================
 
- CIRCUTO HALF ADDER (MEIO SOMADOR) QUÂNTICO
+ CIRCUITO HALF ADDER (MEIO SOMADOR) QUÂNTICO
 
 
  Este programa implementa um Half Adder reversível de 2 qubits de entrada (A e B)
- e 2 qubits de saída (SUM e CARRY) utilizando portas CNOT (Controlled-NOT gate) 
- e CCX (Toffoli Gate), realizando a seguinte transformação unitária no espaço de
- Hilbert de 4 qubits:
+ e 2 qubits auxiliares (SUM e CARRY) utilizando portas CNOT (Controlled-NOT gate) 
+ e CCX (Toffoli Gate), realizando a seguinte sequência de transformações unitárias
+ no espaço de Hilbert de 4 qubits:
 
 
    |A,B,0,0⟩
@@ -19,7 +19,7 @@
    |A,B,A⊕B,A⋅B⟩
 
 
- O circuito em questão realiza a soma binária de A e B, produzindo como saída:
+ O circuito em questão realiza a soma binária de A e B, produzindo:
 
 
    > SUM = A⊕B    (A XOR B)
@@ -81,13 +81,13 @@
    |ψout⟩ = UCCX⋅UCNOT(B→SUM)⋅UCNOT(A→SUM) |ψin⟩
 
 
- O circuito é inicializado em:
+ Em notação de Dirac (ket), o circuito é inicializado em:
 
 
    |A,B,0,0⟩
 
 
- e produz como resultado da transformação unitária:
+ e produz como resultado da sequência de operações:
 
 
    |A,B,A⊕B,A⋅B⟩
@@ -96,20 +96,20 @@
  A tabela verdade para o circuito é a seguinte:
 
 
-   ┌─────┬─────┬─────┬───────┬───────────────────────────────┐
-   │  A  │  B  │ SUM │ CARRY │ OPERAÇÃO                      │                                                         │         
-   ╞═════╪═════╪═════╪═══════╪═══════════════════════════════╡
-   │ |0⟩ │ |0⟩ │ |0⟩ │  |0⟩  │ |0⟩ + |0⟩ = |0⟩ → CARRY |0⟩   │
-   ├─────┼─────┼─────┼───────┼───────────────────────────────┤  
-   │ |0⟩ │ |1⟩ │ |1⟩ │  |0⟩  │ |0⟩ + |1⟩ = |1⟩ → CARRY |0⟩   │
-   ├─────┼─────┼─────┼───────┼───────────────────────────────┤    
-   │ |1⟩ │ |0⟩ │ |1⟩ │  |0⟩  │ |1⟩ + |0⟩ = |1⟩ → CARRY |0⟩   │
-   ├─────┼─────┼─────┼───────┼───────────────────────────────┤ 
-   │ |1⟩ │ |1⟩ │ |0⟩ │  |1⟩  │ |1⟩ + |1⟩ = |0⟩ → CARRY |1⟩ * │ 
-   └─────┴─────┴─────┴───────┴───────────────────────────────┘
-   * 1₂ + 1₂ = 10₂. Como na soma em decimal, mantém-se o 0 e 
-     "sobe" 1. O carry é o valor que "sobe" na soma binária pelo
-     meio-somador.
+   ┌─────┬─────┬─────┬───────┬───────────────────────┐
+   │  A  │  B  │ SUM │ CARRY │ OPERAÇÃO              │       
+   ╞═════╪═════╪═════╪═══════╪═══════════════════════╡
+   │ |0⟩ │ |0⟩ │ |0⟩ │  |0⟩  │ 0 + 0 = 0 → CARRY 0   │
+   ├─────┼─────┼─────┼───────┼───────────────────────┤  
+   │ |0⟩ │ |1⟩ │ |1⟩ │  |0⟩  │ 0 + 1 = 1 → CARRY 0   │
+   ├─────┼─────┼─────┼───────┼───────────────────────┤    
+   │ |1⟩ │ |0⟩ │ |1⟩ │  |0⟩  │ 1 + 0 = 1 → CARRY 0   │
+   ├─────┼─────┼─────┼───────┼───────────────────────┤ 
+   │ |1⟩ │ |1⟩ │ |0⟩ │  |1⟩  │ 1 + 1 = 0 → CARRY 1 * │ 
+   └─────┴─────┴─────┴───────┴───────────────────────┘
+   * 1₂ + 1₂ = 10₂. Como na soma em decimal, mantém-se
+     o 0 e "sobe" 1. O carry é o valor que "sobe" na 
+     soma binária pelo meio-somador.
 
 
  Observe que se trata da mesma tabela de um circuito Half Adder clássico. Mas
@@ -158,22 +158,21 @@
 
 
  Isso significa que se medir o sistema em um determinado instante, terá 50% de
- chance de colapsar em |0,1,1,0⟩ e 50% de chance de colapsar em |1,1,0,1⟩.
- 
- Como não vamos aplicar interferência no circuito para selecionar o estado de
- interesse (exemplo, |1,1,0,1⟩), a cada execução do programa poderemos ter um
- destes dois estados como resultado.
+ chance de colapsar em |0,1,1,0⟩ e 50% de chance de colapsar em |1,1,0,1⟩. Como
+ não vamos aplicar interferência no circuito para selecionar o estado de interesse
+ (exemplo, |1,1,0,1⟩), a cada execução do programa poderemos ter um destes dois
+ estados como resultado.
  
  Neste circuito não será simulado decoerência por uma questão de simplificação 
  do código. Isso seria possível usando o módulo qiskit_aer.noise.
  
- A decoerência é o mecanismo físico pelo qual um sistema quântico deixa de se 
- comportar de acordo com as leis da mecânica quântica e passa a se comportar de
- acordo com a física clássica. Ela acontece devido à interação indesejada e 
- inevitável com o ambiente externo (ruído térmico, campos magnéticos, etc.). É 
- por este motivo que os computadores quânticos atuais tem mecanismos para geração
- de temperaturas criogênicas, afim de evitar ruído térmico, e funcionam em salas
- isoladas para tentar evitar os outros tipos de ruídos.
+ A decoerência é o processo pelo qual um sistema quântico perde coerência de fase
+ devido à interação indesejada e inevitável com o ambiente externo (ruído térmico,
+ campos magnéticos, etc.), fazendo com que seu comportamento efetivo se aproxime
+ do comportamento clássico. É por este motivo que os computadores quânticos atuais
+ tem mecanismos para geração de temperaturas criogênicas, afim de evitar ruído 
+ térmico, e funcionam em salas isoladas para tentar evitar os outros tipos de 
+ ruídos.
 
  Quando ocorre a decoerência, há:
  
@@ -188,14 +187,14 @@
    para um estado definido (colapso da função de onda).
    
    3. Dissipação de Energia (Relaxamento): Além da perda de fase, a decoerência 
-   frequentemente caminha junto com o relaxamento térmico. O sistema quântico troca
-   energia com o ambiente até atingir o equilíbrio. Para um qubit, isso geralmente
-   significa decair de um estado de maior energia (|1⟩) de volta para o estado 
-   fundamental (|0⟩).
+   frequentemente caminha junto com o relaxamento térmico. O sistema quântico 
+   troca energia com o ambiente até atingir o equilíbrio. Para um qubit, isso 
+   geralmente significa decair de um estado de maior energia (|1⟩) de volta para 
+   o estado fundamental (|0⟩).
  
  
- Em um hardware real afetado por ruído, o resultado final medido diverge das 
- probabilidades ideais calculadas por este programa.
+ Em um hardware real afetado por ruído, como o IBMQ, por exemplo, o resultado 
+ final medido diverge das probabilidades ideais calculadas por este programa.
 
 ===============================================================================
 """
@@ -270,7 +269,8 @@ qc.x(1)
 qc.h(0)
 
 
-# Aplica a transformação unitária no espaço de Hilbert:
+# Aplica a sequência de operações unitários no espaço de Hilbert para implementar
+# reversivelmente um Half Adder quântico:
 #
 #   |A,B,0,0⟩
 #       ↓
@@ -279,8 +279,6 @@ qc.h(0)
 #   |A,B,A⊕B,0⟩
 #       ↓
 #   |A,B,A⊕B,A⋅B⟩
-#
-# para implementação do circuito Half Adder quântico.
 
 
 # 1. Aplica a operação CNOT(A → SUM):
@@ -291,7 +289,7 @@ qc.h(0)
 #
 # Como inicialmente SUM = |0⟩, então:
 #
-#   SUM = |0⟩⊕A = A ⇒
+#   SUM = 0⊕A = A ⇒
 #   SUM = A
 #
 # Após esta etapa, o estado fica:
@@ -313,7 +311,7 @@ qc.cx(0, 2)
 #
 # Após esta etapa, o estado fica:
 #
-#   |A,B,A⊕B,0⟩
+#   |A,B,A,0⟩ → |A,B,A⊕B,0⟩
 #
 # O qubit SUM agora contém a soma binária sem carry (ver colunas 1, 2 e 3 da tabela 
 # verdade acima).
@@ -333,7 +331,7 @@ qc.cx(1, 2)
 #
 # Após esta etapa, o estado fica:
 #
-#   |A,B,0,0⟩ → |A,B,A⊕B,A⋅B⟩
+#   |A,B,A⊕B,0⟩ → |A,B,A⊕B,A⋅B⟩
 #
 # O qubit CARRY agora contém o "vai um" resultante da operação A⋅B. Neste caso,
 # CARRY será |1⟩ somente quando A = |1⟩ e B = |1⟩.
