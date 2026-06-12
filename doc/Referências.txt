@@ -7,3 +7,5 @@ https://pt.wikipedia.org/wiki/Computa%C3%A7%C3%A3o_qu%C3%A2ntica
 https://pt.wikipedia.org/wiki/Nota%C3%A7%C3%A3o_bra-ket
 
 https://studentsxstudents.com/coding-the-half-adder-quantum-circuit-b9ec77840399
+
+https://quantum.cloud.ibm.com/docs/en/api/qiskit

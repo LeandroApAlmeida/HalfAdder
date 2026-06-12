@@ -10,13 +10,13 @@
  no espaço de Hilbert de 4 qubits:
 
 
-   |A,B,0,0⟩
+   |0,0,B,A⟩
        ↓
-   |A,B,A,0⟩
+   |0,A,B,A⟩
        ↓
-   |A,B,A⊕B,0⟩
+   |0,A⊕B,B,A⟩
        ↓
-   |A,B,A⊕B,A⋅B⟩
+   |A⋅B,A⊕B,B,A⟩
 
 
  O circuito em questão realiza a soma binária de A e B, produzindo:
@@ -30,36 +30,124 @@
  sem apagar os qubits de entrada.
 
  Em computação quântica, o estado de um sistema é representado dentro de um espaço
- matemático chamado espaço de Hilbert.
+ vetorial chamado espaço de Hilbert.
 
  Para o sistema com 4 qubits deste circuito, existem:
 
 
-   2^4 = 16
+   2⁴ = 16
 
 
  estados básicos possíveis. Estes 16 estados formam uma base ortonormal para o
  espaço de Hilbert, chamada de base computacional:
 
 
-   |0000⟩, |0001⟩, |0010⟩, |0011⟩,
-   |0100⟩, |0101⟩, |0110⟩, |0111⟩,
-   |1000⟩, |1001⟩, |1010⟩, |1011⟩,
-   |1100⟩, |1101⟩, |1110⟩, |1111⟩
+   |0000⟩
+   |0001⟩
+   |0010⟩
+   |0011⟩
+   |0100⟩
+   |0101⟩
+   |0110⟩
+   |0111⟩
+   |1000⟩
+   |1001⟩
+   |1010⟩
+   |1011⟩
+   |1100⟩
+   |1101⟩
+   |1110⟩
+   |1111⟩
+​
+
+ Um sistema quântico não precisa estar em apenas um desses estados. Ele pode existir
+ em uma superposição de vários estados ao mesmo tempo (ou todos os estados).
+
+ Para entender isso, considere um sistema com um único qubit. Nele, os estados são
+ representados pelos vetores:
 
 
- Um sistema quântico não precisa estar em apenas um desses estados. Ele pode 
- existir em uma superposição de vários estados ao mesmo tempo (ou todos os estados).
- O sistema tem uma amplitude de probabilidade (α) associada a cada estado. Ao medí-lo,
- ele colapsa para um único estado de forma probabilística (colapso da função de
- onda). 
-
- A probabilidade de cada resultado é dada por:
+   |0⟩
+   |1⟩
 
 
-   ∣αi​∣²
+ onde:
 
 
+         ┌ ┐           
+         │1│           
+   |0⟩ = │ │
+         │0│           
+         └ ┘           
+
+         ┌ ┐
+         │0│
+   |1⟩ = │ │
+         │1│
+         └ ┘
+
+
+ Os vetores |0⟩ e |1⟩ formam a base computacional no espaço de Hilbert ℋ = ℂ².
+ 
+ A superposição dos vetores |0⟩ e |1⟩ é representada por |ψ⟩:
+
+
+   |ψ⟩ = α|0⟩ + β|1⟩
+
+
+ onde α e β são números complexos que representam as amplitudes de probabilidade
+ para cada estado.
+
+ A interpretação física do qubit em superposição é que ele está simultaneamente
+ nos estados |0⟩ e |1⟩. Isso faz com que a quantidade de informação que pode ser
+ armazenada no estado |ψ⟩ seja infinita. Essa informação, porém, está no nível
+ quântico. Para torná-la acessível, no nível clássico, precisamos fazer uma medida.
+ O processo de medida altera o estado de um qubit, fazendo-o assumir o estado |0⟩,
+ com probabilidade|α|², ou o estado |1⟩, com probabilidade |β|².
+
+ Com apenas duas possibilidades, |0⟩ ou |1⟩, temos, então:
+
+
+   |α|² + |β|² = 1
+ 
+
+ Isso significa que a norma do vetor |ψ⟩ vale 1. Logo, matematicamente, um qubit
+ é um vetor de norma 1 de ℂ².
+
+ Se cada qubit individual i possui um espaço de Hilbert ℋᵢ = ℂ², o sistema combinado
+ de 4 qubits é o produto tensorial desses quatro espaços:
+
+
+   ℋₜ = ℋ₁ ⊗ ℋ₂ ⊗ ℋ₃ ⊗ ℋ₄ = ℂ² ⊗ ℂ² ⊗ ℂ² ⊗ ℂ² = ℂ¹⁶
+
+
+ O produto tensorial de 4 qubits combina os estados individuais de cada qubit para
+ formar um único vetor de estado global em um espaço de Hilbert de 16 dimensões
+ (ℋ = ℂ¹⁶). Matematicamente, essa operação concatena as amplitudes de probabilidade
+ e expande o espaço de estados de forma exponencial (2ⁿ).
+
+ Se os qubits estiverem em estados isolados (não emaranhados):
+
+
+   |ψ₁⟩ = α₀|0⟩ + α₁|1⟩
+   |ψ₂⟩ = β₀|0⟩ + β₁|1⟩
+   |ψ₃⟩ = γ₀|0⟩ + γ₁|1⟩
+   |ψ₄⟩ = δ₀|0⟩ + δ₁|1⟩
+
+
+ O produto tensorial do estado global |ψ⟩ é dado por:
+
+
+                                     15
+                                     ⎲
+   |ψ⟩ = |ψ₁⟩ ⊗ |ψ₂⟩ ⊗ |ψ₃⟩ ⊗ |ψ₄⟩ = ⎳ Cᵢ|i₂⟩
+                                     i=0
+
+
+ Onde i₂ representa a base computacional em binário de 4 bits (de |0000⟩ a |1111⟩.
+
+ ⚠⚠⚠ (continuar daqui...) ⚠⚠⚠️
+ 
  O circuito quântico atua linearmente sobre qualquer estado do espaço de Hilbert.
  Isso significa que a mesma transformação unitária é aplicada ao estado quântico
  completo, afetando simultaneamente todos os componentes da superposição. Isso
@@ -78,19 +166,19 @@
  A evolução linear é dada por:
 
 
-   |ψout⟩ = UCCX⋅UCNOT(B→SUM)⋅UCNOT(A→SUM) |ψin⟩
+   |ψout⟩ = U_CCX(A,B → CARRY)⋅U_CNOT(B→SUM)⋅U_CNOT(A→SUM) |ψin⟩
 
 
- Em notação de Dirac (ket), o circuito é inicializado em:
+ O circuito é inicializado em:
 
 
-   |A,B,0,0⟩
+   |CARRY,SUM,B,A⟩ = |0,0,B,A⟩
 
 
  e produz como resultado da sequência de operações:
 
 
-   |A,B,A⊕B,A⋅B⟩
+   |A⋅B,A⊕B,B,A⟩
 
 
  A tabela verdade para o circuito é a seguinte:
@@ -136,43 +224,43 @@
                                                  0   1   2   3
 
 
- Com A em superposição (∣A⟩ = α∣0⟩ + β∣1⟩), B = |1⟩, SUM = |0⟩ e CARRY = |0⟩ 
- inicialmente, o estado do sistema passa a ser uma superposição de dois estados.
+ Com A em superposição A = α∣0⟩ + β∣1⟩, B = |1⟩, SUM = |0⟩ e CARRY = |0⟩ inicialmente,
+ quando forem aplicadas as portas CNOT e CCX na sequência de operações unitárias
+ do circuito, o estado do sistema passará a ser uma superposição de dois estados:
 
 
-   ∣ψ⟩ = α∣0,1,1,0⟩ + β∣1,1,0,1⟩
+   ∣ψ⟩ = α∣0110⟩ + β∣1011⟩
  
  
- Onde:
- 
- 
-   α: Amplitude de probabilidade do primeiro estado (∣0,1,1,0⟩).
+ onde α e β são amplitudes complexas associadas a cada estado.
+
+ Os dois ramos da superposição têm origem na superposição inicial do qubit A, enquanto
+ as portas CNOT e CCX propagam essa estrutura para os demais qubits, gerando correlações
+ quânticas, incluindo o emaranhamento entre A, SUM e CARRY. Dessa forma, cada componente
+ evolui de maneira consistente sob a mesma transformação unitária. B influencia o
+ estado global, porém está desacoplado (não emaranhado). Ele atua como como qubit
+ clássico controlador fixo no circuito.
    
-   β: Amplitude de probabilidade do segundo estado (∣1,1,0,1⟩).
-   
-   
- Como A está em superposição uniforme (∣A⟩ = (∣0⟩ + ∣1⟩)/√2), então:
+ Para o caso de superposição uniforme em A (∣A⟩ = (∣0⟩ + ∣1⟩)/√2), o estado final
+ torna-se:
 
 
-   ∣ψ⟩ = 1/√2 (|0,1,1,0⟩ + |1,1,0,1⟩)
+   ∣ψ⟩ = 1/√2 (|0110⟩ + ∣1011⟩)
 
 
- Isso significa que se medir o sistema em um determinado instante, terá 50% de
- chance de colapsar em |0,1,1,0⟩ e 50% de chance de colapsar em |1,1,0,1⟩. Como
- não vamos aplicar interferência no circuito para selecionar o estado de interesse
- (exemplo, |1,1,0,1⟩), a cada execução do programa poderemos ter um destes dois
- estados como resultado.
+ Isso implica que, ao realizar uma medição, o sistema colapsa para |0110⟩ ou |1011⟩
+ com probabilidade 50% para cada estado. Como não há um mecanismo de interferência
+ projetado para amplificar um resultado específico, as amplitudes permanecem balanceadas
+ conforme a evolução unitária do circuito.
  
  Neste circuito não será simulado decoerência por uma questão de simplificação 
- do código. Isso seria possível usando o módulo qiskit_aer.noise.
- 
- A decoerência é o processo pelo qual um sistema quântico perde coerência de fase
- devido à interação indesejada e inevitável com o ambiente externo (ruído térmico,
- campos magnéticos, etc.), fazendo com que seu comportamento efetivo se aproxime
- do comportamento clássico. É por este motivo que os computadores quânticos atuais
- tem mecanismos para geração de temperaturas criogênicas, afim de evitar ruído 
- térmico, e funcionam em salas isoladas para tentar evitar os outros tipos de 
- ruídos.
+ do código. Isso seria possível usando o módulo qiskit_aer.noise. A decoerência é
+ o processo pelo qual um sistema quântico perde coerência de fase devido à interação
+ indesejada e inevitável com o ambiente externo (ruído térmico, campos magnéticos,
+ etc.), fazendo com que seu comportamento efetivo se aproxime do comportamento clássico.
+ É por este motivo que os computadores quânticos atuais tem mecanismos para geração
+ de temperaturas criogênicas, afim de evitar ruído térmico, e funcionam em salas
+ isoladas para tentar evitar os outros tipos de ruídos.
 
  Quando ocorre a decoerência, há:
  
@@ -180,7 +268,7 @@
    1. Perda de Fase (Dephasing): O ambiente atua como uma medição constante e 
    indesejada, destruindo a relação de fase sutil entre as amplitudes complexas
    (os αi do espaço de Hilbert).
-   
+                                                                 
    2. Transição de Estado: O estado de superposição (|0⟩ + |1⟩)/√2 colapsa para 
    uma mistura puramente clássica (ou é |0⟩, ou é |1⟩, sem propriedades de 
    interferência). Em um sistema quântico, toda vez que há medição ele colapsa 
@@ -200,15 +288,57 @@
 """
 
 
+"""
+===============================================================================
+
+INSTALAÇÃO DO QISKIT E QISKIT-AER NO PYTHON:
+
+
+Com o Python instalado, abra o terminal do Windows (cmd) e digite:
+
+
+  pip install qiskit
+
+  
+Tecle ENTER e aguarde a instalação terminar.
+
+Abra novamente o terminal e digite:
+
+
+  pip install qiskit-aer
+
+  
+Tecle ENTER e aguarde a instalação terminar.
+
+Com isso, é instalado o framework para programação para o computador quântico
+da IBM (IBMQ) e o simulador, para testar o código na máquina local.
+
+Para instalar os utilitários de visualização de gráficos, abra o terminal e digite: 
+
+
+  pip install "qiskit[visualization]" matplotlib pylatexenc
+  
+  
+Tecle ENTER e aguarde a instalação terminar.
+
+===============================================================================
+"""
+
 import os
+import matplotlib.pyplot as plt
 from qiskit import QuantumCircuit
 from qiskit_aer import AerSimulator
 from qiskit.quantum_info import Statevector, Operator
-from qiskit.visualization import plot_histogram
+from qiskit.visualization import (
+    plot_histogram,
+    plot_state_city, 
+    plot_bloch_multivector, 
+    plot_state_qsphere
+)
 
 
 # =============================================================================
-# Imprementação do circuito Half Adder quântico
+# Implementação do circuito Half Adder quântico
 # =============================================================================
 
 
@@ -247,24 +377,29 @@ qc.x(1)
 # Aplica a porta Hadamard (H) em q0 (A). Isso transforma |0⟩ em (|0⟩ + |1⟩)/√2, 
 # colocando a entrada A nos estados |0⟩ e |1⟩ em superposição.
 #
-# O estado global passa então a ser uma superposição de duas entradas:
+# Com o emaranhamento de A, SUM e CARRY na sequência de operações unitárias aplicadas
+# adiante no código, o estado global passa a ser uma superposição de dois estados:
 #
-#   |ψ⟩ = 1/√2 (|0,1,1,0⟩ + |1,1,0,1⟩)
+#   |ψ⟩ = 1/√2 (|0110⟩ + ∣1011⟩)
 #
 # Devido à linearidade da transformação unitária, o circuito Half Adder processará
 # as duas ramificações da superposição simultaneamente:
 #
 #   Ramo 1:
 #
-#   A = |0⟩, B = |1⟩ ⇒ SUM = |0⟩⊕|1⟩ = |1⟩, CARRY = |0⟩⋅|1⟩ = |0⟩ ⇒ |0,1,1,0⟩
+#   A = |0⟩, B = |1⟩ ⇒ SUM = |0⟩⊕|1⟩ = |1⟩, CARRY = |0⟩⋅|1⟩ = |0⟩ ⇒ |0110⟩
 #
 #   Ramo 2: 
 #
-#   A = |1⟩, B = |1⟩ ⇒ SUM = |1⟩⊕|1⟩ = |0⟩, CARRY = |1⟩⋅|1⟩ = |1⟩ ⇒ |1,1,0,1⟩
+#   A = |1⟩, B = |1⟩ ⇒ SUM = |1⟩⊕|1⟩ = |0⟩, CARRY = |1⟩⋅|1⟩ = |1⟩ ⇒ ∣1011⟩
 #
-# O estado final esperado no espaço de Hilbert é definido como: 
+# Como dito anteriormente, isso não corresponde a paralelismo clássico no sentido
+# tradicional, mas à evolução linear de um vetor de estado no espaço de Hilbert.
 #
-#   1/√2 (|0,1,1,0⟩ + |1,1,0,1⟩)
+# Diferentemente de uma incerteza clássica, onde o sistema "já está em um estado,
+# mas desconhecemos qual", aqui o sistema não possui um valor definido antes da
+# medição. A medição projeta o sistema em um dos dois estados possíveis, de forma
+# probabilística.
     
 qc.h(0)
 
@@ -272,20 +407,20 @@ qc.h(0)
 # Aplica a sequência de operações unitários no espaço de Hilbert para implementar
 # reversivelmente um Half Adder quântico:
 #
-#   |A,B,0,0⟩
+#   |0,0,B,A⟩
 #       ↓
-#   |A,B,A,0⟩
+#   |0,A,B,A⟩
 #       ↓
-#   |A,B,A⊕B,0⟩
+#   |0,A⊕B,B,A⟩
 #       ↓
-#   |A,B,A⊕B,A⋅B⟩
+#   |A⋅B,A⊕B,B,A⟩
 
 
 # 1. Aplica a operação CNOT(A → SUM):
 #
 # Matematicamente:
 #
-#   |A,SUM⟩ → |A,SUM⊕A⟩
+#   |SUM,A⟩ → |SUM⊕A,A⟩
 #
 # Como inicialmente SUM = |0⟩, então:
 #
@@ -294,7 +429,7 @@ qc.h(0)
 #
 # Após esta etapa, o estado fica:
 #
-#   |A,B,0,0⟩ → |A,B,A,0⟩
+#   |0,0,B,A⟩ → |0,A,B,A⟩
     
 qc.cx(0, 2) 
 
@@ -303,7 +438,7 @@ qc.cx(0, 2)
 #
 # Matematicamente:
 #
-#   |B,SUM⟩ → |B,SUM⊕B⟩
+#   |SUM,B⟩ → |SUM⊕B,B⟩
 #
 # Como SUM = A, então:
 #
@@ -311,7 +446,7 @@ qc.cx(0, 2)
 #
 # Após esta etapa, o estado fica:
 #
-#   |A,B,A,0⟩ → |A,B,A⊕B,0⟩
+#   |0,A,B,A⟩ → |0,A⊕B,B,A⟩
 #
 # O qubit SUM agora contém a soma binária sem carry (ver colunas 1, 2 e 3 da tabela 
 # verdade acima).
@@ -323,7 +458,7 @@ qc.cx(1, 2)
 #
 # Matematicamente:
 # 
-#   |A,B,C⟩ → |A,B,C⊕(A⋅B)⟩
+#   |C,B,A⟩ → |C⊕(A⋅B),B,A⟩
 #
 # Como CARRY = |0⟩, então:
 #
@@ -331,7 +466,7 @@ qc.cx(1, 2)
 #
 # Após esta etapa, o estado fica:
 #
-#   |A,B,A⊕B,0⟩ → |A,B,A⊕B,A⋅B⟩
+#   |0,A⊕B,B,A⟩ → |A⋅B,A⊕B,B,A⟩
 #
 # O qubit CARRY agora contém o "vai um" resultante da operação A⋅B. Neste caso,
 # CARRY será |1⟩ somente quando A = |1⟩ e B = |1⟩.
@@ -344,9 +479,8 @@ qc.ccx(0, 1, 3)
 # =============================================================================
 
 
-# A medição quântica, como visto, é destrutiva e probabilística. A medição dos 
-# qubits A, B, SUM e CARRY projeta o sistema em um dos dois ramos correlacionados
-# da superposição.
+# A medição quântica é destrutiva e probabilística. A medição dos qubits A, B,
+# SUM e CARRY projeta o sistema em um dos dois ramos correlacionados da superposição.
 
 qc.measure(0, 0)  # Mede A. Isso força o sistema a escolher o Ramo 1 ou Ramo 2.
 qc.measure(1, 1)  # Mede B. Lê o valor que foi fixado pelo colapso de A.
@@ -388,7 +522,7 @@ line = "\n======================================================================
 
 # Limpa o prompt de comandos antes de imprimir.
 
-os.system('cls')
+os.system('cls' if os.name == 'nt' else 'clear')
 
 
 # Imprime o título do circuito.
@@ -397,7 +531,7 @@ print("\n                         HALF ADDER QUÂNTICO\n")
 print(line)
 
 
-# Imprime o diagrama do circuito.
+# Imprime o diagrama do circuito (caracteres Unicode).
 
 print("DIAGRAMA DE CIRCUITO QUÂNTICO:\n\n")
 print(qc.draw())
@@ -442,3 +576,80 @@ print("B     :", B)
 print("SUM   :", SUM)
 print("CARRY :", CARRY)
 print(line)
+
+
+# =============================================================================
+# GERAÇÃO E EXIBIÇÃO DOS GRÁFICOS DO CIRCUITO
+# =============================================================================
+
+
+# Janela 1: Diagrama de Circuito Quântico
+
+fig_circuit = plt.figure(figsize=(8, 5))
+ax_circ = fig_circuit.add_subplot(111)
+qc.draw(output='mpl', ax=ax_circ)
+ax_circ.set_title("Diagrama de Circuito Quântico")
+plt.tight_layout()
+
+
+# Janela 2: Histograma dos ramos 1 e 2 após as 1000 medições.
+
+fig_hist = plt.figure(figsize=(7, 5))
+ax_hist = fig_hist.add_subplot(111)
+counts_dirac = {f"|{string}⟩": valor for string, valor in counts.items()}
+plot_histogram(counts_dirac, ax=ax_hist)
+ax_hist.set_title("Resultados da Simulação")
+plt.tight_layout()
+
+
+# Janela 3: Esferas de Bloch Individuais para cada um dos 4 qubits.
+
+fig_bloch = plot_bloch_multivector(state, title="Esferas de Bloch (Estado dos Qubits)")
+
+
+# Janela 4: Q-Sphere para visualizar as amplitudes e fases quânticas globais.
+
+fig_qsphere = plot_state_qsphere(state)
+
+
+# Janela 5: State City para mapear tridimensionalmente a Matriz de Densidade.
+
+fig_city = plot_state_city(state, title="State City (Matriz de Densidade)", figsize=(10, 6))
+
+states = ["0110", "1011"]
+
+for ax in fig_city.get_axes():
+    ticks_x = ax.get_xticklabels()
+    labels_x = []
+    for tick in ticks_x:
+        txt = tick.get_text()
+        if txt in states:
+            labels_x.append(f"|{txt}⟩")
+        else:
+            labels_x.append(f"|{txt}⟩" if txt else "")
+    ax.set_xticklabels(labels_x)
+    
+    for tick in ax.get_xticklabels():
+        if tick.get_text() in [f"|{e}⟩" for e in states]:
+            tick.set_color("red")
+            tick.set_weight("bold")
+
+    ticks_y = ax.get_yticklabels()
+    labels_y = []
+    for tick in ticks_y:
+        txt = tick.get_text()
+        if txt in states:
+            labels_y.append(f"|{txt}⟩")
+        else:
+            labels_y.append(f"|{txt}⟩" if txt else "")
+    ax.set_yticklabels(labels_y)
+    
+    for tick in ax.get_yticklabels():
+        if tick.get_text() in [f"|{e}⟩" for e in states]:
+            tick.set_color("red")
+            tick.set_weight("bold")
+
+
+# Renderiza simultaneamente todas as figuras geradas na tela.
+
+plt.show()
