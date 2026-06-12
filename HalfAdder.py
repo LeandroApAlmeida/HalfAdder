@@ -231,8 +231,6 @@
 
    ∣ψ⟩ = α∣0110⟩ + β∣1011⟩
  
- 
- onde α e β são amplitudes complexas associadas a cada estado.
 
  Os dois ramos da superposição têm origem na superposição inicial do qubit A, enquanto
  as portas CNOT e CCX propagam essa estrutura para os demais qubits, gerando correlações
