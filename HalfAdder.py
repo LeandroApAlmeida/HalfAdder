@@ -30,7 +30,7 @@
  sem apagar os qubits de entrada.
 
  Em computação quântica, o estado de um sistema é representado dentro de um espaço
- vetorial chamado espaço de Hilbert.
+ vetorial complexo chamado espaço de Hilbert.
 
  Para o sistema com 4 qubits deste circuito, existem:
 
@@ -39,7 +39,7 @@
 
 
  estados básicos possíveis. Estes 16 estados formam uma base ortonormal para o
- espaço de Hilbert, chamada de base computacional:
+ espaço de Hilbert ℋ = ℂ¹⁶, chamada de base computacional:
 
 
    |0000⟩
@@ -73,18 +73,9 @@
 
  onde:
 
-
-         ┌ ┐           
-         │1│           
-   |0⟩ = │ │
-         │0│           
-         └ ┘           
-
-         ┌ ┐
-         │0│
-   |1⟩ = │ │
-         │1│
-         └ ┘
+          
+   |0⟩ = [1, 0]         
+   |1⟩ = [0, 1]
 
 
  Os vetores |0⟩ e |1⟩ formam a base computacional no espaço de Hilbert ℋ = ℂ².
@@ -95,22 +86,70 @@
    |ψ⟩ = α|0⟩ + β|1⟩
 
 
- onde α e β são números complexos que representam as amplitudes de probabilidade
- para cada estado.
+ onde α e β são números complexos que representam as amplitudes para cada estado
+ (são coeficientes complexos do vetor de estado que indicam "quanto" de cada estado
+ base existe na decomposição).
 
  A interpretação física do qubit em superposição é que ele está simultaneamente
  nos estados |0⟩ e |1⟩. Isso faz com que a quantidade de informação que pode ser
  armazenada no estado |ψ⟩ seja infinita. Essa informação, porém, está no nível
  quântico. Para torná-la acessível, no nível clássico, precisamos fazer uma medida.
- O processo de medida altera o estado de um qubit, fazendo-o assumir o estado |0⟩,
- com probabilidade|α|², ou o estado |1⟩, com probabilidade |β|², onde:
+ O processo de medir altera o estado de um qubit, fazendo-o assumir o estado |0⟩,
+ com probabilidade|α|², ou o estado |1⟩, com probabilidade |β|².
+
+ Pela regra de Born:
+
+
+   P(0) = ∣α∣²
+
+   P(1) = ∣β∣²
+
+
+ Como a soma das probabilidades de todos os resultados possíveis deve ser 1, então:
 
 
    |α|² + |β|² = 1
 
+
+ é a condição de normalização de um qubit. Significa que a soma das probabilidades
+ de todos os resultados possíveis deve ser 100%.
+
+ Por exemplo, considere:
+
+
+   α = (√3/2)
+
+   β = (1/2)
+
+
+ então:
+
+
+   |α|² = (√3/2)² = 3/4
+
+   |β|² = (1/2)² = 1/4
+
+
+ Logo:
+
+
+   3/4 + 1/4 = 1
+
+
+ Isso significa que neste sistema:
+
+
+   > Há 75% de probabilidade de medir |0⟩ (|α|² = 3/4).
+
+   > Há 25% de probalidade de medir |1⟩ (|β|² = 1/4).
+
+   > Somando 75% de probabilidade de medir |0⟩ e 25% de probabilidade de medir |1⟩,
+     obtém-se 100%, o que condiz com condição de normalização imposta.
  
- Se cada qubit individual i possui um espaço de Hilbert ℋᵢ = ℂ², o sistema combinado
- de 4 qubits é o produto tensorial desses quatro espaços:
+
+ Ampliando o espaço de Hilbert para 4 qubits, temos que, se cada qubit individual
+ i possui um espaço de Hilbert ℋᵢ = ℂ², o sistema combinado de 4 qubits é o produto
+ tensorial desses quatro espaços:
 
 
    ℋₜ = ℋ₁ ⊗ ℋ₂ ⊗ ℋ₃ ⊗ ℋ₄ = ℂ² ⊗ ℂ² ⊗ ℂ² ⊗ ℂ² = ℂ¹⁶
@@ -118,31 +157,121 @@
 
  O produto tensorial de 4 qubits combina os estados individuais de cada qubit para
  formar um único vetor de estado global em um espaço de Hilbert de 16 dimensões
- (ℋ = ℂ¹⁶). Matematicamente, essa operação concatena as amplitudes de probabilidade
- e expande o espaço de estados de forma exponencial (2ⁿ).
+ (ℋ = ℂ¹⁶).
 
- Se os qubits estiverem em estados isolados (não emaranhados):
-
-
-   |ψ₁⟩ = α₀|0⟩ + α₁|1⟩
-   |ψ₂⟩ = β₀|0⟩ + β₁|1⟩
-   |ψ₃⟩ = γ₀|0⟩ + γ₁|1⟩
-   |ψ₄⟩ = δ₀|0⟩ + δ₁|1⟩
+ Com isso, a base computacional, que com 1 qubit era:
 
 
- O produto tensorial do estado global |ψ⟩ é dado por:
+   |0⟩
+   |1⟩
 
 
-                                     15
-                                     ⎲
-   |ψ⟩ = |ψ₁⟩ ⊗ |ψ₂⟩ ⊗ |ψ₃⟩ ⊗ |ψ₄⟩ = ⎳ Cᵢ|i₂⟩
-                                     i=0
+ agora passa a ser:
 
 
- Onde i₂ representa a base computacional em binário de 4 bits (de |0000⟩ a |1111⟩.
-
- ⚠⚠⚠ (continuar daqui...) ⚠⚠⚠️
+   |0000⟩
+   |0001⟩
+   |0010⟩
+   |0011⟩
+   |0100⟩
+   |0101⟩
+   |0110⟩
+   |0111⟩
+   |1000⟩
+   |1001⟩
+   |1010⟩
+   |1011⟩
+   |1100⟩
+   |1101⟩
+   |1110⟩
+   |1111⟩
  
+
+ Como regra geral, para n qubits:
+
+
+             ⊗n
+   ℋₙ = (ℂ²)
+
+
+ A dimensão é calculada como:
+
+
+   dim(ℋₙ) = 2ⁿ
+
+
+ Dessa relação que vem a famosa explosão exponencial da computação quântica. Em
+ decorrência dela, podemos simular circuitos com apenas alguns poucos qubits usando
+ um computador clássico, a exemplo do Half Adder implementado neste código, pois
+ o espaço de Hilbert cresce exponencialmente conforme adicionamos mais qubits, consumindo
+ rapidamente todos os recursos de memória e processamento para representá-lo.
+
+ Veja na tabela abaixo alguns valores de dim(ℋₙ):
+
+
+   ┌──────────────┬────────────────┐
+   │  Qubits (n)  │ Dimensão (dim) │       
+   ╞══════════════╪════════════════╡
+   │ 1            │ 2              │
+   ├──────────────┼────────────────┤  
+   │ 2            │ 4              │
+   ├──────────────┼────────────────┤    
+   │ 3            │ 8              │
+   ├──────────────┼────────────────┤
+   │ 4            │ 16             │
+   ├──────────────┼────────────────┤
+   │ 5            │ 32             │
+   ├──────────────┼────────────────┤
+   │ 10           │ 1.024          │
+   ├──────────────┼────────────────┤
+   │ 20           │ 1.048.576      │
+   ├──────────────┼────────────────┤
+   │ 50           │ 1,12 × 10¹⁵    │
+   ├──────────────┼────────────────┤
+   │ 100          │ 1,26 × 10³⁰    │
+   ├──────────────┼────────────────┤
+   │ 500          │ 3,27 × 10¹⁵⁰   │
+   ├──────────────┼────────────────┤
+   │ 1.000        │ 1,07 × 10³⁰¹   │
+   ├──────────────┼────────────────┤
+   │ 10.000       │ 1,99 × 10³⁰¹⁰  │ 
+   └──────────────┴────────────────┘
+
+
+ É importante não confundir dimensão com quantidade de estados quânticos possíveis.
+
+ Quando dizemos:
+
+
+   dim(ℋ₄) = 16
+
+
+ não significa que existam apenas 16 estados quânticos. Existem infinitos estados.
+ Os 16 vetores da base computacional são apenas os "eixos" do espaço, representados
+ por:
+
+
+   |0000⟩ = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   |0001⟩ = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   |0010⟩ = [0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   |0011⟩ = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   |0100⟩ = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   |0101⟩ = [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   |0110⟩ = [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+   |0111⟩ = [0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+   |1000⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0]
+   |1001⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0]
+   |1010⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]
+   |1011⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+   |1100⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]
+   |1101⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]
+   |1110⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
+   |1111⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
+
+
+ Cada vetor é um eixo da base canônica de ℂ¹⁶. Qualquer estado de 4 qubits é uma
+ combinação linear desses vetores com amplitudes complexas normalizadas.
+
  O circuito quântico atua linearmente sobre qualquer estado do espaço de Hilbert.
  Isso significa que a mesma transformação unitária é aplicada ao estado quântico
  completo, afetando simultaneamente todos os componentes da superposição. Isso

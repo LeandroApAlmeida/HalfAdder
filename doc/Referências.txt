@@ -1,3 +1,11 @@
+https://learn.microsoft.com/pt-br/azure/quantum/concepts-the-qubit
+
+https://learn.microsoft.com/pt-br/azure/quantum/concepts-multiple-qubits
+
+https://learn.microsoft.com/pt-br/azure/quantum/concepts-dirac-notation
+
+https://learn.microsoft.com/pt-br/azure/quantum/concepts-circuits
+
 https://pt.wikipedia.org/wiki/Espa%C3%A7o_de_Hilbert
 
 https://en.wikipedia.org/wiki/Quantum_computing
@@ -9,3 +17,11 @@ https://pt.wikipedia.org/wiki/Nota%C3%A7%C3%A3o_bra-ket
 https://studentsxstudents.com/coding-the-half-adder-quantum-circuit-b9ec77840399
 
 https://quantum.cloud.ibm.com/docs/en/api/qiskit
+
+https://pcs.usp.br/pcspf/wp-content/uploads/sites/8/2023/12/Monografia_PCS3560_SEM_2023_Grupo_S17.pdf
+
+https://learn.microsoft.com/pt-br/azure/quantum/concepts-circuits
+
+https://learn.microsoft.com/pt-br/azure/quantum/concepts-entanglement
+
+https://medium.com/@filipe.chagas/uma-introdu%C3%A7%C3%A3o-%C3%A0-matem%C3%A1tica-da-computa%C3%A7%C3%A3o-qu%C3%A2ntica-22763e797b8d
