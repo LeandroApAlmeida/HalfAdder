@@ -5,7 +5,7 @@
 
 
  Este programa implementa um Half Adder reversível de 2 qubits de entrada (A e B)
- e 2 qubits auxiliares (SUM e CARRY) utilizando portas CNOT (Controlled-NOT gate) 
+ e 2 qubits auxiliares (SUM e CARRY), utilizando portas CNOT (Controlled-NOT gate) 
  e CCX (Toffoli Gate), realizando a seguinte sequência de transformações unitárias
  no espaço de Hilbert de 4 qubits:
 
@@ -17,6 +17,12 @@
    |0,A⊕B,B,A⟩
        ↓
    |A⋅B,A⊕B,B,A⟩
+
+
+ Onde, na notação de Dirac (ket), em ordenação little-endian (notação do Qiskit):
+
+
+   |q₃,q₂,q₁,q₀⟩ = |CARRY,SUM,B,A⟩
 
 
  O circuito em questão realiza a soma binária de A e B, produzindo:
@@ -91,10 +97,7 @@
  base existe na decomposição).
 
  A interpretação física do qubit em superposição é que ele está simultaneamente
- nos estados |0⟩ e |1⟩. Isso faz com que a quantidade de informação que pode ser
- armazenada no estado |ψ⟩ seja infinita. Essa informação, porém, está no nível
- quântico. Para torná-la acessível, no nível clássico, precisamos fazer uma medida.
- O processo de medir altera o estado de um qubit, fazendo-o assumir o estado |0⟩,
+ nos estados |0⟩ e |1⟩. Medindo o estado do qubit, ele vai assumir o estado |0⟩,
  com probabilidade|α|², ou o estado |1⟩, com probabilidade |β|².
 
  Pela regra de Born:
@@ -141,7 +144,7 @@
 
    > Há 75% de probabilidade de medir |0⟩ (|α|² = 3/4).
 
-   > Há 25% de probalidade de medir |1⟩ (|β|² = 1/4).
+   > Há 25% de probabilidade de medir |1⟩ (|β|² = 1/4).
 
    > Somando 75% de probabilidade de medir |0⟩ e 25% de probabilidade de medir |1⟩,
      obtém-se 100%, o que condiz com condição de normalização imposta.
@@ -200,11 +203,11 @@
    dim(ℋₙ) = 2ⁿ
 
 
- Dessa relação que vem a famosa explosão exponencial da computação quântica. Em
- decorrência dela, podemos simular circuitos com apenas alguns poucos qubits usando
- um computador clássico, a exemplo do Half Adder implementado neste código, pois
- o espaço de Hilbert cresce exponencialmente conforme adicionamos mais qubits, consumindo
- rapidamente todos os recursos de memória e processamento para representá-lo.
+ Dessa relação surge o crescimento exponencial do espaço de estados quânticos. Em
+ decorrência disso, podemos simular circuitos com apenas alguns poucos qubits usando
+ um computador clássico, pois o espaço de Hilbert cresce exponencialmente conforme
+ adicionamos mais qubits, consumindo rapidamente todos os recursos de memória e
+ processamento para representá-lo.
 
  Veja na tabela abaixo alguns valores de dim(ℋₙ):
 
@@ -236,9 +239,9 @@
    ├─────────────┼─────────────────┤
    │ 10.000      │ 1,99 × 10³⁰¹⁰   │
    ├─────────────┼─────────────────┤
-   │ 100.000     │ 9,98 × 10³⁰¹⁰²  │
+   │ 100.000     │ 9,99 × 10³⁰¹⁰²  │
    ├─────────────┼─────────────────┤
-   │ 100.000.000 │ 9,89 × 10³⁰¹⁰²⁹ │ 
+   │ 1.000.000   │ 9,99 × 10³⁰¹⁰²⁹ │ 
    └─────────────┴─────────────────┘
 
 
