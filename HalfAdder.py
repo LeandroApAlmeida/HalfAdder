@@ -103,17 +103,12 @@
  armazenada no estado |ψ⟩ seja infinita. Essa informação, porém, está no nível
  quântico. Para torná-la acessível, no nível clássico, precisamos fazer uma medida.
  O processo de medida altera o estado de um qubit, fazendo-o assumir o estado |0⟩,
- com probabilidade|α|², ou o estado |1⟩, com probabilidade |β|².
-
- Com apenas duas possibilidades, |0⟩ ou |1⟩, temos, então:
+ com probabilidade|α|², ou o estado |1⟩, com probabilidade |β|², onde:
 
 
    |α|² + |β|² = 1
+
  
-
- Isso significa que a norma do vetor |ψ⟩ vale 1. Logo, matematicamente, um qubit
- é um vetor de norma 1 de ℂ².
-
  Se cada qubit individual i possui um espaço de Hilbert ℋᵢ = ℂ², o sistema combinado
  de 4 qubits é o produto tensorial desses quatro espaços:
 
