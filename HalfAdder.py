@@ -209,33 +209,37 @@
  Veja na tabela abaixo alguns valores de dim(ℋₙ):
 
 
-   ┌──────────────┬────────────────┐
-   │  Qubits (n)  │ Dimensão (dim) │       
-   ╞══════════════╪════════════════╡
-   │ 1            │ 2              │
-   ├──────────────┼────────────────┤  
-   │ 2            │ 4              │
-   ├──────────────┼────────────────┤    
-   │ 3            │ 8              │
-   ├──────────────┼────────────────┤
-   │ 4            │ 16             │
-   ├──────────────┼────────────────┤
-   │ 5            │ 32             │
-   ├──────────────┼────────────────┤
-   │ 10           │ 1.024          │
-   ├──────────────┼────────────────┤
-   │ 20           │ 1.048.576      │
-   ├──────────────┼────────────────┤
-   │ 50           │ 1,12 × 10¹⁵    │
-   ├──────────────┼────────────────┤
-   │ 100          │ 1,26 × 10³⁰    │
-   ├──────────────┼────────────────┤
-   │ 500          │ 3,27 × 10¹⁵⁰   │
-   ├──────────────┼────────────────┤
-   │ 1.000        │ 1,07 × 10³⁰¹   │
-   ├──────────────┼────────────────┤
-   │ 10.000       │ 1,99 × 10³⁰¹⁰  │ 
-   └──────────────┴────────────────┘
+   ┌─────────────┬─────────────────┐
+   │  Qubits (n) │ Dimensão (dim)  │       
+   ╞═════════════╪═════════════════╡
+   │ 1           │ 2               │
+   ├─────────────┼─────────────────┤  
+   │ 2           │ 4               │
+   ├─────────────┼─────────────────┤    
+   │ 3           │ 8               │
+   ├─────────────┼─────────────────┤
+   │ 4           │ 16              │
+   ├─────────────┼─────────────────┤
+   │ 5           │ 32              │
+   ├─────────────┼─────────────────┤
+   │ 10          │ 1.024           │
+   ├─────────────┼─────────────────┤
+   │ 20          │ 1.048.576       │
+   ├─────────────┼─────────────────┤
+   │ 50          │ 1,12 × 10¹⁵     │
+   ├─────────────┼─────────────────┤
+   │ 100         │ 1,26 × 10³⁰     │
+   ├─────────────┼─────────────────┤
+   │ 500         │ 3,27 × 10¹⁵⁰    │
+   ├─────────────┼─────────────────┤
+   │ 1.000       │ 1,07 × 10³⁰¹    │
+   ├─────────────┼─────────────────┤
+   │ 10.000      │ 1,99 × 10³⁰¹⁰   │
+   ├─────────────┼─────────────────┤
+   │ 100.000     │ 9,98 × 10³⁰¹⁰²  │
+   ├─────────────┼─────────────────┤
+   │ 100.000.000 │ 9,89 × 10³⁰¹⁰²⁹ │ 
+   └─────────────┴─────────────────┘
 
 
  É importante não confundir dimensão com quantidade de estados quânticos possíveis.
@@ -246,9 +250,9 @@
    dim(ℋ₄) = 16
 
 
- não significa que existam apenas 16 estados quânticos. Existem infinitos estados.
- Os 16 vetores da base computacional são apenas os "eixos" do espaço, representados
- por:
+ isso significa que o espaço de Hilbert de 4 qubits possui 16 vetores de base ortonormal.
+ No entanto, isso não limita a quantidade de estados possíveis. Os estados da base
+ computacional são apenas os “eixos” do espaço vetorial ℂ¹⁶, onde:
 
 
    |0000⟩ = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -269,10 +273,43 @@
    |1111⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
 
 
- Cada vetor é um eixo da base canônica de ℂ¹⁶. Qualquer estado de 4 qubits é uma
- combinação linear desses vetores com amplitudes complexas normalizadas.
+ Qualquer estado de 4 qubits pode ser escrito como uma combinação linear:
 
- O circuito quântico atua linearmente sobre qualquer estado do espaço de Hilbert.
+
+         15              15
+         ⎲              ⎲
+   ∣ψ⟩ = ⎳ αᵢ|i⟩  com   ⎳ |αᵢ|² = 1
+         i=0             i=0
+
+
+ Como os coeficientes αᵢ são números complexos contínuos, o conjunto de estados
+ possíveis forma um espaço contínuo dentro de ℂ¹⁶, apesar da dimensão ser finita.
+ Isso implica que existem infinitos estados possíveis, no sentido de que há infinitas
+ escolhas possíveis de amplitudes αᵢ que satisfazem a condição de normalização. Os
+ vetores da base computacional, portanto, não representam todos os estados possíveis,
+ mas apenas um conjunto de vetores ortonormais de referência que permite expressar
+ qualquer estado do espaço de Hilbert.
+
+ A situação é análoga ao plano cartesiano ℝ²: os vetores (1,0) e (0,1) definem os
+ eixos do plano, mas não esgotam seus pontos. Da mesma forma, os 16 vetores da base
+ computacional definem os eixos de ℂ¹⁶, mas não esgotam os estados possíveis do
+ sistema.
+
+
+     y
+     
+     │           (3,3)
+   3 │          ◌ ←----------- Ponto no plano ℝ² que
+     │                         está fora dos eixos
+   2 │                         (0,1) e (1,0)
+     │(0,1)
+   1 ●
+     │   (1, 0)
+   0 ┼──●───────────  x
+        1   2   3
+ 
+
+ Um circuito quântico atua linearmente sobre qualquer estado do espaço de Hilbert.
  Isso significa que a mesma transformação unitária é aplicada ao estado quântico
  completo, afetando simultaneamente todos os componentes da superposição. Isso
  não corresponde a paralelismo clássico no sentido tradicional, mas à evolução
