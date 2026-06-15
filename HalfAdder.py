@@ -1,13 +1,13 @@
 """
 ===============================================================================
 
- CIRCUITO HALF ADDER (MEIO SOMADOR) QUÂNTICO
+ CIRCUITO HALF ADDER QUÂNTICO
 
 
- Este programa implementa um Half Adder reversível de 2 qubits de entrada (A e B)
- e 2 qubits auxiliares (SUM e CARRY), utilizando portas CNOT (Controlled-NOT gate) 
- e CCX (Toffoli Gate), realizando a seguinte sequência de transformações unitárias
- no espaço de Hilbert de 4 qubits:
+ Este programa implementa um Half Adder (meio somador) reversível de 2 qubits de
+ entrada (A e B) e 2 qubits auxiliares (SUM e CARRY), utilizando portas CNOT
+ (Controlled-NOT gate) e CCX (Toffoli Gate), realizando a seguinte sequência de
+ transformações unitárias no espaço de Hilbert de 4 qubits:
 
 
    |0,0,B,A⟩
@@ -19,33 +19,17 @@
    |A⋅B,A⊕B,B,A⟩
 
 
- Onde, na notação de Dirac (ket), em ordenação little-endian (notação do Qiskit):
+ Como o programa é implementado com Qiskit, que usa little-endian (|q₃,q₂,q₁,q₀⟩),
+ será utilizada esta convenção na notação de Dirac (bra-ket). Dessa forma, a ordem
+ dos qubits no vetor será a seguinte:
 
 
-   |q₃,q₂,q₁,q₀⟩ = |CARRY,SUM,B,A⟩
+   |CARRY,SUM,B,A⟩
 
 
- O circuito em questão realiza a soma binária de A e B, produzindo:
-
-
-   > SUM = A⊕B    (A XOR B)
-
-   > CARRY = A⋅B  (A AND B)
-
-
- sem apagar os qubits de entrada.
-
- Em computação quântica, o estado de um sistema é representado dentro de um espaço
- vetorial complexo chamado espaço de Hilbert.
-
- Para o sistema com 4 qubits deste circuito, existem:
-
-
-   2⁴ = 16
-
-
- estados básicos possíveis. Estes 16 estados formam uma base ortonormal para o
- espaço de Hilbert ℋ = ℂ¹⁶, chamada de base computacional:
+ Para o sistema com 4 qubits deste circuito, existem 2⁴ = 16 estados básicos possíveis.
+ Estes 16 estados formam uma base ortonormal para o espaço de Hilbert ℋ = ℂ¹⁶,
+ chamada de base computacional:
 
 
    |0000⟩
@@ -66,11 +50,36 @@
    |1111⟩
 ​
 
- Um sistema quântico não precisa estar em apenas um desses estados. Ele pode existir
- em uma superposição de vários estados ao mesmo tempo (ou todos os estados).
+ Um sistema quântico pode estar em um desses estados ou pode existir em uma superposição
+ de vários estados ou todos ao mesmo tempo. Este é o ponto chave para entender o
+ circuito quântico implementado neste código-fonte.
 
- Para entender isso, considere um sistema com um único qubit. Nele, os estados são
- representados pelos vetores:
+ Superposição é um princípio fundamental da mecânica quântica que afirma que um
+ sistema quântico pode existir em uma combinação de múltiplos estados possíveis
+ simultaneamente até que uma medição seja realizada. Quando ocorre a medição, o
+ sistema deixa de ser descrito pela superposição e passa a apresentar um único
+ resultado observável, processo conhecido como colapso da função de onda.
+
+ Para facilitar o entendimento, imagine uma moeda sobre uma mesa. A face visível
+ da moeda pode estar em apenas um de 2 estados: cara ou coroa. Agora, imagine que
+ a moeda foi lançada e está girando no ar. Enquanto ela gira, não podemos descrever
+ seu estado como cara ou coroa. Ela está numa condição que envolve ambas as
+ possibilidades até que seja observada ao cair. Muito a grosso modo, a superposição
+ se parece com isso, com uma diferença fundamental: uma moeda girando ainda possui
+ um estado físico bem definido em cada instante (cara ou coroa). Um sistema quântico
+ é uma combinação desses dois estados ao mesmo tempo.
+
+ Em computação quântica, a superposição é uma propriedade essencial dos qubits.
+ Enquanto um bit clássico pode assumir apenas os valores 0 ou 1, um qubit pode
+ existir em uma combinação dos estados 0 e 1 ao mesmo tempo. Isso permite que um
+ sistema quântico represente simultaneamente diversas possibilidades, constituindo
+ a base para algoritmos quânticos capazes de explorar espaços de solução de forma
+ mais eficiente do que algoritmos clássicos em determinados tipos de problemas.
+
+ Matematicamente, o principio da superposição quântica diz que a combinação linear
+ de dois ou mais vetores de estados no mesmo espaço de Hilbert, também é um estado
+ do sistema. Para entender isso, considere um sistema com um único qubit. Nele, os
+ estados são representados pelos vetores:
 
 
    |0⟩
@@ -79,14 +88,23 @@
 
  onde:
 
-          
-   |0⟩ = [1, 0]         
-   |1⟩ = [0, 1]
+
+         ┌ ┐
+         │1│
+   |0⟩ = │ │
+         │0│
+         └ ┘
+
+         ┌ ┐
+         │0│
+   |1⟩ = │ │
+         │1│
+         └ ┘
 
 
  Os vetores |0⟩ e |1⟩ formam a base computacional no espaço de Hilbert ℋ = ℂ².
  
- A superposição dos vetores |0⟩ e |1⟩ é representada por |ψ⟩:
+ A superposição dos vetores |0⟩ e |1⟩ é representada por:
 
 
    |ψ⟩ = α|0⟩ + β|1⟩
@@ -96,11 +114,8 @@
  (são coeficientes complexos do vetor de estado que indicam "quanto" de cada estado
  base existe na decomposição).
 
- A interpretação física do qubit em superposição é que ele está simultaneamente
- nos estados |0⟩ e |1⟩. Medindo o estado do qubit, ele vai assumir o estado |0⟩,
- com probabilidade|α|², ou o estado |1⟩, com probabilidade |β|².
-
- Pela regra de Born:
+ Medindo o qubit, ele vai assumir o estado |0⟩ ou |1⟩. Pela regra de Born, as
+ probabilidades de medir |0⟩ ou |1⟩ são calculadas, respectivamente, como:
 
 
    P(0) = ∣α∣²
@@ -147,7 +162,7 @@
    > Há 25% de probabilidade de medir |1⟩ (|β|² = 1/4).
 
    > Somando 75% de probabilidade de medir |0⟩ e 25% de probabilidade de medir |1⟩,
-     obtém-se 100%, o que condiz com condição de normalização imposta.
+     obtém-se 100%, o que condiz com a condição de normalização imposta.
  
 
  Ampliando o espaço de Hilbert para 4 qubits, temos que, se cada qubit individual
@@ -209,7 +224,8 @@
  adicionamos mais qubits, consumindo rapidamente todos os recursos de memória e
  processamento para representá-lo.
 
- Veja na tabela abaixo alguns valores de dim(ℋₙ):
+ Na tabela abaixo, calculei alguns valores de dim(ℋₙ) apenas para demonstração de
+ como se dá este crescimento exponencial:
 
 
    ┌─────────────┬─────────────────┐
@@ -245,6 +261,10 @@
    └─────────────┴─────────────────┘
 
 
+ Observe que com apenas 500 qubits, o sistema já têm ordens de grandezas mais
+ estados que o número de átomos estimado no universo observável, calculado em cerca
+ de 1 × 10⁸⁰.
+
  É importante não confundir dimensão com quantidade de estados quânticos possíveis.
 
  Quando dizemos:
@@ -253,9 +273,9 @@
    dim(ℋ₄) = 16
 
 
- isso significa que o espaço de Hilbert de 4 qubits possui 16 vetores de base ortonormal.
- No entanto, isso não limita a quantidade de estados possíveis. Os estados da base
- computacional são apenas os “eixos” do espaço vetorial ℂ¹⁶, onde:
+ significa que o espaço de Hilbert de 4 qubits possui 16 vetores de base ortonormal.
+ Mas estes estados da base computacional são apenas os "eixos" do espaço vetorial
+ ℂ¹⁶, onde:
 
 
    |0000⟩ = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -275,6 +295,11 @@
    |1110⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0]
    |1111⟩ = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
 
+   * Os valores 0 e 1 nos vetores correspondentes a cada estado
+     são amplitudes de probabilidades (αᵢ). No estado |0000⟩,
+     por exemplo, apenas α₀ é 1 (100%). Demais amplitudes são
+     0 (0%).
+
 
  Qualquer estado de 4 qubits pode ser escrito como uma combinação linear:
 
@@ -293,18 +318,17 @@
  mas apenas um conjunto de vetores ortonormais de referência que permite expressar
  qualquer estado do espaço de Hilbert.
 
- A situação é análoga ao plano cartesiano ℝ²: os vetores (1,0) e (0,1) definem os
- eixos do plano, mas não esgotam seus pontos. Da mesma forma, os 16 vetores da base
- computacional definem os eixos de ℂ¹⁶, mas não esgotam os estados possíveis do
- sistema.
+ A termos de comparação, considere o plano cartesiano ℝ² abaixo: os vetores (1,0)
+ e (0,1) definem os eixos do plano, mas não esgotam seus pontos. O vetor (3,3),
+ por exemplo, também pertence ao plano, assim como outros infinitos pontos em ℝ². 
 
 
      y
      
      │           (3,3)
-   3 │          ◌ ←----------- Ponto no plano ℝ² que
-     │                         está fora dos eixos
-   2 │                         (0,1) e (1,0)
+   3 │          ◌ 
+     │                      
+   2 │
      │(0,1)
    1 ●
      │   (1, 0)
@@ -336,7 +360,7 @@
  O circuito é inicializado em:
 
 
-   |CARRY,SUM,B,A⟩ = |0,0,B,A⟩
+   |0,0,B,A⟩
 
 
  e produz como resultado da sequência de operações:
@@ -389,8 +413,8 @@
 
 
  Com A em superposição A = α∣0⟩ + β∣1⟩, B = |1⟩, SUM = |0⟩ e CARRY = |0⟩ inicialmente,
- quando forem aplicadas as portas CNOT e CCX na sequência de operações unitárias
- do circuito, o estado do sistema passará a ser uma superposição de dois estados:
+ quando forem aplicadas as portas CNOT e CCX na sequência de operações do circuito,
+ o estado do sistema passará a ser uma superposição de dois estados:
 
 
    ∣ψ⟩ = α∣0110⟩ + β∣1011⟩
@@ -402,6 +426,39 @@
  evolui de maneira consistente sob a mesma transformação unitária. B influencia o
  estado global, porém está desacoplado (não emaranhado). Ele atua como como qubit
  clássico controlador fixo no circuito.
+
+ Emaranhamento quântico, ou entrelaçamento quântico, é um fenômeno em que dois ou
+ mais sistemas quânticos passam a ser descritos por um único estado quântico conjunto,
+ de modo que não é possível descrever completamente cada sistema de forma independente.
+ Em termos matemáticos, um estado emaranhado não pode ser escrito como o produto dos
+ estados individuais dos subsistemas.
+
+ Por exemplo, considere um sistema de dois qubits no estado:
+
+
+   ∣ψ⟩ = 1/√2 (|00⟩ + ∣11⟩)
+
+
+ Se medirmos o primeiro qubit e o resultado for 0, o segundo qubit também será 0.
+ Se o resultado for 1, o segundo também será 1. No caso, as medições estarão
+ correlacionadas.
+
+ Usando uma analogia, imagine duas caixas fechadas contendo cartões. Você sabe apenas
+ que existem duas possibilidades: ou as duas caixas contêm um cartão azul cada uma,
+ ou um cartão vermelho, mas você não sabe qual das duas situações ocorrerá. Ao abrir
+ a primeira caixa, se encontrar o cartão azul, sabe imediatamente que da outra também
+ é azul. Se encontrar o cartão vermelho, sabe que da outra é vermelho. Muito a grosso
+ modo, emaranhamento é isto. Ele estabelece uma correlação entre as partículas
+ emaranhadas. Mas esta correlação não pode ser explicada por simples "cartões escondidos"
+ previamente determinados, como nesse exemplo, conforme foi demonstrado experimentalmente
+ por testes das desigualdades de Bell.
+
+ Na computação quântica, o emaranhamento permite que qubits compartilhem informação
+ quântica de forma que o estado do sistema completo não possa ser decomposto em estados
+ independentes. Quando as portas CNOT e Toffoli emaranharem A, SUM e CARRY na sequência
+ de operações do circuito, estes qubits passarão a formar um único sistema. Ler 1 em A,
+ acarreta que SUM seja 0 e CARRY seja 1. Ler 0, que SUM seja 1 e CARRY seja 0. Os
+ resultados passam a guardar esta correlação.
    
  Para o caso de superposição uniforme em A (∣A⟩ = (∣0⟩ + ∣1⟩)/√2), o estado final
  torna-se:
@@ -413,7 +470,7 @@
  Isso implica que, ao realizar uma medição, o sistema colapsa para |0110⟩ ou |1011⟩
  com probabilidade 50% para cada estado. Como não há um mecanismo de interferência
  projetado para amplificar um resultado específico, as amplitudes permanecem balanceadas
- conforme a evolução unitária do circuito.
+ conforme a evolução linear do circuito.
  
  Neste circuito não será simulado decoerência por uma questão de simplificação 
  do código. Isso seria possível usando o módulo qiskit_aer.noise. A decoerência é
