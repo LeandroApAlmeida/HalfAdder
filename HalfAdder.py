@@ -76,10 +76,10 @@
  a base para algoritmos quânticos capazes de explorar espaços de solução de forma
  mais eficiente do que algoritmos clássicos em determinados tipos de problemas.
 
- Matematicamente, o principio da superposição quântica diz que a combinação linear
- de dois ou mais vetores de estados no mesmo espaço de Hilbert, também é um estado
- do sistema. Para entender isso, considere um sistema com um único qubit. Nele, os
- estados são representados pelos vetores:
+ Em termos matemáticos, o principio da superposição quântica diz que a combinação
+ linear de dois ou mais vetores de estados no mesmo espaço de Hilbert, também é um
+ estado do sistema. Para entender isso, considere um sistema com um único qubit.
+ Nele, os estados são representados pelos vetores:
 
 
    |0⟩
@@ -470,7 +470,7 @@
  Isso implica que, ao realizar uma medição, o sistema colapsa para |0110⟩ ou |1011⟩
  com probabilidade 50% para cada estado. Como não há um mecanismo de interferência
  projetado para amplificar um resultado específico, as amplitudes permanecem balanceadas
- conforme a evolução linear do circuito.
+ conforme a evolução linear do circuito	.
  
  Neste circuito não será simulado decoerência por uma questão de simplificação 
  do código. Isso seria possível usando o módulo qiskit_aer.noise. A decoerência é
