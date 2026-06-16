@@ -412,7 +412,7 @@
                                                  0   1   2   3
 
 
- Com A em superposição A = α∣0⟩ + β∣1⟩, B = |1⟩, SUM = |0⟩ e CARRY = |0⟩ inicialmente,
+ Com A em superposição (A = α∣0⟩ + β∣1⟩), B = |1⟩, SUM = |0⟩ e CARRY = |0⟩ inicialmente,
  quando forem aplicadas as portas CNOT e CCX na sequência de operações do circuito,
  o estado do sistema passará a ser uma superposição de dois estados:
 
@@ -424,8 +424,8 @@
  as portas CNOT e CCX propagam essa estrutura para os demais qubits, gerando correlações
  quânticas, incluindo o emaranhamento entre A, SUM e CARRY. Dessa forma, cada componente
  evolui de maneira consistente sob a mesma transformação unitária. B influencia o
- estado global, porém está desacoplado (não emaranhado). Ele atua como como qubit
- clássico controlador fixo no circuito.
+ estado global, porém está desacoplado (não emaranhado). Ele atua como qubit clássico
+ controlador fixo no circuito.
 
  Emaranhamento quântico, ou entrelaçamento quântico, é um fenômeno em que dois ou
  mais sistemas quânticos passam a ser descritos por um único estado quântico conjunto,
@@ -460,8 +460,7 @@
  acarreta que SUM seja 0 e CARRY seja 1. Ler 0, que SUM seja 1 e CARRY seja 0. Os
  resultados passam a guardar esta correlação.
    
- Para o caso de superposição uniforme em A (∣A⟩ = (∣0⟩ + ∣1⟩)/√2), o estado final
- torna-se:
+ Para o caso de superposição uniforme ∣A⟩ = 1/√2 (∣0⟩ + ∣1⟩), o estado final torna-se:
 
 
    ∣ψ⟩ = 1/√2 (|0110⟩ + ∣1011⟩)
@@ -488,10 +487,9 @@
    indesejada, destruindo a relação de fase sutil entre as amplitudes complexas
    (os αi do espaço de Hilbert).
                                                                  
-   2. Transição de Estado: O estado de superposição (|0⟩ + |1⟩)/√2 colapsa para 
+   2. Transição de Estado: O estado de superposição 1/√2 (∣0⟩ + ∣1⟩) colapsa para 
    uma mistura puramente clássica (ou é |0⟩, ou é |1⟩, sem propriedades de 
-   interferência). Em um sistema quântico, toda vez que há medição ele colapsa 
-   para um estado definido (colapso da função de onda).
+   interferência).
    
    3. Dissipação de Energia (Relaxamento): Além da perda de fase, a decoerência 
    frequentemente caminha junto com o relaxamento térmico. O sistema quântico 
@@ -593,11 +591,11 @@ qc = QuantumCircuit(4, 4)
 qc.x(1)
 
 
-# Aplica a porta Hadamard (H) em q0 (A). Isso transforma |0⟩ em (|0⟩ + |1⟩)/√2, 
-# colocando a entrada A nos estados |0⟩ e |1⟩ em superposição.
+# Aplica a porta Hadamard (H) em q0 (A). Isso transforma |0⟩ em 1/√2 (∣0⟩ + ∣1⟩), 
+# colocando a entrada A nos estados |0⟩ e |1⟩ em superposição uniforme.
 #
-# Com o emaranhamento de A, SUM e CARRY na sequência de operações unitárias aplicadas
-# adiante no código, o estado global passa a ser uma superposição de dois estados:
+# Com o emaranhamento de A, SUM e CARRY na sequência de operações aplicadas adiante
+# no código, o estado global passa a ser uma superposição de dois estados:
 #
 #   |ψ⟩ = 1/√2 (|0110⟩ + ∣1011⟩)
 #
@@ -623,7 +621,7 @@ qc.x(1)
 qc.h(0)
 
 
-# Aplica a sequência de operações unitários no espaço de Hilbert para implementar
+# Aplica a sequência de transformações unitárias no espaço de Hilbert para implementar
 # reversivelmente um Half Adder quântico:
 #
 #   |0,0,B,A⟩
@@ -633,6 +631,12 @@ qc.h(0)
 #   |0,A⊕B,B,A⟩
 #       ↓
 #   |A⋅B,A⊕B,B,A⟩
+#
+# As operações realizadas são as seguintes:
+#
+#   1. CNOT(A → SUM)
+#   2. CNOT(B → SUM)
+#   3. CCX(A,B → CARRY)
 
 
 # 1. Aplica a operação CNOT(A → SUM):
@@ -702,7 +706,7 @@ qc.ccx(0, 1, 3)
 # SUM e CARRY projeta o sistema em um dos dois ramos correlacionados da superposição.
 
 qc.measure(0, 0)  # Mede A. Isso força o sistema a escolher o Ramo 1 ou Ramo 2.
-qc.measure(1, 1)  # Mede B. Lê o valor que foi fixado pelo colapso de A.
+qc.measure(1, 1)  # Mede B.
 qc.measure(2, 2)  # Mede SUM. Lê o valor que foi fixado pelo colapso de A. 
 qc.measure(3, 3)  # Mede CARRY. Lê o valor que foi fixado pelo colapso de A.
 
