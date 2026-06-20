@@ -4,9 +4,12 @@ Neste projeto implemento um Half Adder (meio somador) quântico, que obtém dois
 
 Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas no mesmo:
 
-  > pip install qiskit
-  > pip install qiskit-aer
-  > pip install "qiskit[visualization]" matplotlib pylatexenc
+<ol>
+  <li>pip install qiskit</li>
+  <li>pip install qiskit-aer</li>
+  <li>pip install "qiskit[visualization]" matplotlib pylatexenc</li>
+</ol>
+  
 
 Com isso, já terá condições de testar o circuito.
 
