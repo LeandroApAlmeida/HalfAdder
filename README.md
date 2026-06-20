@@ -7,13 +7,7 @@ Neste projeto implemento um Half Adder (meio somador) quântico, com 2 qubits de
 Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas:
 
 <b>pip install qiskit</b>
-
-<br>
-
 <b>pip install qiskit-aer</b>
-
-<br>
-
 <b>pip install "qiskit[visualization]" matplotlib pylatexenc</b>
 
 Para entender como ele funciona, leia os comentários no arquivo de código-fonte "HalfAdder.py".
