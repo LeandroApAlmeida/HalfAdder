@@ -1,0 +1,13 @@
+<h3>Half Adder Quântico em Qiskit</h3>
+
+Neste projeto implemento um Half Adder (meio somador) quântico, que obtém dois qubits e produz como saída o resultado da soma (bit menos significativo) em SUM e o carry (vai um) em CARRY. Este circuito é um "Hello World!" em computação quântica.
+
+Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas no mesmo:
+
+  > pip install qiskit
+  > pip install qiskit-aer
+  > pip install "qiskit[visualization]" matplotlib pylatexenc
+
+Com isso, já terá condições de testar o circuito.
+
+Para entender como ele funciona, leia os comentários no arquivo de código-fonte HalfAdder.py.
