@@ -7,7 +7,7 @@ Neste projeto implemento um Half Adder (meio somador) quântico, com 2 qubits de
 O circuito em questão é o equivalente quântico do circuito clássico representado abaixo:
 
 <p align="center">
-  <img src= "https://github.com/user-attachments/assets/07436a78-c7b9-4d8a-93b2-7fd3e5a81185" width="100%">
+  <img src= "https://github.com/user-attachments/assets/07436a78-c7b9-4d8a-93b2-7fd3e5a81185" width="80%">
 </p>
 
 Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas:
