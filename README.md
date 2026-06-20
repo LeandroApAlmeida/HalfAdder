@@ -10,7 +10,7 @@ O circuito em questão é equivalente ao circuito clássico:
     <img
         src="https://github.com/user-attachments/assets/5cacbaf1-c68f-4f37-a350-44779aa6b485"
         alt="Half-Adder-2"
-        style="width: 50%; max-width: 307px; height: auto;">
+        style="width: 30%; max-width: 307px; height: auto;">
 </div>
 
 Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas:
