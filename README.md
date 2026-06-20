@@ -10,13 +10,13 @@ O circuito em questão é equivalente ao circuito clássico:
   <img src= "https://github.com/user-attachments/assets/07436a78-c7b9-4d8a-93b2-7fd3e5a81185" width="60%">
 </p>
 
-Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas:
+Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas no mesmo:
 
-<b>> pip install qiskit</b>
+<b>  > pip install qiskit</b>
 
-<b>> pip install qiskit-aer</b>
+<b>  > pip install qiskit-aer</b>
 
-<b>> pip install "qiskit[visualization]" matplotlib pylatexenc</b>
+<b>  > pip install "qiskit[visualization]" matplotlib pylatexenc</b>
 
 Com estas bibliotecas instaladas, não é necessário testar o código em um computador quântico real (IBMQ), pois elas vão simulador um computador quântico em sua máquina local.
 
@@ -24,3 +24,4 @@ Para entender como o circuito funciona, leia os comentários no arquivo de códi
 
 <br>
 
+https://github.com/user-attachments/assets/999da4aa-062f-4b7f-a519-b2b25994ec83
