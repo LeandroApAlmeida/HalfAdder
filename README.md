@@ -4,7 +4,7 @@
 
 Neste projeto implemento um Half Adder (meio somador) quântico, com 2 qubits de entrada (A e B) e 2 qubits auxiliares (SUM e CARRY). O circuito produz como saída o resultado da soma (bit menos significativo) em SUM (A⊕B) e o carry (vai um) em CARRY (A⋅B).
 
-O circuito em questão é equivalente quântico do circuito clássico:
+O circuito em questão é o equivalente quântico do circuito clássico:
 
 <p align="center">
   <img src= "https://github.com/user-attachments/assets/07436a78-c7b9-4d8a-93b2-7fd3e5a81185" width="60%">
