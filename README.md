@@ -12,4 +12,9 @@ Para testá-lo, é necessário que se tenha o Python instalado, e que se instale
 
 <b>> pip install "qiskit[visualization]" matplotlib pylatexenc</b>
 
-Para entender como ele funciona, leia os comentários no arquivo de código-fonte "HalfAdder.py".
+Com estas bibliotecas instaladas, não é necessário testar o código em um computador quântico real (IBMQ), pois elas vão simulador um computador quântico em sua máquina local.
+
+Para entender como o circuito funciona, leia os comentários no arquivo de código-fonte "HalfAdder.py".
+
+<br>
+
