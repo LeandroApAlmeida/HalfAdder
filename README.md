@@ -26,6 +26,6 @@ Com estas bibliotecas instaladas, não é necessário testar o código em um com
 
 Para entender como o circuito funciona, leia os comentários no arquivo de código-fonte "HalfAdder.py".
 
-<br>
+<br> 
 
 https://github.com/user-attachments/assets/999da4aa-062f-4b7f-a519-b2b25994ec83
