@@ -12,11 +12,15 @@ O circuito em questão é equivalente ao circuito clássico:
 
 Para testá-lo, é necessário que se tenha o Python instalado, e que se instale as seguintes bibliotecas no mesmo:
 
+<br>
+
 <b> &nbsp;&nbsp; > pip install qiskit</b>
 
 <b> &nbsp;&nbsp; > pip install qiskit-aer</b>
 
 <b> &nbsp;&nbsp; > pip install "qiskit[visualization]" matplotlib pylatexenc</b>
+
+<br>
 
 Com estas bibliotecas instaladas, não é necessário testar o código em um computador quântico real (IBMQ), pois elas vão simulador um computador quântico em sua máquina local.
 
