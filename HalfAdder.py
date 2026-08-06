@@ -410,7 +410,7 @@
                                                  ║   ║   ║   ║
    c:   4/═══════════════════════════════════════╩═══╩═══╩═══╩═══
                                                  0   1   2   3
-
+	
 
  Com A em superposição (A = α∣0⟩ + β∣1⟩), B = |1⟩, SUM = |0⟩ e CARRY = |0⟩ inicialmente,
  quando forem aplicadas as portas CNOT e CCX na sequência de operações do circuito,
@@ -459,7 +459,7 @@
  de operações do circuito, estes qubits passarão a formar um único sistema. Ler 1 em A,
  acarreta que SUM seja 0 e CARRY seja 1. Ler 0, que SUM seja 1 e CARRY seja 0. Os
  resultados passam a guardar esta correlação.
-   
+ 		  
  Para o caso de superposição uniforme ∣A⟩ = 1/√2 (∣0⟩ + ∣1⟩), o estado final torna-se:
 
 
@@ -469,7 +469,7 @@
  Isso implica que, ao realizar uma medição, o sistema colapsa para |0110⟩ ou |1011⟩
  com probabilidade 50% para cada estado. Como não há um mecanismo de interferência
  projetado para amplificar um resultado específico, as amplitudes permanecem balanceadas
- conforme a evolução linear do circuito	.
+ conforme a evolução linear do circuito.
  
  Neste circuito não será simulado decoerência por uma questão de simplificação 
  do código. Isso seria possível usando o módulo qiskit_aer.noise. A decoerência é
