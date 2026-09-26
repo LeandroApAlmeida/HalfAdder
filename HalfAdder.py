@@ -542,10 +542,15 @@ Tecle ENTER e aguarde a instalação terminar.
 """
 
 import os
+
 import matplotlib.pyplot as plt
+
 from qiskit import QuantumCircuit
+
 from qiskit_aer import AerSimulator
+
 from qiskit.quantum_info import Statevector, Operator
+
 from qiskit.visualization import (
     plot_histogram,
     plot_state_city, 
