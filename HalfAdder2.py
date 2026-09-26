@@ -109,7 +109,7 @@
  complexos do vetor de estado que indicam "quanto" de cada estado base existe na
  decomposição).
  
- Pode-se representar o Ket também na forma vetorial, denominada de Statevector:
+ Pode-se representar o Ket também na forma vetorial, denominada de state vector:
  
  
          ┌ ┐
@@ -119,10 +119,10 @@
          └ ┘
 
 
- Statevector é o vetor que contém as amplitudes de probabilidade de todos os 
+ State vector é o vetor que contém as amplitudes de probabilidade de todos os 
  estados possíveis da base computacional, permitindo descrever completamente seu
  estado quântico. Este conceito é importante, pois estaremos utilizando este modo
- de representação no simulador do Qiskit Aer.
+ de representação no simulador Qiskit Aer.
 
  Medindo o qubit, ele vai assumir o estado |0⟩ ou |1⟩. Pela regra de Born, as
  probabilidades de medir |0⟩ ou |1⟩ são calculadas, respectivamente, como:
@@ -177,13 +177,13 @@
      obtém-se 100%, o que condiz com a condição de normalização imposta.
  
 
- Representando esta superposição na notação de Dirac:
+ Representando esta superposição na notação de Dirac, temos:
  
           _
    |ψ⟩ = √3/2|0⟩ + 1/2|1⟩
 
 
- e no Statevector:
+ e no state vector:
  
  
          ┌ _  ┐
@@ -313,7 +313,7 @@
         α₁₂|1100⟩ + α₁₃|1101⟩ + α₁₄|1110⟩ + α₁₅|1111⟩
          
          
- e no Statatevector:
+ e no state vector:
  
  
          ┌   ┐
@@ -364,8 +364,8 @@
    
    
    m: Número de bits em ponto flutuante para representar a amplitude de probabilidade
-   de cada estado da base computacional. No Qiskit, utilizando Statevector de precisão
-   dupla (complex128), a representação padrão de uma amplitute é:
+   de cada estado da base computacional. No Qiskit, utilizando state vector de 
+   precisão dupla (complex128), a representação padrão de uma amplitute é:
    
      > Parte real: 64 bits.
      
@@ -378,11 +378,11 @@
  com 2ⁿ × m bits, somente para representar as amplitudes de probabilidades de todos
  os estados. Em decorrência disso, podemos simular circuitos com relativamente
  poucos qubits usando um computador clássico com Qiskit ou outro ambiente para 
- simulação que utilize Statevector, pois conforme adicionamos mais qubits, vai 
+ simulação que utilize state vector, pois conforme adicionamos mais qubits, vai 
  se esgotando rapidamente toda a memória para representá-los. 
  
  Num computador com 32 Gigabytes livres de memória RAM, por exemplo, consegue-se
- simular 31 qubits apenas usando o Qiskit com Statevector de precisão dupla 
+ simular 31 qubits apenas usando o Qiskit com state vector de precisão dupla 
  (complex128):
  
  
@@ -395,14 +395,14 @@
    2³⁵ / 2³⁰ = 2⁵ Gigabytes ⇒ 32 Gigabytes
     
  
- Statevector armazena todas as 2ⁿ amplitudes na memória. Por isso o esgotamento 
+ State vector armazena todas as 2ⁿ amplitudes na memória. Por isso o esgotamento 
  rápido dos recursos à medida que representamos mais qubits. Outros métodos de 
  representar as amplitudes como Tensor Network, Matrix Product State (MPS),
  Stabilizer State podem ocupar menos memória, portanto, permitem a representação
  de mais (às vezes muito mais) qubits com a mesma quantidade de memória. Mas nestes
  casos, isso dependerá muito das características do circuito representado. Mesmo
  os mais potentes supercomputadores da atualidade não conseguem representar mais
- do que 48 qubits em Statevector de precisão dupla.
+ do que 48 qubits em representação state vector de precisão dupla.
 
  Na tabela abaixo, calculei alguns valores de dim(ℋₙ) apenas para demonstração de
  como se dá este crescimento exponencial do número de estados da base computacional 
@@ -610,14 +610,17 @@
  de modo que não é possível descrever completamente cada sistema de forma independente.
  Em termos matemáticos, um estado emaranhado não pode ser escrito como o produto dos
  estados individuais dos subsistemas.
+ 
+ Em computação quântica é o princípio que permite que um circuito quântico produza
+ e manipule correlações quânticas entre vários qubits. Por exemplo, considere o
+ estado de Bell:
 
- Por exemplo, considere um sistema de dois qubits no estado:
-
-            _
-   ∣ψ⟩ = 1/√2 (|00⟩ + ∣11⟩)
+             _
+   ∣Φ⁺⟩ = 1/√2 (|00⟩ + ∣11⟩)
 
 
- Se medirmos o primeiro qubit e o resultado for 0, o segundo qubit também será 0.
+ Como um estado de Bell é um estado quântico de dois qubits maximamente emaranhados,
+ se medirmos o primeiro qubit e o resultado for 0, o segundo qubit também será 0.
  Se o resultado for 1, o segundo também será 1. No caso, as medições estarão
  correlacionadas.
 
@@ -628,15 +631,13 @@
  da outra também é azul. Se encontrar o cartão vermelho, sabe que da outra é vermelho.
  Muito a grosso modo, emaranhamento é isto. Ele estabelece uma correlação entre
  as partículas emaranhadas. Mas esta correlação não pode ser explicada por simples
- "cartões escondidos" previamente determinados, como nesse exemplo, conforme foi
- demonstrado experimentalmente por testes das desigualdades de Bell.
+ "cartões escondidos" previamente determinados, como nesse exemplo, conforme veremos
+ adiante com os testes das desigualdades de Bell.
 
- Na computação quântica, o emaranhamento permite que qubits compartilhem informação
- quântica de forma que o estado do sistema completo não possa ser decomposto em estados
- independentes. Quando as portas CNOT e Toffoli emaranharem A, SUM e CARRY na sequência
- de operações do circuito de exemplo citado acima, estes qubits passarão a formar
- um único sistema. Ler 1 em A, acarreta que SUM seja 0 e CARRY seja 1. Ler 0, que
- SUM seja 1 e CARRY seja 0. Os resultados passam a guardar esta correlação.
+ Quando as portas CNOT e Toffoli emaranharem A, SUM e CARRY na sequência de operações
+ do circuito de exemplo citado acima, estes qubits passarão a formar um "único
+ sistema". Ler 1 em A, acarreta que SUM seja 0 e CARRY seja 1. Ler 0, que SUM seja
+ 1 e CARRY seja 0. Os resultados passam a guardar esta correlação.
  		                                       _
  Para o caso de superposição uniforme ∣A⟩ = 1/√2 (∣0⟩ + ∣1⟩), o estado final torna-se:
 
@@ -646,33 +647,32 @@
 
  Isso implica que, ao realizar uma medição, o sistema colapsa para |0110⟩ ou |1011⟩
  com probabilidade 50% para cada estado. Como não há um mecanismo de interferência
- neste circuito de exemplo projetado para amplificar um resultado específico, as 
+ neste circuito de exemplo, projetado para amplificar um resultado específico, as 
  amplitudes permanecem balanceadas conforme a evolução linear do circuito.
  
- Um detalhe sobre o emaranhamento quântico é que você pode separar cada um dos
- sistemas quânticos emaranhados a longas distâncias e eles continuarão a se 
- comportar como um único sistema. Esta propriedade foi chamada pejorativamente
- por Albert Einstein de ação fantasmagórica à distância (em alemão spukhafte 
+ Um detalhe interessante sobre o emaranhamento quântico é que você pode separar
+ cada um dos sistemas quânticos emaranhados a longas distâncias e eles continuarão
+ a se comportar como um único sistema. Esta propriedade foi chamada pejorativamente
+ por Albert Einstein de ação fantasmagórica à distância (em alemão spukhafte
  Fernwirkung), pois ele acreditava que nada no universo, nem matéria, nem energia, 
- nem informação poderia viajar mais rápido do que a velocidade da luz no vácuo. 
- Esta é a base da Teoria da Relatividade Especial de Einstein, um princípio chamado
- localidade.
+ nem informação poderia viajar mais rápido do que a velocidade da luz no vácuo,
+ e esta é a base da Teoria da Relatividade Especial, um princípio chamado localidade.
  
  No emaranhamento, no entanto, duas partículas ficam conectadas de tal forma que
  o estado de uma depende instantaneamente do estado da outra. Se você separar essas
- duas partículas, mantendo uma na Terra e enviando a outra para a estrela mais 
- próxima (a 4 anos-luz de distância), por exemplo, ao medir a partícula na Terra 
- e ver que ela virou o "Polo Norte", a partícula na estrela instantaneamente vira 
- o "Polo Sul". Para Einstein, isso violava a sua teoria, pois a "informação" da 
- medição pareceria ter viajado a uma velocidade infinita, parecendo pura bruxaria
+ duas partículas, mantendo uma na Terra e enviando a outra para a estrela mais
+ próxima (a 4 anos-luz de distância), por exemplo, ao medir a partícula na Terra
+ e ver que ela virou o "Polo Norte", a partícula na estrela instantaneamente vira
+ o "Polo Sul". Para Einstein, isso violava a sua teoria, pois a "informação" da
+ medição teria de ter viajado a uma velocidade infinita, parecendo pura bruxaria
  ou telepatia. Daí o uso pejorativo do termo ação fanstasmagórica à distância.
  
  Einstein achava que as partículas já carregavam instruções secretas desde o momento
- em que foram criadas, as chamadas "variáveis ocultas locais" (hidden variables), 
- como no exemplo dos cartões nas caixas que citei. Se você abre uma caixa e vê o
- cartão vermelho, já sabe que a outra caixa também tem o cartão vermelho. Se vê 
- azul, sane que na outra tem azul. Não há nenhum cartão "conversado" magicamente
- com o outro à distância. Seus estados já estavam definidos deste o começo. 
+ em que foram criadas, as chamadas "variáveis ocultas locais" (hidden variables),
+ como no exemplo dos cartões nas caixas que citei acima. Se você abre uma caixa 
+ e vê o cartão vermelho, já sabe que a outra caixa também tem o cartão vermelho. Se
+ vê azul, sabe que na outra tem azul. Não há nenhum cartão "conversado" magicamente
+ com o outro à distância. Seus estados já estavam definidos deste o começo.
  
  Décadas mais tarde, experimentos bastante rigorosos provaram que Einstein estava
  errado:
@@ -711,7 +711,7 @@
    violou a desigualdade de Bell.
    
    
-   1990s–2000s — Nas décadas seguintes, diversos grupos fizeram experimentos cada
+   1990–2000 — Nas décadas seguintes, diversos grupos fizeram experimentos cada
    vez mais precisos com partículas entrelaçadas. O objetivo não era simplesmente
    repetir Bell, mas fechar diferentes loopholes que poderiam, em princípio, deixar
    uma explicação alternativa para os resultados. Anton Zeilinger e colaboradores 
@@ -719,24 +719,24 @@
    entrelaçados e configurações de medição escolhidas aleatoriamente.
    
    
-   2015 — Em 2015, diferentes grupos conseguiram realizar testes de Bell que fecharam
+   2015 — Diferentes grupos conseguiram realizar testes de Bell que fecharam
    simultaneamente as principais lacunas experimentais de localidade e detecção,
-   usando diferentes plataformas experimentais. Esse tipo de experimento tornou 
-   muito mais difícil explicar a violação da desigualdade de Bell observada por
-   meio de falhas experimentais convencionais.
+   usando diferentes plataformas experimentais (loophole-free). Esse tipo de 
+   experimento tornou muito mais difícil explicar a violação da desigualdade de
+   Bell observada por meio de falhas experimentais convencionais.
  
  
  Por estes experimentos, os pesquisadores Alain Aspect, John F. Clauser e Anton
  Zeilinger dividiram o Prêmio Nobel de física de 2022.
  
- O que os experimentos provaram é que não existem variáveis ocultas locais, mas
+ O que os experimentos provaram é que não existem variáveis ocultas locais (eles
  não excluem a possibilidade de que existam variáveis ocultas não locais, mas 
- esta já é uma outra questão. Se não existem variáveis ocultas, significa que o 
- universo é fundamentalmente não-local e que o resultado de uma medição quântica 
- não estava determinado antes de acontecer. O termo não-local significa que um
- evento que acontece num determinado ponto do universo pode influenciar instantaneamente
- noutro ponto, sem que nenhuma matéria, energia ou informação viaje pelo espaço
- entre eles. 
+ esta já é uma outra questão). Se não existem variáveis ocultas locais, significa
+ que o universo é fundamentalmente não-local e que o resultado de uma medição
+ quântica não estava determinado antes de acontecer. O termo não-local significa 
+ que um evento que acontece num determinado ponto do universo pode influenciar 
+ instantaneamente noutro ponto, sem que nenhuma matéria, energia ou informação 
+ viaje pelo espaço entre eles. 
  
  Ainda não existem meios de medir algo que acontece instantaneamente, mas a velocidade
  mínima da "ação fantasmagórica à distância" foi medida em 2013 pela equipe de 
@@ -748,13 +748,14 @@
  
  
  Neste projeto não será simulado decoerência por uma questão de simplificação 
- do código. Isso seria possível usando o módulo qiskit_aer.noise. A decoerência é
- o processo pelo qual um sistema quântico perde coerência de fase devido à interação
- indesejada e inevitável com o ambiente externo (ruído térmico, campos magnéticos,
- etc.), fazendo com que seu comportamento efetivo se aproxime do comportamento clássico.
- É por este motivo que os computadores quânticos atuais tem mecanismos para geração
- de temperaturas criogênicas, afim de evitar ruído térmico, e funcionam em salas
- isoladas para tentar evitar os outros tipos de ruídos.
+ do código. Isso seria possível usando o módulo qiskit_aer.noise. 
+ 
+ A decoerência é o processo pelo qual um sistema quântico perde coerência de fase 
+ devido à interação indesejada e inevitável com o ambiente externo (ruído térmico, 
+ campos magnéticos, etc.), fazendo com que seu comportamento efetivo se aproxime
+ do comportamento clássico. É por este motivo que os computadores quânticos atuais
+ tem mecanismos para geração de temperaturas criogênicas, afim de evitar ruído 
+ térmico, e funcionam em salas isoladas para tentar evitar os outros tipos de ruídos.
 
  Quando ocorre a decoerência, há:
  
@@ -775,7 +776,8 @@
  
  
  Em um hardware real afetado por ruído, como o IBMQ, por exemplo, o resultado 
- final medido diverge das probabilidades ideais calculadas por este programa.
+ final medido diverge das probabilidades ideais calculadas por este programa,
+ logo, aqui estamos simulando um sistema ideal.
  
  
  ALGORITMO DE GROVER
@@ -800,13 +802,13 @@
  mechanical algorithm for database search. Como o título indica, ele foi criado
  para realizar a busca em banco de dados não estruturados. O algoritmo utiliza
  propriedades da mecânica quântica para reduzir a complexidade de uma busca não 
- estruturada de O(N), e que requer em média N/2 consultas em um sistema clássico,
- para O(√N) consultas com o algoritmo de Grover.
+ estruturada _ de O(N), e que requer em média N/2 consultas em um sistema clássico,
+ para     O(√N) consultas com o algoritmo de Grover.
  
- Para o circuito deste projeto que tem uma única solução, o número aproximado de 
- iterações quânticas é π/4(√N), resultando em um speedup assintótico quadrático
- em relação à busca clássica. Ou seja, o tamanho do problema cresce quadraticamente
- em relação ao número de operações quânticas.
+ Para o circuito deste projeto  _ que tem uma única solução, o número aproximado 
+ de iterações quânticas é  π/4(√N), resultando em um speedup assintótico quadrático
+ (quadratic asymptotic speedup) em relação à busca clássica. Ou seja, o tamanho 
+ do problema cresce quadraticamente em relação ao número de operações quânticas.
  
  Suponha: 
  
@@ -841,18 +843,37 @@
 
 
  Nesse exemplo, portanto, a quantidade média de consultas cai de aproximadamente
- 500.000 para 785.
+ 500.000 para 785, uma redução de 637 vezes no número de passos na busca.
  
  O ponto mais importante é o comportamento quando N cresce:
  
              _
-   O(N) → O(√N)
+   O(N) → O(√N) 
  
  
- Isso é o speedup assintótico quadrático.
+ Conforme N cresce, o ganho com o algoritmo de Grover vai ficando maior. Por exemplo,
+ para N = 1.000.000.000:
  
- Para este circuito que tem apenas 4 estados de entrada, |00⟩, |01⟩, |10⟩ e |11⟩,
- o número de buscas ficará:
+        _
+   π/4(√N) ⇒
+        _____________
+   π/4(√1.000.000.000) ⇒
+             __
+   π/4(10000√10) = ≈24.836
+   
+   
+ Comparando com a média de passos de uma busca clássica (N/2):
+ 
+ 
+   (500.000.000 / 24.836) = ≈20.132
+ 
+ 
+ O speedup assintótico quadrático, portanto, descreve uma situação em que um algoritmo
+ consegue resolver um problema de forma quadraticamente mais rápida do que outro
+ à medida que o volume de dados cresce para infinito (N → ∞).
+ 
+ Para o circuito Half Adder que tem apenas 4 estados de entrada, |00⟩, |01⟩, |10⟩
+ e |11⟩, o número de buscas ficará:
 
         _
    π/4(√N) ⇒ 
