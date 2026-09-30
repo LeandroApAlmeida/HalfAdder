@@ -886,8 +886,194 @@
  Logo, não será necessário iterar sobre o conjunto, pois em um passo já se encontra
  a solução procurada.
  
- O algoritmo de Grover funciona 
+ O algoritmo de Grover funciona da seguinte forma:
  
+ 
+   1. Cria a superposição:
+ 
+      Cria a superposição de todos os qubits a serem filtrados (exemplo: q₀ e q₁).
+
+
+   2. Oráculo:
+   
+      O oráculo identifica o estado a ser buscado.
+      
+      Suponha que a solução procurada seja:
+      
+      
+        ∣10⟩
+        
+        
+      O oráculo deve realizar:
+      
+      
+        ∣x⟩ → (−1)ᶠ⁽ˣ⁾∣x⟩
+        
+        
+      ou seja:
+      
+      
+        ∣10⟩ → −∣10⟩
+        
+        
+      Todos os outros estados permanecem iguais:
+      
+      
+        ∣x⟩ → ∣x⟩          ∀x, x ≠ 10
+
+        
+      O oráculo não aumenta a probabilidade do estado procurado, apenas muda a
+      fase da amplitude.
+      
+      Logo, antes do oráculo, temos:
+      
+      
+        ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
+        
+        
+      Depois:
+      
+      
+                                Estado
+                                Marcado
+                                  ↓
+        ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + −|10⟩ + |11⟩)
+        
+     
+   3. Operador de difusão:
+
+      Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
+
+
+        D = 2∣s⟩⟨s∣ − I
+
+        
+      Esse operador pode ser interpretado como uma inversão em relação à média das
+      amplitudes.
+      
+      Depois do oráculo, as fases de amplitudes dos estados ficarão como:
+     
+     
+        |00⟩ ⇒  1/2
+        |01⟩ ⇒  1/2
+        |10⟩ ⇒ −1/2
+        |11⟩ ⇒  1/2
+     
+     
+      A média das amplitudes é calculada como:
+     
+     
+        ((1/2 + 1/2 − 1/2 + 1/2) / 4) = 1/4
+     
+     
+      A difusão pega cada amplitude i e faz:
+
+     
+        ảᵢ = 2ā - aᵢ
+     
+     
+      onde ā é a média da amplitudes, que neste caso, é 0,25.
+     
+      Para o estado alvo |10⟩ a amplitude é:
+     
+     
+        a = −1/2
+     
+     
+      então:
+     
+     
+        ả = 2(1/4) − (−1/2)
+        ả = 1/2 + 1/2
+        ả = 1
+     
+     
+      Para os demais estados (|00⟩, |01⟩ e |11⟩), a amplitude é calculada como:
+     
+     
+        ả = 2(1/4) − 1/2
+        ả = 1/2 − 1/2
+        ả = 0
+     
+     
+      Logo, antes da difusão tínhamos estas amplitudes para cada estado:
+     
+     
+        |00⟩ ⇒  1/2
+        |01⟩ ⇒  1/2
+        |10⟩ ⇒ −1/2
+        |11⟩ ⇒  1/2
+     
+     
+      Depois da difusão:
+     
+     
+        |00⟩ ⇒ 0
+        |01⟩ ⇒ 1
+        |10⟩ ⇒ 0
+        |11⟩ ⇒ 0
+        
+        
+      Isso significa que tem próximo de 100% de probabilidade de 
+        
+      Para este problema com apenas 4 estados, calculamos o número de iterações
+      como:
+        
+        
+        π/4(√N) ⇒ 
+             _
+        π/4(√4) ⇒
+   
+        π/4(2) = ≈1
+        
+        
+      Logo, com 1 iteração já encontra a solução.
+      
+      Para N estados, repete-se oráculo → difusão k vezes:
+      
+                 ___
+        k ≈ π/4 √N/M
+      
+      
+      Onde:
+      
+      
+        N: número total de estados.
+      
+        M: número de estados que são soluções.
+ 
+ 
+ O operador de difusão usa interferência destrutiva para os estados não desejados
+ e interferência construtiva para o estado desejado, desta forma:
+ 
+                 
+                         Oráculo cria diferença de fase
+                         
+                                      ⇓
+                     
+                     Difusão faz as amplitudes interferirem
+                                      
+                                      ⇓
+                   
+                   Solução é reforçada, demais são canceladas
+                   
+   
+ Interferência quântica é um fenômeno da mecânica quântica que surge da natureza 
+ ondulatória de partículas quânticas como elétrons ou fótons. 
+ 
+ Na física clássica, costumamos separar:
+
+
+   > Partículas → objetos localizados, como uma pequena esfera;
+
+
+   > Ondas → fenômenos distribuídos, como ondas na água ou ondas sonoras.
+
+
+ Na mecânica quântica, essa separação deixa de funcionar completamente. Elétrons,
+ fótons, átomos podem apresentar fenômenos característicos tanto de partículas 
+ quanto de ondas.
+
  
  (continua...)
  
@@ -976,17 +1162,22 @@ qc = QuantumCircuit(4, 4)
 #
 # Ao aplicar a superposição em A e B, que inicialmente eram ∣00⟩, tem-se:
 #
+#
 #   ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
+#
 #
 # Os quatro estados entram em superposição uniforme, com amplitude de probabilidade
 # 1/2 cada um.
 #
 # Pela regra de Born, a probabilidade de cada estado é calculada como:
 #
+#
 #   |1/2|² = 1/4 = 25%
+#
 #
 # Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
 # de cada estado é a seguinte:
+#
 #
 #   |00⟩ ⇒ 1/2
 #   |01⟩ ⇒ 1/2
@@ -996,13 +1187,68 @@ qc = QuantumCircuit(4, 4)
 # =============================================================================
 
 
-# Aplica a porta Hadamard no qubit 0 (entrada A), colocando-o em superposição
-# (A = α∣0⟩ + β∣1⟩).
+# Aplica a porta Hadamard no qubit 0 (entrada A), colocando-o em superposição.
+#
+# A porta Hadamard é descrita pela matriz 2×2:
+#
+#
+#            ┌    ┐
+#          _ │1  1│
+#   H = 1/√2 │    │
+#            │1 -1│
+#            └    ┘
+#
+#
+# Aplicando H ao vetor ∣0⟩, temos:
+#
+#
+#               ┌    ┐ ┌ ┐          ┌ ┐
+#             _ │1  1│ │1│        _ │1│
+#   H∣0⟩ = 1/√2 │    │ │ │  =  1/√2 │ │
+#               │1 -1│ │0│          │1│
+#               └    ┘ └ ┘          └ ┘
+#
+#
+# Na notação de Dirac:
+#
+#             
+#          ∣0⟩ + ∣1⟩
+#   H∣0⟩ = ────────
+#             √2          
+#
+#
+# Temos então uma superposição uniforme. 
+#
+# A amplitude de cada estado é:
+#
+#      _
+#   1/√2
+#
+#
+# Aplicando H ao vetor ∣1⟩, temos:
+#
+#
+#               ┌    ┐ ┌ ┐          ┌  ┐
+#             _ │1  1│ │0│        _ │ 1│
+#   H∣1⟩ = 1/√2 │    │ │ │  =  1/√2 │  │ 
+#               │1 -1│ │1│          │-1│
+#               └    ┘ └ ┘          └  ┘
+#
+#
+# Na notação de Dirac:
+#
+#
+#          ∣0⟩ - ∣1⟩
+#   H∣1⟩ = ────────
+#             √2
+#
+# 
+# O sinal é negativo. As probabilidades continuam sendo 50%/50%, mas a fase das
+# amplitudes é diferente.
 
 qc.h(0)
 
-# Aplica a porta Hadamard no qubit 1 (entrada B), colocando-o em superposição
-# (B = α∣0⟩ + β∣1⟩).
+# Aplica a porta Hadamard no qubit 1 (entrada B), colocando-o em superposição.
   
 qc.h(1)  
 
@@ -1011,39 +1257,7 @@ qc.h(1)
 
 # =============================================================================
 #
-# ORÁCULO PARA MARCAR APENAS O ESTADO |01⟩:
-#
-#
-# Para filtrar a entrada A = |1⟩ e B = |0⟩, representada por |01⟩ em notação 
-# Little Endian, usaremos o algoritmo de Grover.
-#
-# O oráculo é a primeira parte do algoritmo. Seu objetivo é transformar a fase
-# de amplitude (phase kickback) do estado:
-#
-#   ∣01⟩
-#
-# para:
-#
-#   −∣01⟩
-#
-# mantendo os demais estados inalterados.
-#
-# Antes do oráculo temos as amplitudes:
-#
-#   |00⟩ ⇒  1/2
-#   |01⟩ ⇒  1/2
-#   |10⟩ ⇒  1/2
-#   |11⟩ ⇒  1/2
-#
-# Depois, temos:
-#
-#   |00⟩ ⇒  1/2
-#   |01⟩ ⇒ −1/2 ← (invertido o sinal)
-#   |10⟩ ⇒  1/2
-#   |11⟩ ⇒  1/2
-#
-# Após a mudança de sinal, a probabilidade de |01⟩ ainda é 25%. O oráculo não 
-# aumentou a probabilidade, apenas mudou a fase da amplitude.
+# ORÁCULO PARA MARCAR APENAS O ESTADO |10⟩:
 #
 # =============================================================================
 
