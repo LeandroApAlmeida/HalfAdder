@@ -4,8 +4,8 @@
  CIRCUITO HALF ADDER QUÂNTICO EM QISKIT
 
 
- Este programa implementa um Half Adder (meio somador) reversível de 2 qubits de
- entrada (A e B) e 2 qubits auxiliares (SUM e CARRY), utilizando portas CNOT
+ Este programa implementa um Half Adder (meio somador) reversível de 2 qubits 
+ de entrada (A e B) e 2 qubits auxiliares (SUM e CARRY), utilizando portas CNOT
  (Controlled-NOT gate) e CCX (Toffoli Gate), realizando a seguinte sequência de
  transformações unitárias no espaço de Hilbert de 4 qubits:
 
@@ -139,8 +139,10 @@
    |α|² + |β|² = 1
 
 
- é a condição de normalização de um qubit. Significa que a soma das probabilidades
- de todos os resultados possíveis deve ser 100%.
+ é a condição de normalização de um qubit. 
+ 
+ Significa que a soma das probabilidades de todos os resultados possíveis deve ser
+ 100%.
 
  Por exemplo, considere:
 
@@ -205,7 +207,7 @@
  formando um único espaço de Hilbert de dimensão 2⁴ = 16. Assim, a base computacional
  do sistema de quatro qubits é dada por:
  
- 
+
    |0⟩ ⊗ |0⟩ ⊗ |0⟩ ⊗ |0⟩ = |0000⟩
    |0⟩ ⊗ |0⟩ ⊗ |0⟩ ⊗ |1⟩ = |0001⟩
    |0⟩ ⊗ |0⟩ ⊗ |1⟩ ⊗ |0⟩ = |0010⟩
@@ -222,11 +224,11 @@
    |1⟩ ⊗ |1⟩ ⊗ |0⟩ ⊗ |1⟩ = |1101⟩
    |1⟩ ⊗ |1⟩ ⊗ |1⟩ ⊗ |0⟩ = |1110⟩
    |1⟩ ⊗ |1⟩ ⊗ |1⟩ ⊗ |1⟩ = |1111⟩
-   
-   
+
+
  Onde:
- 
- 
+
+
             ┌ ┐               ┌ ┐               ┌ ┐               ┌ ┐ 
             │1│               │0│               │0│               │0│ 
             │0│               │1│               │0│               │0│ 
@@ -305,17 +307,17 @@
 
 
  Representando a superposição destes estados na notação de Dirac:
- 
- 
+
+
    |ψ⟩ = α₀|0000⟩ +  α₁|0001⟩ +  α₂|0010⟩ +  α₃|0011⟩ +  
          α₄|0100⟩ +  α₅|0101⟩ +  α₆|0110⟩ +  α₇|0111⟩ + 
          α₈|1000⟩ +  α₉|1001⟩ + α₁₀|1010⟩ + α₁₁|1011⟩ +
         α₁₂|1100⟩ + α₁₃|1101⟩ + α₁₄|1110⟩ + α₁₅|1111⟩
-         
-         
+
+
  e no state vector:
- 
- 
+
+
          ┌   ┐
          │ α₀│
          │ α₁│
@@ -334,8 +336,8 @@
          │α₁₄│
          │α₁₅│
          └   ┘
- 
- 
+
+
  Como regra geral, para um espaço de Hilbert de n qubits:
 
 
@@ -352,8 +354,8 @@
  
  Esta equação estabelece uma relação direta entre um computador quântico e um 
  computador clássico, desta forma:
- 
-   
+
+
    Número de bits clássicos = 2ⁿ × m
    
  
@@ -375,7 +377,7 @@
  
  
  Isso implica que para emular n qubits, será necessário um computador clássico 
- com 2ⁿ × m bits, somente para representar as amplitudes de probabilidades de todos
+ com 2ⁿ × m bits somente para representar as amplitudes de probabilidades de todos
  os estados. Em decorrência disso, podemos simular circuitos com relativamente
  poucos qubits usando um computador clássico com Qiskit ou outro ambiente para 
  simulação que utilize state vector, pois conforme adicionamos mais qubits, vai 
@@ -461,7 +463,7 @@
  aplicação prática e sim um benchmark destinado a tornar evidente a diferença entre
  computação quântica e computação clássica. O computador do Google tinha 54 qubits,
  porém um dos qubits apresentou defeito, e ele realizou o processamento com apenas
- 53 qubits. Conclui a tarefa em 200 segundos. Um supercomputador da época, usando
+ 53 qubits. Concluiu a tarefa em 200 segundos. Um supercomputador da época, usando
  métodos clássicos conhecidos, exigiria cerca de 10.000 anos para concluir esta
  mesma tarefa.
 
@@ -509,7 +511,7 @@
      │   (1, 0)
    0 └──●───────────▶ x
         1   2   3
- 
+
 
  Um circuito quântico atua linearmente sobre qualquer estado do espaço de Hilbert.
  Isso significa que a mesma transformação unitária é aplicada ao estado quântico
@@ -598,9 +600,9 @@
    ∣ψ⟩ = α∣0110⟩ + β∣1011⟩
  
 
- Os dois ramos da superposição têm origem na superposição inicial do qubit A, 
+ Os dois ramos da superposição têm origem na superposição inicial do qubit A,
  enquanto as portas CNOT e CCX propagam essa estrutura para os demais qubits, 
- gerando correlações quânticas, incluindo o emaranhamento entre A, SUM e CARRY. 
+ gerando correlações quânticas, incluindo o emaranhamento entre A, SUM e CARRY.
  Dessa forma, cada componente evolui de maneira consistente sob a mesma
  transformação unitária. B influencia o estado global, porém está desacoplado (não
  emaranhado). Ele atua como um qubit clássico controlador fixo no circuito.
@@ -638,7 +640,7 @@
  do circuito de exemplo citado acima, estes qubits passarão a formar um "único
  sistema". Ler 1 em A, acarreta que SUM seja 0 e CARRY seja 1. Ler 0, que SUM seja
  1 e CARRY seja 0. Os resultados passam a guardar esta correlação.
- 		                                       _
+                                               _
  Para o caso de superposição uniforme ∣A⟩ = 1/√2 (∣0⟩ + ∣1⟩), o estado final torna-se:
 
             _
@@ -763,10 +765,12 @@
    1. Perda de Fase (Dephasing): O ambiente atua como uma medição constante e 
    indesejada, destruindo a relação de fase sutil entre as amplitudes complexas
    (os αi do espaço de Hilbert).
-                                                       _    
+   
+                                                       _
    2. Transição de Estado: O estado de superposição 1/√2 (∣0⟩ + ∣1⟩) colapsa para 
    uma mistura puramente clássica (ou é |0⟩, ou é |1⟩, sem propriedades de 
    interferência).
+
    
    3. Dissipação de Energia (Relaxamento): Além da perda de fase, a decoerência 
    frequentemente caminha junto com o relaxamento térmico. O sistema quântico 
@@ -800,17 +804,16 @@
  Este algoritmo foi proposto por Lov K. Grover, pesquisador indiano-americano do 
  Bell Labs, em 1996. O artigo original foi publicado com o título: A fast quantum
  mechanical algorithm for database search. Como o título indica, ele foi criado
- para realizar a busca em banco de dados não estruturados. O algoritmo utiliza
+ para realizar a busca em bancos de dados não estruturados. O algoritmo utiliza
  propriedades da mecânica quântica para reduzir a complexidade de uma busca não 
  estruturada _ de O(N), e que requer em média N/2 consultas em um sistema clássico,
  para     O(√N) consultas com o algoritmo de Grover.
  
- Para o circuito deste projeto  _ que tem uma única solução, o número aproximado 
+ Para o circuito deste projeto, _ que tem uma única solução, o número aproximado 
  de iterações quânticas é  π/4(√N), resultando em um speedup assintótico quadrático
- (quadratic asymptotic speedup) em relação à busca clássica. Ou seja, o tamanho 
- do problema cresce quadraticamente em relação ao número de operações quânticas.
+ (quadratic asymptotic speedup) em relação à busca clássica.
  
- Suponha: 
+ Suponha:
  
  
    N = 1.000.000
@@ -824,7 +827,7 @@
  
  consultas para encontrar a solução.
  
- Com o algoritmo de Grover precisaria de aproximadamente:
+ Com o algoritmo de Grover precisaria de:
  
         _
    π/4(√N) ⇒
@@ -842,8 +845,8 @@
    (500.000 / 785) = ≈637
 
 
- Nesse exemplo, portanto, a quantidade média de consultas cai de aproximadamente
- 500.000 para 785, uma redução de 637 vezes no número de passos na busca.
+ Nesse exemplo, portanto, a quantidade de consultas cai de em média 500.000
+ para 785, uma redução de 637 vezes no número consultas.
  
  O ponto mais importante é o comportamento quando N cresce:
  
@@ -851,8 +854,8 @@
    O(N) → O(√N) 
  
  
- Conforme N cresce, o ganho com o algoritmo de Grover vai ficando maior. Por exemplo,
- para N = 1.000.000.000:
+ Conforme N cresce, o ganho com o algoritmo de Grover vai ficando maior. Por 
+ exemplo, para N = 1.000.000.000:
  
         _
    π/4(√N) ⇒
@@ -868,9 +871,9 @@
    (500.000.000 / 24.836) = ≈20.132
  
  
- O speedup assintótico quadrático, portanto, descreve uma situação em que um algoritmo
- consegue resolver um problema de forma quadraticamente mais rápida do que outro
- à medida que o volume de dados cresce para infinito (N → ∞).
+ O speedup assintótico quadrático, portanto, descreve uma situação em que um 
+ algoritmo consegue resolver um problema de forma quadraticamente mais rápida do
+ que outro à medida que o volume de dados cresce para infinito (N → ∞).
  
  Para o circuito Half Adder que tem apenas 4 estados de entrada, |00⟩, |01⟩, |10⟩
  e |11⟩, o número de buscas ficará:
@@ -891,14 +894,35 @@
  
    1. Cria a superposição:
  
-      Cria a superposição de todos os qubits a serem filtrados (exemplo: q₀ e q₁).
+      Cria a superposição de todos os qubits a serem filtrados, no caso, q₀ e q₁.
+      Ao aplicar a superposição em q₀ e q₁, que inicialmente eram ∣00⟩, tem-se:
+     
+     
+        ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
+     
+     
+      Os quatro estados entram em superposição uniforme, com amplitude de 
+      probabilidade 1/2 cada um.
+     
+      Pela regra de Born, a probabilidade de cada estado é calculada como:
+     
+     
+        |1/2|² = 1/4 = 25%
+     
+     
+      Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
+      de cada estado é a seguinte:
+     
+     
+        |00⟩ ⇒ 1/2
+        |01⟩ ⇒ 1/2
+        |10⟩ ⇒ 1/2
+        |11⟩ ⇒ 1/2
 
 
    2. Oráculo:
    
-      O oráculo identifica o estado a ser buscado.
-      
-      Suponha que a solução procurada seja:
+      O oráculo identifica o estado a ser buscado. Como a solução procurada é:
       
       
         ∣10⟩
@@ -907,10 +931,10 @@
       O oráculo deve realizar:
       
       
-        ∣x⟩ → (−1)ᶠ⁽ˣ⁾∣x⟩
+        Of∣x⟩ → (−1)ᶠ⁽ˣ⁾∣x⟩
+
         
-        
-      ou seja:
+      ou seja, o oráculo marca:
       
       
         ∣10⟩ → −∣10⟩
@@ -923,11 +947,11 @@
 
         
       O oráculo não aumenta a probabilidade do estado procurado, apenas muda a
-      fase da amplitude.
+      fase da amplitude da solução.
       
       Logo, antes do oráculo, temos:
-      
-      
+
+ 
         ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
         
         
@@ -938,8 +962,8 @@
                                 Marcado
                                   ↓
         ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + −|10⟩ + |11⟩)
-        
-     
+   
+
    3. Operador de difusão:
 
       Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
@@ -972,9 +996,9 @@
         ảᵢ = 2ā - aᵢ
      
      
-      onde ā é a média da amplitudes, que neste caso, é 0,25.
+      onde ā é a média da amplitudes, que neste caso, é 1/4.
      
-      Para o estado alvo |10⟩ a amplitude é:
+      Para o estado alvo |10⟩, a amplitude é:
      
      
         a = −1/2
@@ -1008,13 +1032,14 @@
       Depois da difusão:
      
      
-        |00⟩ ⇒ 0
-        |01⟩ ⇒ 1
-        |10⟩ ⇒ 0
-        |11⟩ ⇒ 0
+        |00⟩ ⇒  0
+        |01⟩ ⇒  0
+        |10⟩ ⇒  1
+        |11⟩ ⇒  0
         
         
-      Isso significa que tem próximo de 100% de probabilidade de 
+      Isso significa que tem próximo de 100% de probabilidade de colapsar no estado
+      |10⟩, e quase nenhuma probabilidade de colapsar nos demais estados.
         
       Para este problema com apenas 4 estados, calculamos o número de iterações
       como:
@@ -1027,9 +1052,11 @@
         π/4(2) = ≈1
         
         
-      Logo, com 1 iteração já encontra a solução.
+      Logo, com 1 iteração já encontra a solução procurada.
       
-      Para N estados, repete-se oráculo → difusão k vezes:
+      De modo genérico, para N estados e M soluções, onde M é muito menor que N
+      (M ≪ N), repete-se oráculo → operador de difusão k vezes, de acordo com a
+      função:
       
                  ___
         k ≈ π/4 √N/M
@@ -1038,15 +1065,15 @@
       Onde:
       
       
-        N: número total de estados.
+        N: Número total de estados.
       
-        M: número de estados que são soluções.
+        M: Número de estados que são soluções.
  
  
  O operador de difusão usa interferência destrutiva para os estados não desejados
  e interferência construtiva para o estado desejado, desta forma:
  
-                 
+
                          Oráculo cria diferença de fase
                          
                                       ⇓
@@ -1055,11 +1082,15 @@
                                       
                                       ⇓
                    
-                   Solução é reforçada, demais são canceladas
+          Solução é reforçada a cada iteração, demais são canceladas
                    
-   
- Interferência quântica é um fenômeno da mecânica quântica que surge da natureza 
- ondulatória de partículas quânticas como elétrons ou fótons. 
+                                      ⇓
+                                      
+                      Solução é a entrada para o HalfAdder
+
+ 
+ Interferência é um fenômeno da mecânica quântica em que partículas como elétrons
+ e fótons se comportam como ondas e combinam seus estados em superposição.
  
  Na física clássica, costumamos separar:
 
@@ -1074,12 +1105,81 @@
  fótons, átomos podem apresentar fenômenos característicos tanto de partículas 
  quanto de ondas.
 
+ Na mecânica quântica, interferência é o efeito produzido quando diferentes amplitudes
+ quânticas associadas a alternativas possíveis para um mesmo resultado se combinam.
+
+ A diferença fundamental em relação à mecânica clássica é que não somamos diretamente
+ probabilidades. Somamos amplitudes de probabilidade e só depois calculamos a 
+ probabilidade.
+ 
  
  (continua...)
  
  
+ 
+ PORTAS QUÂNTICAS
+ 
+ 
+ PORTA HADAMARD
+
+ A porta Hadamard é descrita pela matriz 2×2:
 
 
+            ┌    ┐
+          _ │1  1│
+   H = 1/√2 │    │
+            │1 -1│
+            └    ┘
+
+
+ Aplicando H ao vetor ∣0⟩, temos:
+
+
+               ┌    ┐ ┌ ┐          ┌ ┐
+             _ │1  1│ │1│        _ │1│
+   H∣0⟩ = 1/√2 │    │ │ │  =  1/√2 │ │
+               │1 -1│ │0│          │1│
+               └    ┘ └ ┘          └ ┘
+
+
+ Na notação de Dirac:
+
+             
+          ∣0⟩ + ∣1⟩
+   H∣0⟩ = ────────
+             √2          
+
+
+ Temos então uma superposição uniforme. 
+
+ A amplitude de cada estado é:
+
+      _
+   1/√2
+
+
+ Aplicando H ao vetor ∣1⟩, temos:
+
+
+               ┌    ┐ ┌ ┐          ┌  ┐
+             _ │1  1│ │0│        _ │ 1│
+   H∣1⟩ = 1/√2 │    │ │ │  =  1/√2 │  │ 
+               │1 -1│ │1│          │-1│
+               └    ┘ └ ┘          └  ┘
+
+
+ Na notação de Dirac:
+
+
+          ∣0⟩ - ∣1⟩
+   H∣1⟩ = ────────
+             √2
+
+ 
+ O sinal é negativo. As probabilidades continuam sendo 50%/50%, mas a fase das
+ amplitudes é diferente.
+ 
+ 
  INSTALAÇÃO DO QISKIT E QISKIT-AER NO PYTHON:
 
  
@@ -1159,92 +1259,10 @@ qc = QuantumCircuit(4, 4)
 #
 # SUPERPOSIÇÃO INICIAL DE TODAS AS ENTRADAS:
 #
-#
-# Ao aplicar a superposição em A e B, que inicialmente eram ∣00⟩, tem-se:
-#
-#
-#   ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
-#
-#
-# Os quatro estados entram em superposição uniforme, com amplitude de probabilidade
-# 1/2 cada um.
-#
-# Pela regra de Born, a probabilidade de cada estado é calculada como:
-#
-#
-#   |1/2|² = 1/4 = 25%
-#
-#
-# Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
-# de cada estado é a seguinte:
-#
-#
-#   |00⟩ ⇒ 1/2
-#   |01⟩ ⇒ 1/2
-#   |10⟩ ⇒ 1/2
-#   |11⟩ ⇒ 1/2
-#
 # =============================================================================
 
 
 # Aplica a porta Hadamard no qubit 0 (entrada A), colocando-o em superposição.
-#
-# A porta Hadamard é descrita pela matriz 2×2:
-#
-#
-#            ┌    ┐
-#          _ │1  1│
-#   H = 1/√2 │    │
-#            │1 -1│
-#            └    ┘
-#
-#
-# Aplicando H ao vetor ∣0⟩, temos:
-#
-#
-#               ┌    ┐ ┌ ┐          ┌ ┐
-#             _ │1  1│ │1│        _ │1│
-#   H∣0⟩ = 1/√2 │    │ │ │  =  1/√2 │ │
-#               │1 -1│ │0│          │1│
-#               └    ┘ └ ┘          └ ┘
-#
-#
-# Na notação de Dirac:
-#
-#             
-#          ∣0⟩ + ∣1⟩
-#   H∣0⟩ = ────────
-#             √2          
-#
-#
-# Temos então uma superposição uniforme. 
-#
-# A amplitude de cada estado é:
-#
-#      _
-#   1/√2
-#
-#
-# Aplicando H ao vetor ∣1⟩, temos:
-#
-#
-#               ┌    ┐ ┌ ┐          ┌  ┐
-#             _ │1  1│ │0│        _ │ 1│
-#   H∣1⟩ = 1/√2 │    │ │ │  =  1/√2 │  │ 
-#               │1 -1│ │1│          │-1│
-#               └    ┘ └ ┘          └  ┘
-#
-#
-# Na notação de Dirac:
-#
-#
-#          ∣0⟩ - ∣1⟩
-#   H∣1⟩ = ────────
-#             √2
-#
-# 
-# O sinal é negativo. As probabilidades continuam sendo 50%/50%, mas a fase das
-# amplitudes é diferente.
 
 qc.h(0)
 
@@ -1257,7 +1275,7 @@ qc.h(1)
 
 # =============================================================================
 #
-# ORÁCULO PARA MARCAR APENAS O ESTADO |10⟩:
+# ORÁCULO
 #
 # =============================================================================
 
@@ -1279,61 +1297,7 @@ qc.x(0)
 
 # =============================================================================
 #
-# DIFUSÃO (OPERADOR DE GROVER PARA AMPLIFICAR O ESTADO ALV0 |01⟩):
-#
-#
-# Essa sequência implementa:
-#
-#   D = 2∣s⟩⟨s∣ − I
-#
-# chamado de inversão sobre a média.
-#
-# Depois do oráculo, as amplitudes dos estados ficarão como:
-#
-#   |00⟩ ⇒ +1/2
-#   |01⟩ ⇒ −1/2
-#   |10⟩ ⇒ +1/2
-#   |11⟩ ⇒ +1/2
-#
-# A média das amplitudes é calculada como:
-#
-#   ((0,5 − 0,5 + 0,5 + 0,5) / 4) = 1/4 ou 0,25
-# 
-# A difusão pega cada amplitude i e faz:
-#
-#   ảᵢ = 2ā - aᵢ
-#
-# onde ā é a média da amplitudes, que neste caso, é 0,25.
-#
-# Para o estado alvo |01⟩ a amplitude é:
-#
-#   a = −0,5
-#
-# então:
-#
-#   ả = 2(0,25) − (−0,5)
-#   ả = 0,5 + 0,5
-#   ả = 1
-#
-# Para os demais estados (|00⟩, |10⟩, |11⟩), a amplitude é calculada como:
-#
-#   ả = 2(0,25) − 0,5
-#   ả = 0,5 − 0,5
-#   ả = 0
-#
-# Logo, antes da difusão tínhamos estas amplitudes para cada estado:
-#
-#   |00⟩ ⇒ +1/2
-#   |01⟩ ⇒ −1/2
-#   |10⟩ ⇒ +1/2
-#   |11⟩ ⇒ +1/2
-#
-# Depois da difusão:
-#
-#   |00⟩ ⇒ 0
-#   |01⟩ ⇒ 1
-#   |10⟩ ⇒ 0
-#   |11⟩ ⇒ 0
+# DIFUSÃO
 #
 # =============================================================================
 
