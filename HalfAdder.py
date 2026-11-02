@@ -895,7 +895,7 @@
    1. Cria a superposição:
  
       Cria a superposição de todos os qubits a serem filtrados, no caso, q₀ e q₁.
-      Ao aplicar a superposição em q₀ e q₁, que inicialmente eram ∣00⟩, tem-se:
+      Ao aplicar a superposição em q₀ e q₁, que inicialmente era ∣00⟩, tem-se:
      
      
         ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
@@ -1052,7 +1052,8 @@
         π/4(2) = ≈1
         
         
-      Logo, com 1 iteração já encontra a solução procurada.
+      Logo, com 1 iteração já encontra a solução procurada. Não será necessário
+      iterar mais vezes sobre oráculo → operador de difusão.
       
       De modo genérico, para N estados e M soluções, onde M é muito menor que N
       (M ≪ N), repete-se oráculo → operador de difusão k vezes, de acordo com a
@@ -1071,7 +1072,7 @@
  
  
  O operador de difusão usa interferência destrutiva para os estados não desejados
- e interferência construtiva para o estado desejado, desta forma:
+ e interferência construtiva para o estado desejado desta forma neste algoritmo:
  
 
                          Oráculo cria diferença de fase
@@ -1082,13 +1083,13 @@
                                       
                                       ⇓
                    
-          Solução é reforçada a cada iteração, demais são canceladas
+                   Solução é reforçada, demais são canceladas
                    
                                       ⇓
                                       
-                      Solução é a entrada para o HalfAdder
+              Solução |10⟩ (A=0, B=1) é a entrada para o Half Adder
 
- 
+
  Interferência é um fenômeno da mecânica quântica em que partículas como elétrons
  e fótons se comportam como ondas e combinam seus estados em superposição.
  
