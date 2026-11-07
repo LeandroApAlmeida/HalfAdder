@@ -781,7 +781,7 @@
  
  Em um hardware real afetado por ruído, como o IBMQ, por exemplo, o resultado 
  final medido diverge das probabilidades ideais calculadas por este programa,
- logo, aqui estamos simulando um sistema ideal.
+ logo, aqui estamos simulando um sistema ideal, não um real.
  
  
  ALGORITMO DE GROVER
@@ -810,8 +810,8 @@
  para     O(√N) consultas com o algoritmo de Grover.
  
  Para o circuito deste projeto, _ que tem uma única solução, o número aproximado 
- de iterações quânticas é  π/4(√N), resultando em um speedup assintótico quadrático
- (quadratic asymptotic speedup) em relação à busca clássica.
+ de iterações quânticas é  π/4(√N), resultando em um speedup quadrático (quadratic
+ speedup) em relação à busca clássica.
  
  Suponha:
  
@@ -871,9 +871,9 @@
    (500.000.000 / 24.836) = ≈20.132
  
  
- O speedup assintótico quadrático, portanto, descreve uma situação em que um 
- algoritmo consegue resolver um problema de forma quadraticamente mais rápida do
- que outro à medida que o volume de dados cresce para infinito (N → ∞).
+ O speedup quadrático, portanto, descreve uma situação em que um algoritmo consegue
+ resolver um problema de forma quadraticamente mais rápida do que outro à medida
+ que o volume de dados cresce para infinito (N → ∞).
  
  Para o circuito Half Adder que tem apenas 4 estados de entrada, |00⟩, |01⟩, |10⟩
  e |11⟩, o número de buscas ficará:
@@ -884,193 +884,410 @@
    π/4(√4) ⇒
    
    π/4(2) = ≈1
+
+
+ A execução do algoritmo de Grover se dá nas seguintes etapas:
+ 
+ 
+ 1. Cria a superposição:
+
+    Cria a superposição de todos os qubits a serem filtrados, no caso, q₀ e q₁.
+    Ao aplicar a superposição em q₀ e q₁, que inicialmente era ∣00⟩, tem-se:
    
    
- Logo, não será necessário iterar sobre o conjunto, pois em um passo já se encontra
- a solução procurada.
- 
- O algoritmo de Grover funciona da seguinte forma:
- 
- 
-   1. Cria a superposição:
- 
-      Cria a superposição de todos os qubits a serem filtrados, no caso, q₀ e q₁.
-      Ao aplicar a superposição em q₀ e q₁, que inicialmente era ∣00⟩, tem-se:
-     
-     
-        ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
-     
-     
-      Os quatro estados entram em superposição uniforme, com amplitude de 
-      probabilidade 1/2 cada um.
-     
-      Pela regra de Born, a probabilidade de cada estado é calculada como:
-     
-     
-        |1/2|² = 1/4 = 25%
-     
-     
-      Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
-      de cada estado é a seguinte:
-     
-     
-        |00⟩ ⇒ 1/2
-        |01⟩ ⇒ 1/2
-        |10⟩ ⇒ 1/2
-        |11⟩ ⇒ 1/2
-
-
-   2. Oráculo:
+      ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
    
-      O oráculo identifica o estado a ser buscado. Como a solução procurada é:
-      
-      
-        ∣10⟩
-        
-        
-      O oráculo deve realizar:
-      
-      
-        Of∣x⟩ → (−1)ᶠ⁽ˣ⁾∣x⟩
-
-        
-      ou seja, o oráculo marca:
-      
-      
-        ∣10⟩ → −∣10⟩
-        
-        
-      Todos os outros estados permanecem iguais:
-      
-      
-        ∣x⟩ → ∣x⟩          ∀x, x ≠ 10
-
-        
-      O oráculo não aumenta a probabilidade do estado procurado, apenas muda a
-      fase da amplitude da solução.
-      
-      Logo, antes do oráculo, temos:
-
- 
-        ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
-        
-        
-      Depois:
-      
-      
-                                Estado
-                                Marcado
-                                  ↓
-        ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + −|10⟩ + |11⟩)
    
-
-   3. Operador de difusão:
-
-      Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
-
-
-        D = 2∣s⟩⟨s∣ − I
-
-        
-      Esse operador pode ser interpretado como uma inversão em relação à média das
-      amplitudes.
-      
-      Depois do oráculo, as fases de amplitudes dos estados ficarão como:
-     
-     
-        |00⟩ ⇒  1/2
-        |01⟩ ⇒  1/2
-        |10⟩ ⇒ −1/2
-        |11⟩ ⇒  1/2
-     
-     
-      A média das amplitudes é calculada como:
-     
-     
-        ((1/2 + 1/2 − 1/2 + 1/2) / 4) = 1/4
-     
-     
-      A difusão pega cada amplitude i e faz:
-
-     
-        ảᵢ = 2ā - aᵢ
-     
-     
-      onde ā é a média da amplitudes, que neste caso, é 1/4.
-     
-      Para o estado alvo |10⟩, a amplitude é:
-     
-     
-        a = −1/2
-     
-     
-      então:
-     
-     
-        ả = 2(1/4) − (−1/2)
-        ả = 1/2 + 1/2
-        ả = 1
-     
-     
-      Para os demais estados (|00⟩, |01⟩ e |11⟩), a amplitude é calculada como:
-     
-     
-        ả = 2(1/4) − 1/2
-        ả = 1/2 − 1/2
-        ả = 0
-     
-     
-      Logo, antes da difusão tínhamos estas amplitudes para cada estado:
-     
-     
-        |00⟩ ⇒  1/2
-        |01⟩ ⇒  1/2
-        |10⟩ ⇒ −1/2
-        |11⟩ ⇒  1/2
-     
-     
-      Depois da difusão:
-     
-     
-        |00⟩ ⇒  0
-        |01⟩ ⇒  0
-        |10⟩ ⇒  1
-        |11⟩ ⇒  0
-        
-        
-      Isso significa que tem próximo de 100% de probabilidade de colapsar no estado
-      |10⟩, e quase nenhuma probabilidade de colapsar nos demais estados.
-        
-      Para este problema com apenas 4 estados, calculamos o número de iterações
-      como:
-        
-             _
-        π/4(√N) ⇒ 
-             _
-        π/4(√4) ⇒
+    Os quatro estados entram em superposição uniforme, com amplitude de probabilidade
+    1/2 cada um.
    
-        π/4(2) = ≈1
-        
-        
-      Logo, com 1 iteração já encontra a solução procurada. Não será necessário
-      iterar mais vezes sobre oráculo → operador de difusão.
-      
-      De modo genérico, para N estados e M soluções, onde M é muito menor que N
-      (M ≪ N), repete-se oráculo → operador de difusão k vezes, de acordo com a
-      função:
-      
-                 ___
-        k ≈ π/4 √N/M
-      
-      
-      Onde:
-      
-      
-        N: Número total de estados.
-      
-        M: Número de estados que são soluções.
+    Pela regra de Born, a probabilidade de cada estado é calculada como:
+   
+   
+      |1/2|² = 1/4 = 25%
+   
+   
+    Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
+    de cada estado é a seguinte:
+   
+   
+      |00⟩ ⇒ 1/2
+      |01⟩ ⇒ 1/2
+      |10⟩ ⇒ 1/2
+      |11⟩ ⇒ 1/2
+
+
+ 2. Oráculo:
  
+    O oráculo identifica o estado a ser buscado. Ele vai aplicar:
+    
+    
+      Of∣x⟩ → (−1)ᶠ⁽ˣ⁾∣x⟩
+      
+    
+    sobre os estados de q₀ e q₁ em superposição.
+  
+    Como queremos marcar o estado ∣10⟩, temos que:
+    
+    
+             ⎧ 1  x = 10
+      f(x) = ⎨
+             ⎩ 0  x ≠ 10
+             
+    
+    Que resulta:
+    
+    
+      ┌────────┬──────┬───────────┐
+      │ Estado │ f(x) │ Of∣x⟩     │
+      ╞════════╪══════╪═══════════╡
+      │ ∣00⟩   │ 0    │ +∣00⟩     │
+      ├────────┼──────┼───────────┤
+      │ ∣01⟩   │ 0    │ +∣01⟩     │
+      ├────────┼──────┼───────────┤
+      │ ∣10⟩   │ 1    │ −∣10⟩     │
+      ├────────┼──────┼───────────┤
+      │ ∣11⟩   │ 0    │ +∣11⟩     │
+      └────────┴──────┴───────────┘
+
+
+    Representando a matriz do oráculo para cada estado da tabela:
+    
+
+           ┌            ┐
+           │ 1  0  0  0 │
+           │ 0  1  0  0 │
+      Of = │ 0  0 −1  0 │
+           │ 0  0  0  1 │
+           └            ┘
+
  
+    O oráculo não aumenta a probabilidade do estado procurado, apenas muda a
+    fase da amplitude da solução.
+    
+    O circuito que realiza esta transformação no projeto é o seguinte:
+    
+                            
+                 ┌───┐           ┌───┐                    
+      q0(A)  ────┤ X ├─────■─────┤ X ├────
+                 └───┘     │     └───┘   
+                           │     
+      q1(B)  ──────────────■──────────────
+                                 
+
+      1. A porta X transforma o estado desejado ∣10⟩ em ∣11⟩ temporariamente,
+         invertendo o valor do qubit A (q0).
+      
+      2. A porta CZ inverte a fase da amplitude se os dois qubits forem 1. Nos
+         demais casos, ela não altera nada.
+      
+      3. A segunda porta X desfaz a transformação inicial, invertendo novamente 
+         o valor do qubit A (q0), porém a fase negativa permanece (−∣10⟩).
+         
+         
+    Mostrando cada etapa da transformação em uma tabela:
+    
+    
+      ┌────────────────┬────────┬─────────┬────────┐
+      │ Estado inicial │ Após X │ Após CZ │ Após X │
+      ╞════════════════╪════════╪═════════╪════════╡
+      │ ∣00⟩           │  ∣01⟩  │  ∣01⟩   │  ∣00⟩  │
+      ├────────────────┼────────┼─────────┼────────┤
+      │ ∣01⟩           │  ∣00⟩  │  ∣00⟩   │  ∣01⟩  │
+      ├────────────────┼────────┼─────────┼────────┤
+      │ ∣10⟩           │  ∣11⟩  │ −∣11⟩   │ −∣10⟩  │
+      ├────────────────┼────────┼─────────┼────────┤
+      │ ∣11⟩           │  ∣10⟩  │  ∣10⟩   │  ∣11⟩  │
+      └────────────────┴────────┴─────────┴────────┘
+
+
+    Antes do oráculo tínhamos:
+
+
+      ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
+      
+      
+    Depois:
+    
+    
+                              Estado
+                              Marcado
+                                ↓
+      ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + −|10⟩ + |11⟩)
+ 
+
+ 3. Operador de difusão (difusor):
+
+    Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
+
+
+      D = 2∣s⟩⟨s∣ − I
+
+ 
+    Esse operador pode ser interpretado como uma inversão em relação à média das
+    amplitudes.
+    
+    Depois do oráculo, as fases de amplitudes dos estados ficarão como:
+   
+   
+      |00⟩ ⇒  1/2
+      |01⟩ ⇒  1/2
+      |10⟩ ⇒ −1/2
+      |11⟩ ⇒  1/2
+   
+   
+    A amplitude de cada estado, após a aplicação do difusor de Grover, é calculada
+    pela expressão:
+    
+    
+      ảᵢ = 2ā − aᵢ
+      
+    
+    onde:
+    
+      ā: Média das amplitudes.
+      
+      ảᵢ: Amplitude após a difusão.
+
+      aᵢ: Amplitude original do estado.
+      
+      
+    A média das amplitudes, no caso, é calculada como:
+   
+   
+      ((1/2 + 1/2 − 1/2 + 1/2) / 4) = 1/4
+    
+    
+    Como, na prática, o circuito implementa o negativo global do difusor, denotado
+    por:
+
+
+      −D = I − 2∣s⟩⟨s∣
+      
+      
+    a nova amplitude é calculada pela expressão:
+
+   
+      ảᵢ = aᵢ − 2ā
+      
+      
+    Aplicando a expressão para o estado alvo |10⟩, com amplitude a = −1/2, temos:
+   
+   
+      ả = −1/2 − 2(1/4)
+      ả = −1/2 − 1/2
+      ả = −1
+   
+   
+    Para os demais estados (|00⟩, |01⟩ e |11⟩), a amplitude é calculada como:
+   
+   
+      ả = 1/2 − 2(1/4)
+      ả = 1/2 − 1/2
+      ả = 0
+   
+   
+    Logo, antes da difusão tínhamos estas amplitudes para cada estado:
+   
+   
+      |00⟩ ⇒  1/2
+      |01⟩ ⇒  1/2
+      |10⟩ ⇒ −1/2
+      |11⟩ ⇒  1/2
+   
+   
+    Depois:
+   
+   
+      |00⟩ ⇒  0
+      |01⟩ ⇒  0
+      |10⟩ ⇒ −1
+      |11⟩ ⇒  0
+      
+      
+    Isso significa que tem próximo de 100% de probabilidade de colapsar no estado
+    |10⟩, e quase nenhuma probabilidade de colapsar nos demais estados.
+      
+    Para este problema com apenas 4 estados e 1 solução, calculamos o número
+    de iterações de oráculo → operador de difusão como:
+      
+           _
+      π/4(√N) ⇒ 
+           _
+      π/4(√4) ⇒
+ 
+      π/4(2) = ≈1
+
+    
+    De modo genérico, para N estados e M soluções, onde M é muito menor que N 
+    (M ≪ N), repete-se oráculo → operador de difusão k vezes, de acordo com a
+    expressão:
+
+               ___
+      k ≈ π/4 √N/M
+     
+     
+    Onde:
+     
+     
+      N: Número total de estados.
+     
+      M: Número de estados que são soluções.
+      
+      
+    O circuito que implementa o operador de difusão no projeto é o seguinte:
+    
+    
+                ┌───┐ ┌───┐                 ┌───┐ ┌───┐
+      q0(A) ────┤ H ├─┤ X ├────────●────────┤ X ├─┤ H ├────
+                └───┘ └───┘        │        └───┘ └───┘
+                                   │
+                ┌───┐ ┌───┐ ┌───┐  │  ┌───┐ ┌───┐ ┌───┐
+      q1(B) ────┤ H ├─┤ X ├─┤ H ├──⊕──┤ H ├─┤ X ├─┤ H ├────
+                └───┘ └───┘ └───┘     └───┘ └───┘ └───┘
+
+
+      1. Aplica Hadamard nos qubits q0 e q1, preparando o sistema para a
+         transformação de difusão e estabelecendo a base de superposição.
+         
+         ┌────────┬───────────┐
+         │ Estado │ Amplitude │
+         ╞════════╪═══════════╡
+         │ ∣00⟩   │ +1/2      │
+         ├────────┼───────────┤
+         │ ∣01⟩   │ +1/2      │
+         ├────────┼───────────┤
+         │ ∣10⟩   │ −1/2      │
+         ├────────┼───────────┤
+         │ ∣11⟩   │ +1/2      │
+         └────────┴───────────┘
+
+      2. Aplica a porta X nos dois qubits, realizando a inversão lógica dos
+         estados |0⟩ e |1⟩. Essa operação prepara os qubits para a reflexão de
+         fase.
+         
+         ┌────────┬───────────┐
+         │ Estado │ Amplitude │
+         ╞════════╪═══════════╡
+         │ ∣00⟩   │ +1/2      │
+         ├────────┼───────────┤
+         │ ∣01⟩   │ +1/2      │
+         ├────────┼───────────┤
+         │ ∣10⟩   │ −1/2      │
+         ├────────┼───────────┤
+         │ ∣11⟩   │ +1/2      │
+         └────────┴───────────┘
+
+      3. Aplica Hadamard no qubit q1, preparando-o para participar da operação
+         controlada CNOT.
+         
+         ┌────────┬───────────┐
+         │ Estado │ Amplitude │
+         ╞════════╪═══════════╡
+         │ ∣00⟩   │ +0,7071   │
+         ├────────┼───────────┤
+         │ ∣01⟩   │ −0,7071   │
+         ├────────┼───────────┤
+         │ ∣10⟩   │ 0         │
+         ├────────┼───────────┤
+         │ ∣11⟩   │ 0         │
+         └────────┴───────────┘
+
+      4. Aplica CNOT entre q0 (controle) e q1 (alvo). A operação inverte o qubit
+         alvo quando o qubit de controle está no estado |1⟩.
+         
+         ┌────────┬───────────┐
+         │ Estado │ Amplitude │
+         ╞════════╪═══════════╡
+         │ ∣00⟩   │ +0,7071   │
+         ├────────┼───────────┤
+         │ ∣01⟩   │ −0,7071   │
+         ├────────┼───────────┤
+         │ ∣10⟩   │ 0         │
+         ├────────┼───────────┤
+         │ ∣11⟩   │ 0         │
+         └────────┴───────────┘
+
+      5. Aplica novamente Hadamard no qubit q1. Em conjunto com a CNOT, essa 
+         sequência equivale a uma porta CZ (Controlled-Z), que altera o sinal
+         da amplitude do estado |11⟩.
+         
+         ┌────────┬───────────┐
+         │ Estado │ Amplitude │
+         ╞════════╪═══════════╡
+         │ ∣00⟩   │ +1/2      │
+         ├────────┼───────────┤
+         │ ∣01⟩   │ −1/2      │
+         ├────────┼───────────┤
+         │ ∣10⟩   │ −1/2      │
+         ├────────┼───────────┤
+         │ ∣11⟩   │ −1/2      │
+         └────────┴───────────┘
+
+      6. Aplica novamente X nos qubits q0 e q1, completando a transformação de
+         fase necessária para a reflexão.
+         
+         ┌────────┬───────────┐
+         │ Estado │ Amplitude │
+         ╞════════╪═══════════╡
+         │ ∣00⟩   │ −1/2      │
+         ├────────┼───────────┤
+         │ ∣01⟩   │ −1/2      │
+         ├────────┼───────────┤
+         │ ∣10⟩   │ +1/2      │
+         ├────────┼───────────┤
+         │ ∣11⟩   │ −1/2      │
+         └────────┴───────────┘
+
+      7. Aplica Hadamard nos qubits q0 e q1, retornando à base computacional e
+         completando o operador de difusão.
+         
+         ┌────────┬───────────┬───────────────┐
+         │ Estado │ Amplitude │ Probabilidade │
+         ╞════════╪═══════════╪═══════════════╡
+         │ ∣00⟩   │  0        │ 0%            │
+         ├────────┼───────────┼───────────────┤
+         │ ∣01⟩   │  0        │ 0%            │
+         ├────────┼───────────┼───────────────┤
+         │ ∣10⟩   │ −1        │ 100%          │
+         ├────────┼───────────┼───────────────┤
+         │ ∣11⟩   │  0        │  0            │
+         └────────┴───────────┴───────────────┘
+         
+         
+ Resumindo as amplitudes de probabilidade de cada estado a cada etapa do algoritmo
+ de Grover:
+
+
+   ┌──────────────────────┬──────────┬──────────┬──────────┬──────────┐
+   │ Etapa                │  |00⟩    │  |01⟩    │  |10⟩    │  |11⟩    │
+   ╞══════════════════════╪══════════╪══════════╪══════════╪══════════╡
+   │ Estado inicial       │    1     │    0     │    0     │    0     │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ H(0), H(1)           │  +1/2    │  +1/2    │  +1/2    │  +1/2    │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ Oráculo              │  +1/2    │  +1/2    │  −1/2    │  +1/2    │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ H(0), H(1)           │  +1/2    │  +1/2    │  −1/2    │  +1/2    │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ X(0), X(1)           │  +1/2    │  +1/2    │  −1/2    │  +1/2    │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ H(1)                 │ +0,7071  │ −0,7071  │    0     │    0     │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ CNOT                 │ +0,7071  │ −0,7071  │    0     │    0     │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ H(1)                 │  +1/2    │  +1/2    │  −1/2    │  −1/2    │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ X(0), X(1)           │  −1/2    │  −1/2    │  +1/2    │  −1/2    │
+   ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
+   │ H(0), H(1)           │    0     │    0     │   −1     │    0     │
+   └──────────────────────┴──────────┴──────────┴──────────┴──────────┘
+   
+   Observação: esse resultado de 100% ocorre porque, com dois qubits e um único
+   estado marcado, uma iteração é suficiente. O sinal negativo final é apenas uma
+   fase global, sem efeito sobre a medição.
+
+
  O operador de difusão usa interferência destrutiva para os estados não desejados
  e interferência construtiva para o estado desejado desta forma neste algoritmo:
  
@@ -1129,7 +1346,7 @@
             ┌    ┐
           _ │1  1│
    H = 1/√2 │    │
-            │1 -1│
+            │1 −1│
             └    ┘
 
 
@@ -1139,7 +1356,7 @@
                ┌    ┐ ┌ ┐          ┌ ┐
              _ │1  1│ │1│        _ │1│
    H∣0⟩ = 1/√2 │    │ │ │  =  1/√2 │ │
-               │1 -1│ │0│          │1│
+               │1 −1│ │0│          │1│
                └    ┘ └ ┘          └ ┘
 
 
@@ -1165,14 +1382,14 @@
                ┌    ┐ ┌ ┐          ┌  ┐
              _ │1  1│ │0│        _ │ 1│
    H∣1⟩ = 1/√2 │    │ │ │  =  1/√2 │  │ 
-               │1 -1│ │1│          │-1│
+               │1 −1│ │1│          │−1│
                └    ┘ └ ┘          └  ┘
 
 
  Na notação de Dirac:
 
 
-          ∣0⟩ - ∣1⟩
+          ∣0⟩ − ∣1⟩
    H∣1⟩ = ────────
              √2
 
