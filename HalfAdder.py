@@ -1,5 +1,5 @@
 """
-===============================================================================
+════════════════════════════════════════════════════════════════════════════════
 
  CIRCUITO HALF ADDER QUÂNTICO EM QISKIT
 
@@ -763,20 +763,20 @@
  
  
    1. Perda de Fase (Dephasing): O ambiente atua como uma medição constante e 
-   indesejada, destruindo a relação de fase sutil entre as amplitudes complexas
-   (os αi do espaço de Hilbert).
+      indesejada, destruindo a relação de fase sutil entre as amplitudes complexas
+      (os αi do espaço de Hilbert).
    
                                                        _
    2. Transição de Estado: O estado de superposição 1/√2 (∣0⟩ + ∣1⟩) colapsa para 
-   uma mistura puramente clássica (ou é |0⟩, ou é |1⟩, sem propriedades de 
-   interferência).
+      uma mistura puramente clássica (ou é |0⟩, ou é |1⟩, sem propriedades de 
+      interferência).
 
    
    3. Dissipação de Energia (Relaxamento): Além da perda de fase, a decoerência 
-   frequentemente caminha junto com o relaxamento térmico. O sistema quântico 
-   troca energia com o ambiente até atingir o equilíbrio. Para um qubit, isso 
-   geralmente significa decair de um estado de maior energia (|1⟩) de volta para 
-   o estado fundamental (|0⟩).
+      frequentemente caminha junto com o relaxamento térmico. O sistema quântico 
+      troca energia com o ambiente até atingir o equilíbrio. Para um qubit, isso 
+      geralmente significa decair de um estado de maior energia (|1⟩) de volta para 
+      o estado fundamental (|0⟩).
  
  
  Em um hardware real afetado por ruído, como o IBMQ, por exemplo, o resultado 
@@ -799,7 +799,7 @@
  Para que ele se torne um circuito prático, é necessário selecionar qual ramo é
  de interesse. Vou implementar neste programa a soma de A = |0⟩ e B = |1⟩, que
  fará o circuito colapsar no estado |0110⟩. Para isso, eu optei por filtrar os
- estados de entrada usando o algoritmo de Grover.
+ estados de entrada A e B usando o algoritmo de Grover.
  
  Este algoritmo foi proposto por Lov K. Grover, pesquisador indiano-americano do 
  Bell Labs, em 1996. O artigo original foi publicado com o título: A fast quantum
@@ -833,7 +833,7 @@
    π/4(√N) ⇒
         ________
    π/4(√1000.000) ⇒
-   
+
    π/4(1000) = ≈785
 
 
@@ -842,7 +842,7 @@
  Comparando com a média de uma busca clássica:
  
  
-   (500.000 / 785) = ≈637
+   (500.000 / 785) = ≈637          (≈1.274 no pior caso)
 
 
  Nesse exemplo, portanto, a quantidade de consultas cai de em média 500.000
@@ -868,7 +868,7 @@
  Comparando com a média de passos de uma busca clássica (N/2):
  
  
-   (500.000.000 / 24.836) = ≈20.132
+   (500.000.000 / 24.836) = ≈20.132          (≈40.264 no pior caso)
  
  
  O speedup quadrático, portanto, descreve uma situação em que um algoritmo consegue
@@ -983,8 +983,8 @@
       
       3. A segunda porta X desfaz a transformação inicial, invertendo novamente 
          o valor do qubit A (q0), porém a fase negativa permanece (−∣10⟩).
-         
-         
+
+
     Mostrando cada etapa da transformação em uma tabela:
     
     
@@ -1036,8 +1036,8 @@
       |11⟩ ⇒  1/2
    
    
-    A amplitude de cada estado, após a aplicação do difusor de Grover, é calculada
-    pela expressão:
+    A amplitude de cada estado, após a aplicação do difusor, é calculada pela
+    expressão:
     
     
       ảᵢ = 2ā − aᵢ
@@ -1103,11 +1103,11 @@
       |01⟩ ⇒  0
       |10⟩ ⇒ −1
       |11⟩ ⇒  0
-      
-      
+
+
     Isso significa que tem próximo de 100% de probabilidade de colapsar no estado
     |10⟩, e quase nenhuma probabilidade de colapsar nos demais estados.
-      
+
     Para este problema com apenas 4 estados e 1 solução, calculamos o número
     de iterações de oráculo → operador de difusão como:
       
@@ -1149,110 +1149,26 @@
 
       1. Aplica Hadamard nos qubits q0 e q1, preparando o sistema para a
          transformação de difusão e estabelecendo a base de superposição.
-         
-         ┌────────┬───────────┐
-         │ Estado │ Amplitude │
-         ╞════════╪═══════════╡
-         │ ∣00⟩   │ +1/2      │
-         ├────────┼───────────┤
-         │ ∣01⟩   │ +1/2      │
-         ├────────┼───────────┤
-         │ ∣10⟩   │ −1/2      │
-         ├────────┼───────────┤
-         │ ∣11⟩   │ +1/2      │
-         └────────┴───────────┘
 
       2. Aplica a porta X nos dois qubits, realizando a inversão lógica dos
          estados |0⟩ e |1⟩. Essa operação prepara os qubits para a reflexão de
          fase.
-         
-         ┌────────┬───────────┐
-         │ Estado │ Amplitude │
-         ╞════════╪═══════════╡
-         │ ∣00⟩   │ +1/2      │
-         ├────────┼───────────┤
-         │ ∣01⟩   │ +1/2      │
-         ├────────┼───────────┤
-         │ ∣10⟩   │ −1/2      │
-         ├────────┼───────────┤
-         │ ∣11⟩   │ +1/2      │
-         └────────┴───────────┘
 
       3. Aplica Hadamard no qubit q1, preparando-o para participar da operação
          controlada CNOT.
-         
-         ┌────────┬───────────┐
-         │ Estado │ Amplitude │
-         ╞════════╪═══════════╡
-         │ ∣00⟩   │ +0,7071   │
-         ├────────┼───────────┤
-         │ ∣01⟩   │ −0,7071   │
-         ├────────┼───────────┤
-         │ ∣10⟩   │ 0         │
-         ├────────┼───────────┤
-         │ ∣11⟩   │ 0         │
-         └────────┴───────────┘
 
       4. Aplica CNOT entre q0 (controle) e q1 (alvo). A operação inverte o qubit
          alvo quando o qubit de controle está no estado |1⟩.
-         
-         ┌────────┬───────────┐
-         │ Estado │ Amplitude │
-         ╞════════╪═══════════╡
-         │ ∣00⟩   │ +0,7071   │
-         ├────────┼───────────┤
-         │ ∣01⟩   │ −0,7071   │
-         ├────────┼───────────┤
-         │ ∣10⟩   │ 0         │
-         ├────────┼───────────┤
-         │ ∣11⟩   │ 0         │
-         └────────┴───────────┘
 
       5. Aplica novamente Hadamard no qubit q1. Em conjunto com a CNOT, essa 
          sequência equivale a uma porta CZ (Controlled-Z), que altera o sinal
          da amplitude do estado |11⟩.
-         
-         ┌────────┬───────────┐
-         │ Estado │ Amplitude │
-         ╞════════╪═══════════╡
-         │ ∣00⟩   │ +1/2      │
-         ├────────┼───────────┤
-         │ ∣01⟩   │ −1/2      │
-         ├────────┼───────────┤
-         │ ∣10⟩   │ −1/2      │
-         ├────────┼───────────┤
-         │ ∣11⟩   │ −1/2      │
-         └────────┴───────────┘
 
       6. Aplica novamente X nos qubits q0 e q1, completando a transformação de
          fase necessária para a reflexão.
-         
-         ┌────────┬───────────┐
-         │ Estado │ Amplitude │
-         ╞════════╪═══════════╡
-         │ ∣00⟩   │ −1/2      │
-         ├────────┼───────────┤
-         │ ∣01⟩   │ −1/2      │
-         ├────────┼───────────┤
-         │ ∣10⟩   │ +1/2      │
-         ├────────┼───────────┤
-         │ ∣11⟩   │ −1/2      │
-         └────────┴───────────┘
 
       7. Aplica Hadamard nos qubits q0 e q1, retornando à base computacional e
          completando o operador de difusão.
-         
-         ┌────────┬───────────┬───────────────┐
-         │ Estado │ Amplitude │ Probabilidade │
-         ╞════════╪═══════════╪═══════════════╡
-         │ ∣00⟩   │  0        │ 0%            │
-         ├────────┼───────────┼───────────────┤
-         │ ∣01⟩   │  0        │ 0%            │
-         ├────────┼───────────┼───────────────┤
-         │ ∣10⟩   │ −1        │ 100%          │
-         ├────────┼───────────┼───────────────┤
-         │ ∣11⟩   │  0        │  0            │
-         └────────┴───────────┴───────────────┘
          
          
  Resumindo as amplitudes de probabilidade de cada estado a cada etapa do algoritmo
@@ -1434,7 +1350,7 @@
  
  https://quantum.cloud.ibm.com/learning/pt/courses/basics-of-quantum-information
  
-===============================================================================
+════════════════════════════════════════════════════════════════════════════════
 """
 
 
@@ -1458,14 +1374,15 @@ from qiskit.visualization import (
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# IMPLEMENTAÇÃO DO CIRCUITO HALF ADDER QUÂNTICO COM 4 QUBITS:
+# CIRCUITO HALF ADDER QUÂNTICO COM 4 QUBITS
+#
 #
 # Cria um circuito quântico contendo 4 qubits e 4 registradores clássicos para
 # leitura destes qubits.
 #
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 
 
 qc = QuantumCircuit(4, 4)
@@ -1473,125 +1390,142 @@ qc = QuantumCircuit(4, 4)
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# SUPERPOSIÇÃO INICIAL DE TODAS AS ENTRADAS:
+# ALGORITMO DE GROOVER
 #
-# =============================================================================
+#
+# Aplica o algoritmo de Grover para filtrar o estado que representa a soma A = |0⟩
+# e B = |1⟩, representado por ∣10⟩. Como a superposição de A e B tem apenas 4
+# estados, e aplicando:
+#        _
+#   π/4(√N) ⇒ 
+#        _
+#   π/4(√4) ⇒
+#  
+#   π/4(2) = ≈1
+#
+# Calculamos que com apenas uma iteração de oráculo → operador de difusão já é
+# filtrado o estado ∣10⟩.
+#
+# ══════════════════════════════════════════════════════════════════════════════
 
 
-# Aplica a porta Hadamard no qubit 0 (entrada A), colocando-o em superposição.
+# ==============================================================================
+#
+# 1. CRIA A SUPERPOSIÇÃO:
+#
+# Inicialmente as entradas A e B estão no estado:
+#
+#   ∣00⟩
+#
+# Ao aplicar a porta Hadamard a ambas as entradas, entra em superposição uniforme
+# de A e B, representada por:
+#
+#   ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
+#
+# As amplitudes de probabilidades para cada estado, portanto, ficam:
+#
+#   |00⟩ ⇒  1/2
+#   |01⟩ ⇒  1/2
+#   |10⟩ ⇒  1/2
+#   |11⟩ ⇒  1/2
+#
+# ==============================================================================
+
 
 qc.h(0)
-
-# Aplica a porta Hadamard no qubit 1 (entrada B), colocando-o em superposição.
   
 qc.h(1)  
 
 
-
-
-# =============================================================================
+# ==============================================================================
 #
-# ORÁCULO
+# 2. ORÁCULO:
 #
-# =============================================================================
+# Transforma as amplitudes de probabilidades:
+#
+#   |00⟩ ⇒  1/2
+#   |01⟩ ⇒  1/2
+#   |10⟩ ⇒  1/2
+#   |11⟩ ⇒  1/2
+#
+# em:
+#
+#   |00⟩ ⇒  1/2
+#   |01⟩ ⇒  1/2
+#   |10⟩ ⇒ −1/2
+#   |11⟩ ⇒  1/2
+#
+# A fase de amplitude negativa em |10⟩ prepara para a seleção deste estado pelo
+# operador de difusão.
+#
+# ==============================================================================
 
-
-# Inversão do qubit q0 (A).
 
 qc.x(0)
-
-# Aplica a fase controlada (CZ).
 
 qc.cz(0, 1)
 
-# Desfaz a inversão do qubit q0 (A).
-
 qc.x(0)
 
 
-
-
-# =============================================================================
+# ==============================================================================
 #
-# DIFUSÃO
+# 3. OPERADOR DE DIFUSÃO (DIFUSOR):
 #
-# =============================================================================
+# Transforma as amplitudes de probabilidades de:
+#
+#   |00⟩ ⇒  1/2
+#   |01⟩ ⇒  1/2
+#   |10⟩ ⇒ −1/2
+#   |11⟩ ⇒  1/2
+#
+# em:
+#
+#   |00⟩ ⇒  0
+#   |01⟩ ⇒  0
+#   |10⟩ ⇒ −1
+#   |11⟩ ⇒  0
+#
+# Com isso, o estado |10⟩ tem em torno de 100% de probabilidade de colapsar nele,
+# e os demais estados tem em torno de 0%.
+#
+# ==============================================================================
 
-
-# Aplica Hadamard no qubit 0 para a inversão sobre a média.
 
 qc.h(0)
 
-# Aplica Hadamard no qubit 1 para a inversão sobre a média.
+qc.h(1)  
 
-qc.h(1)
-
-# Aplica a porta X no qubit 0 para inverter o sinal lógico.  
-
-qc.x(0)
-
-# Aplica a porta X no qubit 1 para inverter o sinal lógico.  
+qc.x(0) 
 
 qc.x(1)
 
-# Aplica Hadamard no qubit 1.
-
 qc.h(1)
-
-# Aplica CNOT entre o qubit 0 e o qubit 1 para o espelhamento de fase. 
 
 qc.cx(0, 1)
 
-# Aplica Hadamard no qubit 1.
-
 qc.h(1)
-
-# Reverte a porta X no qubit 0. 
 
 qc.x(0)
 
-# Reverte a porta X no qubit 1.
-
 qc.x(1)
 
-# Aplica Hadamard final no qubit 0.
-
 qc.h(0)
-
-# Aplica Hadamard final no qubit 1.
 
 qc.h(1)
 
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# EXECUTA O CIRCUITO HALF ADDER SOBRE O ESTADO JÁ FILTRADO PELO ALGORITMO DE
-# GROVER
-# 
+# HALF ADDER
 #
-# Graças à interferência do Algoritmo de Grover, o sistema não está mais dividindo
-# as probabilidades igualmente entre |00⟩, |01⟩, |10⟩ e |11⟩. O estado de entrada 
-# A = |1⟩ e B = |0⟩ foi amplificado a ponto de ocupar quase 100% da probabilidade 
-# do vetor de estados. Os outros estados ainda existem matematicamente na 
-# superposição, mas com amplitudes de probabilidades próximas de 0%.
 #
-# Quando as portas lógicas do Half Adder atuam sobre as entradas, elas então 
-# calculam sobre esta superposição. Como o estado |01⟩ domina quase totalmente 
-# o vetor (amplitude próxima de 100%), o somador executa a operação para esse
-# estado dominante: 0 + 1 = 1 (com carry 0). Como os qubits de saída SUM e CARRY
-# foram conectados aos de entrada por portas CNOT e Toffoli, eles ficam emaranhados 
-# com A e B, formando um único sistema. Como o estado predominante nas entradas
-# é |01⟩, a saída gerada emaranhada a ele será |1⟩ para SUM e |0⟩ para o CARRY.
-#
-# =============================================================================
-
-
 # Aplica a sequência de transformações unitárias no espaço de Hilbert para 
-# implementar reversivelmente um Half Adder quântico:
+# implementar reversivelmente um circuito Half Adder quântico:
 #
 #   |0,0,B,A⟩
 #       ↓
@@ -1606,9 +1540,18 @@ qc.h(1)
 #   1. CNOT(A → SUM)
 #   2. CNOT(B → SUM)
 #   3. CCX(A,B → CARRY)
+#
+# As entradas A e B continuam em superposição, porém, após a filtragem pelo
+# algoritmo de Grover, a amplitude de probabilidade do estado |10⟩ está próxima
+# de 100%, enquanto os demais estados tem amplitudes próximas de 0%. Logo, na
+# prática, o circuito vai somar A = |0⟩ + B = |1⟩.
+#
+# ══════════════════════════════════════════════════════════════════════════════
 
 
-# 1. Aplica a operação CNOT(A → SUM):
+# ==============================================================================
+#
+# 1. OPERAÇÃO CNOT(A → SUM):
 #
 # Matematicamente:
 #
@@ -1622,11 +1565,15 @@ qc.h(1)
 # Após esta etapa, o estado fica:
 #
 #   |0,0,B,A⟩ → |0,A,B,A⟩
+#
+# ==============================================================================
 
 qc.cx(0, 2)
 
 
-# 2. Aplica a operação CNOT(B → SUM):
+# ==============================================================================
+#
+# 2. OPERAÇÃO CNOT(B → SUM):
 #
 # Matematicamente:
 #
@@ -1642,11 +1589,15 @@ qc.cx(0, 2)
 #
 # O qubit SUM agora contém a soma binária sem carry (ver colunas 1, 2 e 3 da 
 # tabela verdade acima).
+#
+# ==============================================================================
 
 qc.cx(1, 2)
 
 
-# 3. Aplica a operação CCX(A,B → CARRY):
+# ==============================================================================
+#
+# 3. OPERAÇÃO CCX(A,B → CARRY):
 #
 # Matematicamente:
 # 
@@ -1662,21 +1613,23 @@ qc.cx(1, 2)
 #
 # O qubit CARRY agora contém o "vai um" resultante da operação A⋅B. Neste caso,
 # CARRY será |1⟩ somente quando A = |1⟩ e B = |1⟩.
+#
+# ==============================================================================
 
 qc.ccx(0, 1, 3)
 
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# EXTRAÇÃO DE DADOS MATEMÁTICOS DO CIRCUITO (STATEVECTOR e OPERATOR):
+# EXTRAÇÃO DE DADOS DO CIRCUITO (STATEVECTOR e OPERATOR)
 #
 #
-# Cria uma cópia temporária do circuito sem as medições para fins de análise 
-# matemática e impressão no terminal.
+# Cria uma cópia temporária do circuito, sem realizar as medições, para fins de
+# análise matemática e impressão no terminal.
 #
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 
 
 qc_no_meas = qc.remove_final_measurements(inplace=False)
@@ -1688,17 +1641,18 @@ state = Statevector.from_instruction(qc_no_meas) # Statevector(qc_no_meas)
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# Medição do circuito (colapso da função de onda):
+# MEDIÇÃO DO CIRCUITO (COLAPSO DA FUNÇÃO DE ONDA)
+#
 #
 # A medição quântica é destrutiva e probabilística. A medição dos qubits A, B,
 # SUM e CARRY projeta o sistema no estado correlacionado da superposição. Como
-# o algoritmo de Grover fez com que a entrada |01⟩ ficasse com amplitude de quase
-# 100%, então, o resultado esperado da medição será |0101⟩, descartando-se todos
+# o algoritmo de Grover fez com que a entrada |10⟩ ficasse com amplitude de quase
+# 100%, então, o resultado esperado da medição será |0110⟩, descartando-se todos
 # os demais ramos que não levavam a este resultado.
 #
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 
 
 # Mede A.
@@ -1720,11 +1674,16 @@ qc.measure(3, 3)
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# Execução da simulação com AerSimulator:
+# EXECUÇÃO DA SIMULAÇÃO COM AERSIMULATOR
 #
-# =============================================================================
+#
+# Executa o circuito quântico usando o simulador AerSimulator. Internamente, o
+# simulador está configurado para representar as amplitudes de probabilidades no
+# State Vector.
+#
+# ══════════════════════════════════════════════════════════════════════════════
 
 
 # Inicializa o simulador quântico do Qiskit.
@@ -1751,11 +1710,26 @@ CARRY = int(bitstring[0])
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# Impressão do estado do sistema quântico no prompt:
+# IMPRESSÃO NO PROMPT
 #
-# =============================================================================
+#
+# Imprime os dados do circuito no prompt de comandos. Os dados impressos são:
+#
+#   ● Diagrama de circuito quântico.
+#
+#   ● Matriz unitária.
+#
+#   ● State Vector.
+#
+#   ● Estatísticas.
+#
+#   ● Resultado bruto.
+#
+#   ● Resultado interpletado.
+#
+# ══════════════════════════════════════════════════════════════════════════════
 
 
 # Define uma linha horizontal.
@@ -1823,11 +1797,24 @@ print(line)
 
 
 
-# =============================================================================
+# ══════════════════════════════════════════════════════════════════════════════
 #
-# Geração dos gráficos do circuito:
+# GRÁFICOS
 #
-# =============================================================================
+#
+# Exibe os gráficos do circuito. Os gráficos gerados são:
+#
+#   ● Diagrama do circuito quântico.
+#
+#   ● Histograma.
+#
+#   ● Esferas de Bloch para cada qubit do circuito.
+#
+#   ● Q-Sphere.
+#
+#   ● State City.
+#
+# ══════════════════════════════════════════════════════════════════════════════
 
 
 # Janela 1: Diagrama de Circuito Quântico em Matplotlib.
