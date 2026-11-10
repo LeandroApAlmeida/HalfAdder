@@ -574,22 +574,22 @@
  Representando o circuito Half Adder em um Diagrama de Circuito Quântico:
 
 
-             ┌───┐                              ┌─┐
-   q0(A)  ───┤ H ├─────●─────────────────●──────┤M├──────────────
-             └───┘     │                 │      └╥┘
-             ┌───┐     │                 │       ║  ┌─┐
-   q1(B)  ───┤ X ├─────┼─────────●───────●───────╫──┤M├──────────
-             └───┘     │         │       │       ║  └╥┘ 
-                       │         │       │       ║   ║  ┌─┐
-   q2(S)  ─────────────⊕─────────⊕───────┼───────╫───╫──┤M├──────
-                                         │       ║   ║  └╥┘
-                                         │       ║   ║   ║  ┌─┐
-   q3(C)  ───────────────────────────────⊕───────╫───╫───╫──┤M├──
-                                                 ║   ║   ║  └╥┘
-                                                 ║   ║   ║   ║
-   c:   4/═══════════════════════════════════════╩═══╩═══╩═══╩═══
-                                                 0   1   2   3
-	
+               ┌───┐                      ┌─┐
+   q0(A) |0⟩───┤ H ├─────●───────────●────┤M├───────────────
+               └───┘     │           │    └╥┘
+               ┌───┐     │           │     ║  ┌─┐
+   q1(B) |0⟩───┤ X ├─────┼─────●─────●─────╫──┤M├───────────
+               └───┘     │     │     │     ║  └╥┘ 
+                         │     │     │     ║   ║  ┌─┐
+   q2(S) |0⟩─────────────⊕─────⊕─────┼─────╫───╫──┤M├───────
+                                     │     ║   ║  └╥┘
+                                     │     ║   ║   ║  ┌─┐
+   q3(C) |0⟩─────────────────────────⊕─────╫───╫───╫──┤M├───
+                                           ║   ║   ║  └╥┘
+                                           ║   ║   ║   ║
+   c:    4/ ═══════════════════════════════╩═══╩═══╩═══╩════
+                                           0   1   2   3
+
 
  Neste circuito de exemplo, inicialmente A está em superposição (A = α∣0⟩ + β∣1⟩),
  B = |1⟩, SUM = |0⟩ e CARRY = |0⟩. Quando são aplicadas as portas CNOT e CCX na 
@@ -891,284 +891,280 @@
  
  1. Cria a superposição:
 
-    Cria a superposição de todos os qubits a serem filtrados, no caso, q₀ e q₁.
-    Ao aplicar a superposição em q₀ e q₁, que inicialmente era ∣00⟩, tem-se:
+ Cria a superposição de todos os qubits a serem filtrados, no caso, q₀ e q₁. Ao
+ aplicar a superposição em q₀ e q₁, que inicialmente era ∣00⟩, tem-se:
    
    
-      ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
+   ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
    
    
-    Os quatro estados entram em superposição uniforme, com amplitude de probabilidade
-    1/2 cada um.
+ Os quatro estados entram em superposição uniforme, com amplitude de probabilidade
+ 1/2 cada um.
    
-    Pela regra de Born, a probabilidade de cada estado é calculada como:
-   
-   
-      |1/2|² = 1/4 = 25%
+ Pela regra de Born, a probabilidade de cada estado é calculada como:
    
    
-    Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
-    de cada estado é a seguinte:
+   |1/2|² = 1/4 = 25%
    
    
-      |00⟩ ⇒ 1/2
-      |01⟩ ⇒ 1/2
-      |10⟩ ⇒ 1/2
-      |11⟩ ⇒ 1/2
+ Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
+ de cada estado é a seguinte:
+   
+   
+   |00⟩ ⇒ 1/2
+   |01⟩ ⇒ 1/2
+   |10⟩ ⇒ 1/2
+   |11⟩ ⇒ 1/2
 
 
  2. Oráculo:
  
-    O oráculo identifica o estado a ser buscado. Ele vai aplicar:
+ O oráculo identifica o estado a ser buscado. Ele vai aplicar:
     
     
-      Of∣x⟩ → (−1)ᶠ⁽ˣ⁾∣x⟩
+   Of∣x⟩ → (−1)ᶠ⁽ˣ⁾∣x⟩
       
     
-    sobre os estados de q₀ e q₁ em superposição.
+ sobre os estados de q₀ e q₁ em superposição.
   
-    Como queremos marcar o estado ∣10⟩, temos que:
+ Como queremos marcar o estado ∣10⟩, temos que:
     
     
-             ⎧ 1  x = 10
-      f(x) = ⎨
-             ⎩ 0  x ≠ 10
+          ⎧ 1  x = 10
+   f(x) = ⎨
+          ⎩ 0  x ≠ 10
              
     
-    Que resulta:
+ Que resulta:
     
     
-      ┌────────┬──────┬───────────┐
-      │ Estado │ f(x) │ Of∣x⟩     │
-      ╞════════╪══════╪═══════════╡
-      │ ∣00⟩   │ 0    │ +∣00⟩     │
-      ├────────┼──────┼───────────┤
-      │ ∣01⟩   │ 0    │ +∣01⟩     │
-      ├────────┼──────┼───────────┤
-      │ ∣10⟩   │ 1    │ −∣10⟩     │
-      ├────────┼──────┼───────────┤
-      │ ∣11⟩   │ 0    │ +∣11⟩     │
-      └────────┴──────┴───────────┘
+   ┌────────┬──────┬───────────┐
+   │ Estado │ f(x) │ Of∣x⟩     │
+   ╞════════╪══════╪═══════════╡
+   │ ∣00⟩   │ 0    │ +∣00⟩     │
+   ├────────┼──────┼───────────┤
+   │ ∣01⟩   │ 0    │ +∣01⟩     │
+   ├────────┼──────┼───────────┤
+   │ ∣10⟩   │ 1    │ −∣10⟩     │
+   ├────────┼──────┼───────────┤
+   │ ∣11⟩   │ 0    │ +∣11⟩     │
+   └────────┴──────┴───────────┘
 
 
-    Representando a matriz do oráculo para cada estado da tabela:
+ Representando a matriz do oráculo para cada estado da tabela:
     
 
-           ┌            ┐
-           │ 1  0  0  0 │
-           │ 0  1  0  0 │
-      Of = │ 0  0 −1  0 │
-           │ 0  0  0  1 │
-           └            ┘
+        ┌            ┐
+        │ 1  0  0  0 │
+        │ 0  1  0  0 │
+   Of = │ 0  0 −1  0 │
+        │ 0  0  0  1 │
+        └            ┘
 
  
-    O oráculo não aumenta a probabilidade do estado procurado, apenas muda a
-    fase da amplitude da solução.
+ O oráculo não aumenta a probabilidade do estado procurado, apenas muda a fase da
+ amplitude da solução.
     
-    O circuito que realiza esta transformação no projeto é o seguinte:
-    
-                            
-                 ┌───┐           ┌───┐                    
-      q0(A)  ────┤ X ├─────●─────┤ X ├────
-                 └───┘     │     └───┘   
-                           │     
-      q1(B)  ──────────────●──────────────
-                                 
+ O circuito que realiza esta transformação no projeto é o seguinte:
 
-      1. A porta X transforma o estado desejado ∣10⟩ em ∣11⟩ temporariamente,
-         invertendo o valor do qubit A (q0).
+
+             ┌───┐           ┌───┐                    
+   q0(A) ────┤ X ├─────●─────┤ X ├────
+             └───┘     │     └───┘   
+                       │
+   q1(B) ──────────────●──────────────
+                      
+
+   1. A porta X transforma o estado desejado ∣10⟩ em ∣11⟩ temporariamente, invertendo
+      o valor do qubit A (q0).
       
-      2. A porta CZ inverte a fase da amplitude se os dois qubits forem 1. Nos
-         demais casos, ela não altera nada.
+   2. A porta CZ inverte a fase da amplitude se os dois qubits forem 1. Nos demais
+      casos, ela não altera nada.
       
-      3. A segunda porta X desfaz a transformação inicial, invertendo novamente 
-         o valor do qubit A (q0), porém a fase negativa permanece (−∣10⟩).
+   3. A segunda porta X desfaz a transformação inicial, invertendo novamente o valor
+      do qubit A (q0), porém a fase negativa permanece (−∣10⟩).
 
 
-    Mostrando cada etapa da transformação em uma tabela:
+ Mostrando cada etapa da transformação em uma tabela:
     
     
-      ┌────────────────┬────────┬─────────┬────────┐
-      │ Estado inicial │ Após X │ Após CZ │ Após X │
-      ╞════════════════╪════════╪═════════╪════════╡
-      │ ∣00⟩           │  ∣01⟩  │  ∣01⟩   │  ∣00⟩  │
-      ├────────────────┼────────┼─────────┼────────┤
-      │ ∣01⟩           │  ∣00⟩  │  ∣00⟩   │  ∣01⟩  │
-      ├────────────────┼────────┼─────────┼────────┤
-      │ ∣10⟩           │  ∣11⟩  │ −∣11⟩   │ −∣10⟩  │
-      ├────────────────┼────────┼─────────┼────────┤
-      │ ∣11⟩           │  ∣10⟩  │  ∣10⟩   │  ∣11⟩  │
-      └────────────────┴────────┴─────────┴────────┘
+   ┌────────────────┬────────┬─────────┬────────┐
+   │ Estado inicial │ Após X │ Após CZ │ Após X │
+   ╞════════════════╪════════╪═════════╪════════╡
+   │ ∣00⟩           │  ∣01⟩  │  ∣01⟩   │  ∣00⟩  │
+   ├────────────────┼────────┼─────────┼────────┤
+   │ ∣01⟩           │  ∣00⟩  │  ∣00⟩   │  ∣01⟩  │
+   ├────────────────┼────────┼─────────┼────────┤
+   │ ∣10⟩           │  ∣11⟩  │ −∣11⟩   │ −∣10⟩  │
+   ├────────────────┼────────┼─────────┼────────┤
+   │ ∣11⟩           │  ∣10⟩  │  ∣10⟩   │  ∣11⟩  │
+   └────────────────┴────────┴─────────┴────────┘
 
 
-    Antes do oráculo tínhamos:
+ Antes do oráculo tínhamos:
 
 
-      ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
+   ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
       
       
-    Depois:
+ Depois:
     
     
-                              Estado
-                              Marcado
-                                ↓
-      ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + −|10⟩ + |11⟩)
+                           Estado
+                           Marcado
+                             ↓
+   ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + −|10⟩ + |11⟩)
  
 
  3. Operador de difusão (difusor):
 
-    Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
+ Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
 
 
-      D = 2∣s⟩⟨s∣ − I
+   D = 2∣ψ⟩⟨ψ∣ − I
 
  
-    Esse operador pode ser interpretado como uma inversão em relação à média das
-    amplitudes.
+ Esse operador pode ser interpretado como uma inversão em relação à média das
+ amplitudes.
     
-    Depois do oráculo, as fases de amplitudes dos estados ficarão como:
+ Depois do oráculo, as fases de amplitudes dos estados ficarão como:
    
    
-      |00⟩ ⇒  1/2
-      |01⟩ ⇒  1/2
-      |10⟩ ⇒ −1/2
-      |11⟩ ⇒  1/2
+   |00⟩ ⇒  1/2
+   |01⟩ ⇒  1/2
+   |10⟩ ⇒ −1/2
+   |11⟩ ⇒  1/2
    
    
-    A amplitude de cada estado, após a aplicação do difusor, é calculada pela
-    expressão:
-    
-    
-      ảᵢ = 2ā − aᵢ
-      
-    
-    onde:
-    
-      ā: Média das amplitudes.
-      
-      ảᵢ: Amplitude após a difusão.
-
-      aᵢ: Amplitude original do estado.
-      
-      
-    A média das amplitudes, no caso, é calculada como:
-   
-   
-      ((1/2 + 1/2 − 1/2 + 1/2) / 4) = 1/4
+ A amplitude de cada estado, após a aplicação do difusor, é calculada pela expressão:
     
     
-    Como, na prática, o circuito implementa o negativo global do difusor, denotado
-    por:
+   ảᵢ = 2ā − aᵢ
+      
+    
+ onde:
+    
+   ā: Média das amplitudes.
+      
+   ảᵢ: Amplitude após a difusão.
 
-
-      −D = I − 2∣s⟩⟨s∣
+   aᵢ: Amplitude original do estado.
       
       
-    a nova amplitude é calculada pela expressão:
-
+ A média das amplitudes, no caso, é calculada como:
    
-      ảᵢ = aᵢ − 2ā
+   
+   ((1/2 + 1/2 − 1/2 + 1/2) / 4) = 1/4
+    
+    
+ Como, na prática, o circuito implementa o negativo global do difusor, denotado
+ por:
+
+
+   −D = I − 2∣ψ⟩⟨ψ∣
       
       
-    Aplicando a expressão para o estado alvo |10⟩, com amplitude a = −1/2, temos:
-   
-   
-      ả = −1/2 − 2(1/4)
-      ả = −1/2 − 1/2
-      ả = −1
-   
-   
-    Para os demais estados (|00⟩, |01⟩ e |11⟩), a amplitude é calculada como:
-   
-   
-      ả = 1/2 − 2(1/4)
-      ả = 1/2 − 1/2
-      ả = 0
-   
-   
-    Logo, antes da difusão tínhamos estas amplitudes para cada estado:
-   
-   
-      |00⟩ ⇒  1/2
-      |01⟩ ⇒  1/2
-      |10⟩ ⇒ −1/2
-      |11⟩ ⇒  1/2
-   
-   
-    Depois:
-   
-   
-      |00⟩ ⇒  0
-      |01⟩ ⇒  0
-      |10⟩ ⇒ −1
-      |11⟩ ⇒  0
+ a nova amplitude é calculada pela expressão:
 
-
-    Isso significa que tem próximo de 100% de probabilidade de colapsar no estado
-    |10⟩, e quase nenhuma probabilidade de colapsar nos demais estados.
-
-    Para este problema com apenas 4 estados e 1 solução, calculamos o número
-    de iterações de oráculo → operador de difusão como:
+   
+   ảᵢ = aᵢ − 2ā
       
-           _
-      π/4(√N) ⇒ 
-           _
-      π/4(√4) ⇒
+      
+ Aplicando a expressão para o estado alvo |10⟩, com amplitude a = −1/2, temos:
+   
+   
+   ả = −1/2 − 2(1/4)
+   ả = −1/2 − 1/2
+   ả = −1
+   
+   
+ Para os demais estados (|00⟩, |01⟩ e |11⟩), a amplitude é calculada como:
+   
+   
+   ả = 1/2 − 2(1/4)
+   ả = 1/2 − 1/2
+   ả = 0
+   
+   
+ Logo, antes da difusão tínhamos estas amplitudes para cada estado:
+   
+   
+   |00⟩ ⇒  1/2
+   |01⟩ ⇒  1/2
+   |10⟩ ⇒ −1/2
+   |11⟩ ⇒  1/2
+   
+   
+ Depois:
+   
+   
+   |00⟩ ⇒  0
+   |01⟩ ⇒  0
+   |10⟩ ⇒ −1
+   |11⟩ ⇒  0
+
+
+ Isso significa que tem próximo de 100% de probabilidade de colapsar no estado |10⟩,
+ e quase nenhuma probabilidade de colapsar nos demais estados.
+
+ Para este problema com apenas 4 estados e 1 solução, calculamos o número de iterações
+ de oráculo → operador de difusão como:
+      
+        _
+   π/4(√N) ⇒ 
+        _
+   π/4(√4) ⇒
  
-      π/4(2) = ≈1
+   π/4(2) = ≈1
 
     
-    De modo genérico, para N estados e M soluções, onde M é muito menor que N 
-    (M ≪ N), repete-se oráculo → operador de difusão k vezes, de acordo com a
-    expressão:
+ De modo genérico, para N estados e M soluções, onde M é muito menor que N (M ≪ N),
+ repete-se oráculo → operador de difusão k vezes, de acordo com a expressão:
 
-               ___
-      k ≈ π/4 √N/M
+            ___
+   k ≈ π/4 √N/M
      
      
-    Onde:
+ Onde:
      
      
-      N: Número total de estados.
+   N: Número total de estados.
      
-      M: Número de estados que são soluções.
+   M: Número de estados que são soluções.
       
       
-    O circuito que implementa o operador de difusão no projeto é o seguinte:
-    
-    
-                ┌───┐ ┌───┐                 ┌───┐ ┌───┐
-      q0(A) ────┤ H ├─┤ X ├────────●────────┤ X ├─┤ H ├────
-                └───┘ └───┘        │        └───┘ └───┘
-                                   │
-                ┌───┐ ┌───┐ ┌───┐  │  ┌───┐ ┌───┐ ┌───┐
-      q1(B) ────┤ H ├─┤ X ├─┤ H ├──⊕──┤ H ├─┤ X ├─┤ H ├────
-                └───┘ └───┘ └───┘     └───┘ └───┘ └───┘
+ O circuito que implementa o operador de difusão no projeto é o seguinte:
 
 
-      1. Aplica Hadamard nos qubits q0 e q1, preparando o sistema para a
-         transformação de difusão e estabelecendo a base de superposição.
+             ┌───┐ ┌───┐                 ┌───┐ ┌───┐
+   q0(A) ────┤ H ├─┤ X ├────────●────────┤ X ├─┤ H ├────
+             └───┘ └───┘        │        └───┘ └───┘
+             ┌───┐ ┌───┐ ┌───┐  │  ┌───┐ ┌───┐ ┌───┐
+   q1(B) ────┤ H ├─┤ X ├─┤ H ├──⊕──┤ H ├─┤ X ├─┤ H ├────
+             └───┘ └───┘ └───┘     └───┘ └───┘ └───┘
 
-      2. Aplica a porta X nos dois qubits, realizando a inversão lógica dos
-         estados |0⟩ e |1⟩. Essa operação prepara os qubits para a reflexão de
-         fase.
 
-      3. Aplica Hadamard no qubit q1, preparando-o para participar da operação
-         controlada CNOT.
+   1. Aplica Hadamard nos qubits q0 e q1, preparando o sistema para a transformação
+      de difusão e estabelecendo a base de superposição.
 
-      4. Aplica CNOT entre q0 (controle) e q1 (alvo). A operação inverte o qubit
-         alvo quando o qubit de controle está no estado |1⟩.
+   2. Aplica a porta X nos dois qubits, realizando a inversão lógica dos estados
+      |0⟩ e |1⟩. Essa operação prepara os qubits para a reflexão de fase.
 
-      5. Aplica novamente Hadamard no qubit q1. Em conjunto com a CNOT, essa 
-         sequência equivale a uma porta CZ (Controlled-Z), que altera o sinal
-         da amplitude do estado |11⟩.
+   3. Aplica Hadamard no qubit q1, preparando-o para participar da operação controlada
+      CNOT.
 
-      6. Aplica novamente X nos qubits q0 e q1, completando a transformação de
-         fase necessária para a reflexão.
+   4. Aplica CNOT entre q0 (controle) e q1 (alvo). A operação inverte o qubit alvo
+      quando o qubit de controle está no estado |1⟩.
 
-      7. Aplica Hadamard nos qubits q0 e q1, retornando à base computacional e
-         completando o operador de difusão.
+   5. Aplica novamente Hadamard no qubit q1. Em conjunto com a CNOT, essa sequência
+      equivale a uma porta CZ (Controlled-Z), que altera o sinal da amplitude do
+      estado |11⟩.
+
+   6. Aplica novamente X nos qubits q0 e q1, completando a transformação de fase
+      necessária para a reflexão.
+
+   7. Aplica Hadamard nos qubits q0 e q1, retornando à base computacional e completando
+      o operador de difusão.
          
          
  Resumindo as amplitudes de probabilidade de cada estado a cada etapa do algoritmo
@@ -1205,26 +1201,9 @@
 
 
  O operador de difusão usa interferência destrutiva para os estados não desejados
- e interferência construtiva para o estado desejado desta forma neste algoritmo:
- 
-
-                         Oráculo cria diferença de fase
-                         
-                                      ⇓
-                     
-                     Difusão faz as amplitudes interferirem
-                                      
-                                      ⇓
-                   
-                   Solução é reforçada, demais são canceladas
-                   
-                                      ⇓
-                                      
-              Solução |10⟩ (A=0, B=1) é a entrada para o Half Adder
-
-
- Interferência é um fenômeno da mecânica quântica em que partículas como elétrons
- e fótons se comportam como ondas e combinam seus estados em superposição.
+ e interferência construtiva para o estado desejado. Interferência é um fenômeno
+ da mecânica quântica em que partículas como elétrons e fótons se comportam como
+ ondas e combinam seus estados em superposição.
  
  Na física clássica, costumamos separar:
 
@@ -1248,15 +1227,104 @@
  
  
  (continua...)
- 
- 
- 
- PORTAS QUÂNTICAS
- 
- 
- PORTA HADAMARD
 
- A porta Hadamard é descrita pela matriz 2×2:
+
+ CIRCUITO HALF ADDER COMPLETO
+
+
+ O circuito Half Adder implementado neste projeto é representado no diagrama de
+ circuito quântico abaixo:
+
+                                                            
+        ├────────────── Algoritmo de Grover ─────────────┤ ├ Half Adder e medição ┤
+
+
+         ┌──┐ ┌──┐   ┌──┐ ┌──┐ ┌──┐             ┌──┐ ┌──┐ ┊       ┊ ┌─┐                 
+ q0 |0⟩──┤H ├─┤X ├─●─┤X ├─┤H ├─┤X ├──────●──────┤X ├─┤H ├─┼─●───●─┼─┤M├────────────
+         └──┘ └──┘ │ └──┘ └──┘ └──┘      │      └──┘ └──┘ ┊ │   │ ┊ └╥┘
+         ┌──┐      │      ┌──┐ ┌──┐ ┌──┐ │ ┌──┐ ┌──┐ ┌──┐ ┊ │   │ ┊  ║  ┌─┐
+ q1 |0⟩──┤H ├──────●──────┤H ├─┤X ├─┤H ├─⊕─┤H ├─┤X ├─┤H ├─┼─┼─●─●─┼──╫──┤M├────────
+         └──┘             └──┘ └──┘ └──┘   └──┘ └──┘ └──┘ ┊ │ │ │ ┊  ║  └╥┘
+                                                          ┊ │ │ │ ┊  ║   ║  ┌─┐
+ q2 |0⟩───────────────────────────────────────────────────┼─⊕─⊕─┼─┼──╫───╫──┤M├────
+                                                          ┊     │ ┊  ║   ║  └╥┘
+                                                          ┊     │ ┊  ║   ║   ║  ┌─┐
+ q3 |0⟩───────────────────────────────────────────────────┼─────⊕─┼──╫───╫───╫──┤M├
+                                                          ┊       ┊  ║   ║   ║  └╥┘
+                                                                     ║   ║   ║   ║
+ c: 4/ ══════════════════════════════════════════════════════════════╩═══╩═══╩═══╩═
+                                                                     0   1   2   3
+
+
+ Como detalhado anteriormente, a primeira etapa do circuito é o algoritmo de Grover,
+ responsável por filtrar o estado de A = |0⟩ e B = |1⟩, denotado por |10⟩. A segunda
+ é o Half Adder propriamente dito, que realiza a soma A + B. Uma terceira etapa é
+ a medição dos qubits, que leva ao colapso da função de onda.
+
+ Sem filtrar o estado de entrada |10⟩, o circuito Half Adder tem um comportamento
+ puramente probabilístico. Por exemplo, considere o Half Adder sem a etapa do
+ algoritmo de Grover:
+
+
+               ┌───┐                      ┌─┐
+   q0(A) |0⟩───┤ H ├─────●───────────●────┤M├───────────────
+               └───┘     │           │    └╥┘
+               ┌───┐     │           │     ║  ┌─┐
+   q1(B) |0⟩───┤ H ├─────┼─────●─────●─────╫──┤M├───────────
+               └───┘     │     │     │     ║  └╥┘ 
+                         │     │     │     ║   ║  ┌─┐
+   q2(S) |0⟩─────────────⊕─────⊕─────┼─────╫───╫──┤M├───────
+                                     │     ║   ║  └╥┘
+                                     │     ║   ║   ║  ┌─┐
+   q3(C) |0⟩─────────────────────────⊕─────╫───╫───╫──┤M├───
+                                           ║   ║   ║  └╥┘
+                                           ║   ║   ║   ║
+   c:    4/ ═══════════════════════════════╩═══╩═══╩═══╩════
+                                           0   1   2   3
+
+
+ Nele, os estados de entrada (q0 e q1) são colocados em superposição uniforme:
+
+
+   ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
+
+
+ que se ramificará nos seguintes estados ao emaranhar q0, q1, q2 e q3:
+
+
+   ∣ψ⟩ = 1/2(|0000⟩ + |0101⟩ + |0110⟩ + |1111⟩)
+
+
+ Nesta condição, o circuito estará em superposição uniforme de todos os estados
+ que representam uma soma A + B, com probabilidade de 25% cada:
+
+
+   |0000⟩ ⇒ 25%
+   |0101⟩ ⇒ 25%
+   |0110⟩ ⇒ 25%
+   |1111⟩ ⇒ 25%
+
+
+ Isso significa que se executá-lo 1000 vezes, ele colapsará aproximadamente 250
+ vezes em cada estado ao fazer a medição. Este circuito não tem nenhuma função
+ prática, no sentido de somar duas entradas com valores específicos, pois é uma
+ mistura probabilística de todas as somas de A + B possíveis.
+
+ O papel do algoritmo de Grover é a seleção de um ramo específico, no caso |0110⟩,
+ que representa a soma de A = |0⟩ e B = |1⟩, uma vez que ele filtra o estado de
+ entrada |10⟩ com amplitude próxima de 100% para o Half Adder, enquanto os demais
+ estados estarão com amplitude próxima de 0%. Com isso, mesmo os qubits estando em
+ superposição, o resultado do Half Adder será a soma de A = |0⟩ e B = |1⟩, com
+ alta probabilidade (100% em um circuito ideal).
+
+ Para entender o circuito, é necessário entender as funções desempenhadas pelas
+ portas quânticas que ele utiliza.
+ 
+ 
+ 1. Porta Hadamard:
+
+ A porta Hadamard ou Walsh-Hadamard, nomeada em homenagem a Jacques Hadamard e
+ Joseph L. Walsh, atua em um único qubit. Ela é descrita pela matriz 2×2:
 
 
             ┌    ┐
@@ -1420,7 +1488,7 @@ qc = QuantumCircuit(4, 4)
 #   ∣00⟩
 #
 # Ao aplicar a porta Hadamard a ambas as entradas, entra em superposição uniforme
-# de A e B, representada por:
+# de A e B:
 #
 #   ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
 #
@@ -1817,7 +1885,7 @@ print(line)
 # ══════════════════════════════════════════════════════════════════════════════
 
 
-# Janela 1: Diagrama de Circuito Quântico em Matplotlib.
+# Janela 1: Diagrama de Circuito Quântico.
 
 fig_circuit = plt.figure(figsize=(8, 5))
 ax_circ = fig_circuit.add_subplot(111)
@@ -1848,19 +1916,52 @@ fig_qsphere = plot_state_qsphere(state)
 
 # Janela 5: State City para mapear tridimensionalmente a Matriz de Densidade.
 
-fig_city = plot_state_city(state, title="State City (Matriz de Densidade)", figsize=(10, 6))
+fig_city = plot_state_city(
+    state,
+    title="State City (Matriz de Densidade)",
+    figsize=(12, 8)
+)
 
+dirac_labels = [
+    rf"$|{i:04b}\rangle$"
+    for i in range(16)
+]
 
-# Destaca em vermelho os estados predominantes no State City.
+active_states = set(counts.keys())
 
-active_states = list(counts.keys())
 for ax in fig_city.get_axes():
-    for tick in ax.get_xticklabels():
-        if tick.get_text() in active_states:
+
+    ax.set_xticks(range(16))
+
+    ax.set_xticklabels(
+        dirac_labels
+        #rotation=360
+        #ha="right",
+        #va="top"
+    )
+
+    ax.set_yticks(range(16))
+
+    ax.set_yticklabels(
+        dirac_labels
+        #rotation=0
+        #ha="center",
+        #va="center"
+    )
+    
+    for i, tick in enumerate(ax.get_xticklabels()):
+        
+        state_label = f"{i:04b}"
+
+        if state_label in active_states:
             tick.set_color("red")
             tick.set_weight("bold")
-    for tick in ax.get_yticklabels():
-        if tick.get_text() in active_states:
+
+    for i, tick in enumerate(ax.get_yticklabels()):
+        
+        state_label = f"{i:04b}"
+
+        if state_label in active_states:
             tick.set_color("red")
             tick.set_weight("bold")
 
