@@ -48,6 +48,9 @@
    |1101⟩
    |1110⟩
    |1111⟩
+
+
+ SUPERPOSIÇÃO QUÂNTICA
 ​
 
  Um sistema quântico pode estar em um desses estados ou pode existir em uma 
@@ -513,6 +516,9 @@
         1   2   3
 
 
+ CIRCUITO HALF ADDER
+
+
  Um circuito quântico atua linearmente sobre qualquer estado do espaço de Hilbert.
  Isso significa que a mesma transformação unitária é aplicada ao estado quântico
  completo, afetando simultaneamente todos os componentes da superposição. Isso
@@ -523,11 +529,11 @@
  são:
 
 
-   CNOT(A → SUM)
+   CNOT(A,SUM)
 
-   CNOT(B → SUM)
+   CNOT(B,SUM)
 
-   CCX(A,B → CARRY)
+   CCX(A,B,CARRY)
 
 
  A evolução linear é dada por:
@@ -606,15 +612,27 @@
  transformação unitária. B influencia o estado global, porém está desacoplado (não
  emaranhado). Ele atua como um qubit clássico controlador fixo no circuito.
 
+
+ EMARANHAMENTO QUÂNTICO
+ 
+
  Emaranhamento quântico, ou entrelaçamento quântico, é um fenômeno em que dois ou
  mais sistemas quânticos passam a ser descritos por um único estado quântico conjunto,
  de modo que não é possível descrever completamente cada sistema de forma independente.
  Em termos matemáticos, um estado emaranhado não pode ser escrito como o produto dos
  estados individuais dos subsistemas.
+
+ Diferente dos sistemas clássicos, que possuem propriedades definidas, os sistemas
+ quânticos são descritos por uma função de onda. Essa função de onda não determina
+ um único resultado para uma medição, mas fornece uma distribuição de probabilidade
+ sobre todos os resultados possíveis. Quando dois sistemas quânticos tornam-se
+ emaranhados, suas funções de onda individuais não podem mais ser escritas de forma
+ separada. Em vez disso, eles são descritos por uma única função de onda combinada
+ que abrange ambos os sistemas. É essa função de onda compartilhada que resulta na
+ forte correlação entre os sistemas entrelaçados.
  
- Em computação quântica é o princípio que permite que um circuito quântico produza
- e manipule correlações quânticas entre vários qubits. Por exemplo, considere o
- estado de Bell:
+ Por exemplo, considere dois qubits inicialmente preparados em um estado emaranhado
+ representado pelo estado de Bell:
 
              _
    ∣Φ⁺⟩ = 1/√2 (|00⟩ + ∣11⟩)
@@ -763,21 +781,21 @@
  
    1. Perda de Fase (Dephasing): O ambiente atua como uma medição constante e 
       indesejada, destruindo a relação de fase sutil entre as amplitudes complexas
-      (os αi do espaço de Hilbert).
-   
-                                                       _
-   2. Transição de Estado: O estado de superposição 1/√2 (∣0⟩ + ∣1⟩) colapsa para 
-      uma mistura puramente clássica (ou é |0⟩, ou é |1⟩, sem propriedades de 
-      interferência).
+      (os αi do espaço de Hilbert), mesmo sem necessariamente perder energia.
 
    
-   3. Dissipação de Energia (Relaxamento): Além da perda de fase, a decoerência 
+   2. Dissipação de Energia (Relaxamento): Além da perda de fase, a decoerência 
       frequentemente caminha junto com o relaxamento térmico. O sistema quântico 
       troca energia com o ambiente até atingir o equilíbrio. Para um qubit, isso 
       geralmente significa decair de um estado de maior energia (|1⟩) de volta para 
       o estado fundamental (|0⟩).
- 
- 
+
+                                                       _
+   3. Transição de Estado: O estado de superposição 1/√2 (∣0⟩ + ∣1⟩) colapsa para 
+      uma mistura puramente clássica (ou é |0⟩, ou é |1⟩, sem propriedades de 
+      interferência).
+
+
  Em um hardware real afetado por ruído, como o IBMQ, por exemplo, o resultado 
  final medido diverge das probabilidades ideais calculadas por este programa,
  logo, aqui estamos simulando um sistema ideal, não um real.
@@ -888,7 +906,8 @@
  A execução do algoritmo de Grover se dá nas seguintes etapas:
  
  
- 1. Cria a superposição:
+ 1. Cria a superposição
+
 
  Cria a superposição de todos os qubits a serem filtrados, no caso, q₀ e q₁. Ao
  aplicar a superposição em q₀ e q₁, que inicialmente era ∣00⟩, tem-se:
@@ -901,22 +920,23 @@
  1/2 cada um.
    
  Pela regra de Born, a probabilidade de cada estado é calculada como:
-   
-   
+
+
    |1/2|² = 1/4 = 25%
-   
-   
+
+
  Antes de aplicar o algoritmo de Grover, portanto, a amplitude de probabilidade
  de cada estado é a seguinte:
-   
-   
+
+
    |00⟩ ⇒ 1/2
    |01⟩ ⇒ 1/2
    |10⟩ ⇒ 1/2
    |11⟩ ⇒ 1/2
 
 
- 2. Oráculo:
+ 2. Oráculo
+
  
  O oráculo identifica o estado a ser buscado. Ele vai aplicar:
     
@@ -935,8 +955,8 @@
              
     
  Que resulta:
-    
-    
+
+
    ┌────────┬──────┬───────────┐
    │ Estado │ f(x) │ Of∣x⟩     │
    ╞════════╪══════╪═══════════╡
@@ -1007,22 +1027,23 @@
       
       
  Depois:
-    
-    
+
+
                            Estado
                            Marcado
                              ↓
    ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + −|10⟩ + |11⟩)
- 
 
- 3. Operador de difusão (difusor):
+
+ 3. Operador de difusão (difusor)
+ 
 
  Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
 
 
    D = 2∣ψ⟩⟨ψ∣ − I
 
- 
+
  Esse operador pode ser interpretado como uma inversão em relação à média das
  amplitudes.
     
@@ -1108,15 +1129,15 @@
 
  Para este problema com apenas 4 estados e 1 solução, calculamos o número de iterações
  de oráculo → operador de difusão como:
-      
+ 
         _
-   π/4(√N) ⇒ 
+   π/4(√N) ⇒
         _
    π/4(√4) ⇒
  
    π/4(2) = ≈1
 
-    
+ 
  De modo genérico, para N estados e M soluções, onde M é muito menor que N (M ≪ N),
  repete-se oráculo → operador de difusão k vezes, de acordo com a expressão:
 
@@ -1125,13 +1146,13 @@
      
      
  Onde:
-     
-     
+
+
    N: Número total de estados.
      
    M: Número de estados que são soluções.
-      
-      
+
+
  O circuito que implementa o operador de difusão no projeto é o seguinte:
 
 
@@ -1199,6 +1220,9 @@
    fase global, sem efeito sobre a medição.
 
 
+ INTERFERÊNCIA QUÂNTICA
+ 
+
  O operador de difusão usa interferência destrutiva para os estados não desejados
  e interferência construtiva para o estado desejado. Interferência é um fenômeno
  da mecânica quântica em que partículas como elétrons e fótons se comportam como
@@ -1223,12 +1247,12 @@
  A diferença fundamental em relação à mecânica clássica é que não somamos diretamente
  probabilidades. Somamos amplitudes de probabilidade e só depois calculamos a 
  probabilidade.
- 
- 
+
+
  (continua...)
 
 
- CIRCUITO HALF ADDER COMPLETO
+ CIRCUITO HALF ADDER COMPLETO (ALGORITMO DE GROVER + HALF ADDER)
 
 
  O circuito Half Adder implementado neste projeto é representado no diagrama de
@@ -1315,13 +1339,62 @@
  alta probabilidade (100% em um circuito ideal).
 
  Para entender o circuito, é necessário entender as funções desempenhadas pelas
- portas quânticas que ele utiliza.
- 
- 
- 1. Porta Hadamard:
+ portas quânticas que ele utiliza na sequência de transformações unitárias.
 
- A porta Hadamard ou Walsh-Hadamard, nomeada em homenagem a Jacques Hadamard e
- Joseph L. Walsh, atua em um único qubit. Ela é descrita pela matriz 2×2:
+
+ 1. Porta Pauli-X (X)
+
+
+        ┌───┐
+   ─────┤ X ├─────          ─────⊕─────
+        └───┘
+
+
+ A porta Pauli-X atua em um único qubit. Ela inverte o estado deste, transformando
+ de |0⟩ em |1⟩ e vice-versa. É o equivalente de uma porta NOT clássica.
+
+ Sua representação matricial é:
+
+
+       ┌    ┐
+       │0  1│
+   X = │    │
+       │1  0│
+       └    ┘
+
+
+ Aplicando X ao vetor |0⟩, temos:
+
+ 
+            ┌    ┐┌   ┐     ┌   ┐
+            │0  1││ 1 │     │ 0 │
+   X|0⟩  =  │    ││   │  =  │   │  =  |1⟩
+            │1  0││ 0 │     │ 1 │
+            └    ┘└   ┘     └   ┘
+
+
+ Aplicando X ao vetor |1⟩, temos:
+
+
+            ┌    ┐┌   ┐     ┌   ┐
+            │0  1││ 0 │     │ 1 │
+   X|1⟩  =  │    ││   │  =  │   │  =  |0⟩
+            │1  0││ 1 │     │ 0 │
+            └    ┘└   ┘     └   ┘
+
+
+ 2. Porta Hadamard (H)
+
+
+        ┌───┐
+   ─────┤ H ├─────
+        └───┘
+
+
+ A porta Hadamard atua em um único qubit. Se aplicada a qualquer estado base |0⟩
+ ou |1⟩, produz uma superposição.
+
+ Sua representação matricial é:
 
 
             ┌    ┐
@@ -1334,52 +1407,421 @@
  Aplicando H ao vetor ∣0⟩, temos:
 
 
-               ┌    ┐ ┌ ┐          ┌ ┐
-             _ │1  1│ │1│        _ │1│
-   H∣0⟩ = 1/√2 │    │ │ │  =  1/√2 │ │
-               │1 −1│ │0│          │1│
-               └    ┘ └ ┘          └ ┘
-
-
- Na notação de Dirac:
-
-             
-          ∣0⟩ + ∣1⟩
-   H∣0⟩ = ────────
-             √2          
-
-
- Temos então uma superposição uniforme. 
-
- A amplitude de cada estado é:
-
-      _
-   1/√2
+                 ┌    ┐ ┌   ┐          ┌   ┐        
+               _ │1  1│ │ 1 │        _ │ 1 │        _ 
+   H∣0⟩  =  1/√2 │    │ │   │  =  1/√2 │   │  =  1/√2 (|0⟩ + |1⟩)
+                 │1 −1│ │ 0 │          │ 1 │        
+                 └    ┘ └   ┘          └   ┘
 
 
  Aplicando H ao vetor ∣1⟩, temos:
 
 
-               ┌    ┐ ┌ ┐          ┌  ┐
-             _ │1  1│ │0│        _ │ 1│
-   H∣1⟩ = 1/√2 │    │ │ │  =  1/√2 │  │ 
-               │1 −1│ │1│          │−1│
-               └    ┘ └ ┘          └  ┘
-
-
- Na notação de Dirac:
-
-
-          ∣0⟩ − ∣1⟩
-   H∣1⟩ = ────────
-             √2
+                 ┌    ┐ ┌   ┐          ┌   ┐
+               _ │1  1│ │ 0 │        _ │ 1 │        _
+   H∣1⟩  =  1/√2 │    │ │   │  =  1/√2 │   │  =  1/√2 (|0⟩ − |1⟩)
+                 │1 −1│ │ 1 │          │−1 │
+                 └    ┘ └   ┘          └   ┘
 
  
  O sinal é negativo. As probabilidades continuam sendo 50%/50%, mas a fase das
  amplitudes é diferente.
+
+
+ 3. Porta Controlled-Z (CZ)
+
+
+   ─────●─────          ─────●─────
+        │                    │
+        │                  ┌───┐
+   ─────●─────          ───┤ Z ├───
+                           └───┘
+
+
+ A porta Controlled-Z (CZ) é uma porta de 2 qubits que aplica uma inversão de fase
+ de amplitude de −1 quando ambos os qubits estão no estado ∣1⟩.
+
+ Sua representação matricial é:
+
+
+        ┌            ┐
+        │ 1  0  0  0 │
+        │ 0  1  0  0 │
+   CZ = │ 0  0  1  0 │
+        │ 0  0  0 −1 │
+        └            ┘
+
+
+ Aplicando CZ ao vetor ∣00⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 1 │     │ 1 │
+              │ 0  1  0  0 ││ 0 │     │ 0 │
+   CZ∣00⟩  =  │ 0  0  1  0 ││ 0 │  =  │ 0 │  =  ∣00⟩
+              │ 0  0  0 −1 ││ 0 │     │ 0 │
+              └            ┘└   ┘     └   ┘
+
+
+ Aplicando CZ ao vetor ∣01⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 0 │     │ 0 │
+              │ 0  1  0  0 ││ 1 │     │ 1 │
+   CZ∣01⟩  =  │ 0  0  1  0 ││ 0 │  =  │ 0 │  =  ∣01⟩
+              │ 0  0  0 −1 ││ 0 │     │ 0 │
+              └            ┘└   ┘     └   ┘
+
+
+ Aplicando CZ ao vetor ∣10⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 0 │     │ 0 │
+              │ 0  1  0  0 ││ 0 │     │ 0 │
+   CZ∣10⟩  =  │ 0  0  1  0 ││ 1 │  =  │ 1 │  =  ∣10⟩
+              │ 0  0  0 −1 ││ 0 │     │ 0 │
+              └            ┘└   ┘     └   ┘
+
+
+ Aplicando CZ ao vetor ∣11⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 0 │     │ 0 │
+              │ 0  1  0  0 ││ 0 │     │ 0 │
+   CZ∣11⟩  =  │ 0  0  1  0 ││ 0 │  =  │ 0 │  =  −∣11⟩
+              │ 0  0  0 −1 ││ 1 │     │−1 │
+              └            ┘└   ┘     └   ┘
+
+
+ A porta CZ altera exclusivamente a fase do estado ∣11⟩, multiplicando a sua amplitude
+ por −1.
+
+
+ 4. Porta Controlled-NOT (CNOT ou CX)
+
+
+   ─────●─────
+        │
+        │
+   ─────⊕─────
  
+
+ A porta quântica Controlled-NOT é uma porta de 2 qubits, sendo um qubit de controle
+ e um qubit alvo.
+
+ Ela funciona da seguinte maneira:
+
+
+   > Se o qubit de controle for |0⟩, o qubit alvo permanece inalterado.
+
+   > Se o qubit de controle for |1⟩, o qubit alvo sofre uma operação NOT (inversão).
+
+
+ Em termos matemáricos:
+
+
+   ∣a,b⟩ ⟶ ∣a,b⊕a⟩
+
+
+ Onde:
+
+
+   a: É o qubit de controle.
+
+   b: É o qubit alvo.
+
+   ⊕: Representa a operação XOR (Exclusive OR).
+
+
+ Sua representação matricial é:
+
+
+        ┌            ┐
+        │ 1  0  0  0 │
+        │ 0  1  0  0 │
+   CX = │ 0  0  0  1 │
+        │ 0  0  1  0 │
+        └            ┘
+
+
+ Aplicando CX ao vetor ∣00⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 1 │     │ 1 │
+              │ 0  1  0  0 ││ 0 │     │ 0 │
+   CX∣00⟩  =  │ 0  0  0  1 ││ 0 │  =  │ 0 │  =  ∣00⟩
+              │ 0  0  1  0 ││ 0 │     │ 0 │
+              └            ┘└   ┘     └   ┘
+
+
+ Aplicando CX ao vetor ∣01⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 0 │     │ 0 │
+              │ 0  1  0  0 ││ 1 │     │ 1 │
+   CX∣01⟩  =  │ 0  0  0  1 ││ 0 │  =  │ 0 │  =  ∣01⟩
+              │ 0  0  1  0 ││ 0 │     │ 0 │
+              └            ┘└   ┘     └   ┘
+
+
+ Aplicando CX ao vetor ∣10⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 0 │     │ 0 │
+              │ 0  1  0  0 ││ 0 │     │ 0 │
+   CX∣10⟩  =  │ 0  0  0  1 ││ 1 │  =  │ 0 │  =  ∣11⟩
+              │ 0  0  1  0 ││ 0 │     │ 1 │
+              └            ┘└   ┘     └   ┘
+
+
+ Aplicando CX ao vetor ∣11⟩, temos:
+
+
+              ┌            ┐┌   ┐     ┌   ┐
+              │ 1  0  0  0 ││ 0 │     │ 0 │
+              │ 0  1  0  0 ││ 0 │     │ 0 │
+   CX∣11⟩  =  │ 0  0  0  1 ││ 0 │  =  │ 1 │  =  ∣10⟩
+              │ 0  0  1  0 ││ 1 │     │ 0 │
+              └            ┘└   ┘     └   ┘
+
+
+ A operação CX também funciona para uma combinação linear dos estados.
+
+ Por exemplo, seja:
+
+            _
+   ∣ψ⟩ = 1/√2(∣00⟩ + ∣10⟩)
+
+
+ Aplicando CX:
+
+              _
+   CX∣ψ⟩ = 1/√2(CX∣00⟩ + CX∣10⟩)
+
+
+ Temos:
+
+             _
+   ∣ψ'⟩ = 1/√2(∣00⟩ + ∣11⟩)
+
+
+ Nesse caso, a operação produz um estado emaranhado de dois qubits.
+
+
+ 5. Porta Toffoli (CCNOT ou CCX)
+
+
+   ─────●─────
+        │
+        │
+   ─────●─────
+        │
+        │
+   ─────⊕─────
+
  
- INSTALAÇÃO DO QISKIT E QISKIT-AER NO PYTHON:
+ A porta Toffoli utiliza três qubits, sendo dois qubits de controle e um qubit
+ alvo.
+
+ Ela funciona da seguinte maneira:
+ 
+
+   > Se os dois qubits de controle forem iguais a |1⟩, o qubit alvo será invertido.
+
+   > Em qualquer outra situação, o qubit alvo permanece inalterado.
+
+
+ Em termos matemáticos:
+
+
+   ∣a,b,c⟩ ⟶ ∣a,b,c⊕(a⋅b)⟩
+
+
+ Onde:
+
+
+   a, b: São os qubits de controle.
+
+   c: É o qubit alvo.
+
+   ⊕: Representa a operação XOR (Exclusive OR).
+
+
+ Sua representação matricial é:
+
+
+         ┌                        ┐
+         │ 1  0  0  0  0  0  0  0 │
+         │ 0  1  0  0  0  0  0  0 │
+         │ 0  0  1  0  0  0  0  0 │
+         │ 0  0  0  1  0  0  0  0 │
+   CCX = │ 0  0  0  0  1  0  0  0 │
+         │ 0  0  0  0  0  1  0  0 │
+         │ 0  0  0  0  0  0  0  1 │
+         │ 0  0  0  0  0  0  1  0 │
+         └                        ┘
+
+
+ Aplicando CCX ao vetor ∣000⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 1 │     │ 1 │
+                │ 0  1  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  1  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  1  0  0  0  0 ││ 0 │     │ 0 │
+   CCX∣000⟩  =  │ 0  0  0  0  1  0  0  0 ││ 0 │  =  │ 0 │  =  ∣000⟩
+                │ 0  0  0  0  0  1  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  0  1 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  1  0 ││ 0 │     │ 0 │
+                └                        ┘└   ┘     └   ┘
+
+
+ Aplicando CCX ao vetor ∣001⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  1  0  0  0  0  0  0 ││ 1 │     │ 1 │
+                │ 0  0  1  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  1  0  0  0  0 ││ 0 │     │ 0 │
+   CCX∣001⟩  =  │ 0  0  0  0  1  0  0  0 ││ 0 │  =  │ 0 │  =  ∣001⟩
+                │ 0  0  0  0  0  1  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  0  1 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  1  0 ││ 0 │     │ 0 │
+                └                        ┘└   ┘     └   ┘
+
+
+ Aplicando CCX ao vetor ∣010⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  1  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  1  0  0  0  0  0 ││ 1 │     │ 1 │
+                │ 0  0  0  1  0  0  0  0 ││ 0 │     │ 0 │
+   CCX∣010⟩  =  │ 0  0  0  0  1  0  0  0 ││ 0 │  =  │ 0 │  =  ∣010⟩
+                │ 0  0  0  0  0  1  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  0  1 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  1  0 ││ 0 │     │ 0 │
+                └                        ┘└   ┘     └   ┘
+
+
+ Aplicando CCX ao vetor ∣011⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  1  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  1  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  1  0  0  0  0 ││ 1 │     │ 1 │
+   CCX∣011⟩  =  │ 0  0  0  0  1  0  0  0 ││ 0 │  =  │ 0 │  =  ∣011⟩
+                │ 0  0  0  0  0  1  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  0  1 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  1  0 ││ 0 │     │ 0 │
+                └                        ┘└   ┘     └   ┘
+
+
+ Aplicando CCX ao vetor ∣100⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  1  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  1  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  1  0  0  0  0 ││ 0 │     │ 0 │
+   CCX∣100⟩  =  │ 0  0  0  0  1  0  0  0 ││ 1 │  =  │ 1 │  =  ∣100⟩
+                │ 0  0  0  0  0  1  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  0  1 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  1  0 ││ 0 │     │ 0 │
+                └                        ┘└   ┘     └   ┘
+
+
+ Aplicando CCX ao vetor ∣101⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  1  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  1  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  1  0  0  0  0 ││ 0 │     │ 0 │
+   CCX∣101⟩  =  │ 0  0  0  0  1  0  0  0 ││ 0 │  =  │ 0 │  =  ∣101⟩
+                │ 0  0  0  0  0  1  0  0 ││ 1 │     │ 1 │
+                │ 0  0  0  0  0  0  0  1 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  1  0 ││ 0 │     │ 0 │
+                └                        ┘└   ┘     └   ┘
+
+
+ Aplicando CCX ao vetor ∣110⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  1  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  1  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  1  0  0  0  0 ││ 0 │     │ 0 │
+   CCX∣110⟩  =  │ 0  0  0  0  1  0  0  0 ││ 0 │  =  │ 0 │  =  ∣111⟩
+                │ 0  0  0  0  0  1  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  0  1 ││ 1 │     │ 0 │
+                │ 0  0  0  0  0  0  1  0 ││ 0 │     │ 1 │
+                └                        ┘└   ┘     └   ┘
+
+
+ Aplicando CCX ao vetor ∣111⟩, temos:
+
+
+                ┌                        ┐┌   ┐     ┌   ┐
+                │ 1  0  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  1  0  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  1  0  0  0  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  1  0  0  0  0 ││ 0 │     │ 0 │
+   CCX∣111⟩  =  │ 0  0  0  0  1  0  0  0 ││ 0 │  =  │ 0 │  =  ∣110⟩
+                │ 0  0  0  0  0  1  0  0 ││ 0 │     │ 0 │
+                │ 0  0  0  0  0  0  0  1 ││ 0 │     │ 1 │
+                │ 0  0  0  0  0  0  1  0 ││ 1 │     │ 0 │
+                └                        ┘└   ┘     └   ┘
+
+
+ O circuito possui quatro qubits. Portanto, a matriz completa da operação tem
+ dimensão:
+
+
+   2⁴ × 2⁴ = 16 × 16
+
+
+ Mas o qubit 2 permanece inalterado.
+
+ A operação CCX também funciona para uma combinação linear dos estados.
+
+ Por exemplo, considere o estado inicial:
+
+         
+   |ψ⟩ = 1/2 (|000⟩ + |001⟩ + |010⟩ + |011⟩)
+
+
+ Aplicando CCX:
+
+
+   CCX|ψ⟩ = 1/2 (CCX|000⟩ + CCX|001⟩ + CCX|010⟩ + CCX|011⟩)
+
+
+ Temos:
+
+
+   |ψ'⟩ = 1/2 (|000⟩ + |001⟩ + |010⟩ + |111⟩)
+
+
+ Nesse caso, a operação produz um estado emaranhado de três qubits (emaranhamento
+ multipartido - multipartite entanglement).
+
+
+ INSTALAÇÃO DO QISKIT E QISKIT-AER NO PYTHON
 
  
  Para testar este programa é necessário que se instale o SDK Qiskit junto com o
@@ -1412,9 +1854,6 @@
   
  Tecle ENTER e aguarde a instalação terminar.
  
- 
- https://quantum.cloud.ibm.com/learning/pt/courses/basics-of-quantum-information
- 
 ════════════════════════════════════════════════════════════════════════════════
 """
 
@@ -1445,7 +1884,30 @@ from qiskit.visualization import (
 #
 #
 # Cria um circuito quântico contendo 4 qubits e 4 registradores clássicos para
-# leitura destes qubits.
+# leitura destes qubits:
+#
+#
+#       ├───────────── Algoritmo de Grover ──────────────┤ ├ Half Adder e Medição ┤
+#
+#        ┌──┐ ┌──┐   ┌──┐ ┌──┐ ┌──┐             ┌──┐ ┌──┐ ┊       ┊ ┌─┐                 
+# q0 |0⟩─┤H ├─┤X ├─●─┤X ├─┤H ├─┤X ├──────●──────┤X ├─┤H ├─┼─●───●─┼─┤M├─────────────
+#        └──┘ └──┘ │ └──┘ └──┘ └──┘      │      └──┘ └──┘ ┊ │   │ ┊ └╥┘
+#        ┌──┐      │      ┌──┐ ┌──┐ ┌──┐ │ ┌──┐ ┌──┐ ┌──┐ ┊ │   │ ┊  ║  ┌─┐
+# q1 |0⟩─┤H ├──────●──────┤H ├─┤X ├─┤H ├─⊕─┤H ├─┤X ├─┤H ├─┼─┼─●─●─┼──╫──┤M├─────────
+#        └──┘             └──┘ └──┘ └──┘   └──┘ └──┘ └──┘ ┊ │ │ │ ┊  ║  └╥┘
+#                                                         ┊ │ │ │ ┊  ║   ║  ┌─┐
+# q2 |0⟩──────────────────────────────────────────────────┼─⊕─⊕─┼─┼──╫───╫──┤M├─────
+#                                                         ┊     │ ┊  ║   ║  └╥┘
+#                                                         ┊     │ ┊  ║   ║   ║  ┌─┐
+# q3 |0⟩──────────────────────────────────────────────────┼─────⊕─┼──╫───╫───╫──┤M├─
+#                                                         ┊       ┊  ║   ║   ║  └╥┘
+#                                                                    ▼ 0 ▼ 1 ▼ 2 ▼ 3
+# c: 4/ ════════════════════════════════════════════════════════════════════════════
+#
+#
+# O circuito em questão filtra as entradas q0 (A) e q1 (B) com o algoritmo de
+# Grover para selecionar o estado ∣10⟩, na sequência, aplica o estado filtrado
+# na entrada do circuito Half Adder para calcular a soma de A = ∣0⟩ e B = ∣1⟩.
 #
 # ══════════════════════════════════════════════════════════════════════════════
 
@@ -1460,15 +1922,27 @@ qc = QuantumCircuit(4, 4)
 # ALGORITMO DE GROOVER
 #
 #
+#             ├ 1 ┤ ├──── 2 ────┤ ├──────────────── 3 ────────────────┤
+#
+#             ┌───┐ ┌───┐   ┌───┐ ┌───┐ ┌───┐               ┌───┐ ┌───┐      
+#   q0 |0⟩────┤ H ├─┤ X ├─●─┤ X ├─┤ H ├─┤ X ├───────●───────┤ X ├─┤ H ├────
+#             └───┘ └───┘ │ └───┘ └───┘ └───┘       │       └───┘ └───┘ 
+#             ┌───┐       │       ┌───┐ ┌───┐ ┌───┐ │ ┌───┐ ┌───┐ ┌───┐ 
+#   q1 |0⟩────┤ H ├───────●───────┤ H ├─┤ X ├─┤ H ├─⊕─┤ H ├─┤ X ├─┤ H ├────
+#             └───┘               └───┘ └───┘ └───┘   └───┘ └───┘ └───┘                                                         
+#
+#
 # Aplica o algoritmo de Grover para filtrar o estado que representa a soma A = |0⟩
 # e B = |1⟩, representado por ∣10⟩. Como a superposição de A e B tem apenas 4
 # estados, e aplicando:
+#
 #        _
 #   π/4(√N) ⇒ 
 #        _
 #   π/4(√4) ⇒
 #  
 #   π/4(2) = ≈1
+#
 #
 # Calculamos que com apenas uma iteração de oráculo → operador de difusão já é
 # filtrado o estado ∣10⟩.
@@ -1480,16 +1954,30 @@ qc = QuantumCircuit(4, 4)
 #
 # 1. CRIA A SUPERPOSIÇÃO:
 #
+#
+#                ┌───┐
+#   q0(A) |0⟩────┤ H ├────
+#                └───┘
+#                ┌───┐
+#   q1(B) |0⟩────┤ H ├────
+#                └───┘
+#
+#
 # Inicialmente as entradas A e B estão no estado:
 #
+#
 #   ∣00⟩
+#
 #
 # Ao aplicar a porta Hadamard a ambas as entradas, entra em superposição uniforme
 # de A e B:
 #
+#
 #   ∣00⟩ → 1/2(∣00⟩ + ∣01⟩ + ∣10⟩ + ∣11⟩)
 #
+#
 # As amplitudes de probabilidades para cada estado, portanto, ficam:
+#
 #
 #   |00⟩ ⇒  1/2
 #   |01⟩ ⇒  1/2
@@ -1508,19 +1996,32 @@ qc.h(1)
 #
 # 2. ORÁCULO:
 #
+#
+#             ┌───┐   ┌───┐
+#   q0(A) ────┤ X ├─●─┤ X ├────
+#             └───┘ │ └───┘
+#                   │
+#   q1(B) ──────────●──────────
+#
+#
+#
 # Transforma as amplitudes de probabilidades:
+#
 #
 #   |00⟩ ⇒  1/2
 #   |01⟩ ⇒  1/2
 #   |10⟩ ⇒  1/2
 #   |11⟩ ⇒  1/2
 #
+#
 # em:
+#
 #
 #   |00⟩ ⇒  1/2
 #   |01⟩ ⇒  1/2
 #   |10⟩ ⇒ −1/2
 #   |11⟩ ⇒  1/2
+#
 #
 # A fase de amplitude negativa em |10⟩ prepara para a seleção deste estado pelo
 # operador de difusão.
@@ -1539,12 +2040,23 @@ qc.x(0)
 #
 # 3. OPERADOR DE DIFUSÃO (DIFUSOR):
 #
+#
+#             ┌───┐ ┌───┐                 ┌───┐ ┌───┐
+#   q0(A) ────┤ H ├─┤ X ├────────●────────┤ X ├─┤ H ├────
+#             └───┘ └───┘        │        └───┘ └───┘
+#             ┌───┐ ┌───┐ ┌───┐  │  ┌───┐ ┌───┐ ┌───┐
+#   q1(B) ────┤ H ├─┤ X ├─┤ H ├──⊕──┤ H ├─┤ X ├─┤ H ├────
+#             └───┘ └───┘ └───┘     └───┘ └───┘ └───┘
+#
+#
 # Transforma as amplitudes de probabilidades de:
+#
 #
 #   |00⟩ ⇒  1/2
 #   |01⟩ ⇒  1/2
 #   |10⟩ ⇒ −1/2
 #   |11⟩ ⇒  1/2
+#
 #
 # em:
 #
@@ -1552,6 +2064,7 @@ qc.x(0)
 #   |01⟩ ⇒  0
 #   |10⟩ ⇒ −1
 #   |11⟩ ⇒  0
+#
 #
 # Com isso, o estado |10⟩ tem em torno de 100% de probabilidade de colapsar nele,
 # e os demais estados tem em torno de 0%.
@@ -1589,8 +2102,21 @@ qc.h(1)
 # HALF ADDER
 #
 #
+#   q0(A) ────●─────────●────
+#             │         │
+#             │         │
+#   q1(B) ────┼────●────●────
+#             │    │    │
+#             │    │    │
+#   q2(S) ────⊕────⊕────┼────
+#                       │
+#                       │
+#   q3(C) ──────────────⊕────
+#
+#
 # Aplica a sequência de transformações unitárias no espaço de Hilbert para 
 # implementar reversivelmente um circuito Half Adder quântico:
+#
 #
 #   |0,0,B,A⟩
 #       ↓
@@ -1600,11 +2126,16 @@ qc.h(1)
 #       ↓
 #   |A⋅B,A⊕B,B,A⟩
 #
+#
 # As operações realizadas são as seguintes:
 #
-#   1. CNOT(A → SUM)
-#   2. CNOT(B → SUM)
-#   3. CCX(A,B → CARRY)
+#
+#   CNOT(A, SUM)
+#
+#   CNOT(B, SUM)
+#
+#   CCX(A,B, CARRY)
+#
 #
 # As entradas A e B continuam em superposição, porém, após a filtragem pelo
 # algoritmo de Grover, a amplitude de probabilidade do estado |10⟩ está próxima
@@ -1618,16 +2149,22 @@ qc.h(1)
 #
 # 1. OPERAÇÃO CNOT(A → SUM):
 #
+#
 # Matematicamente:
+#
 #
 #   |SUM,A⟩ → |SUM⊕A,A⟩
 #
+#
 # Como inicialmente SUM = |0⟩, então:
+#
 #
 #   SUM = 0⊕A = A ⇒
 #   SUM = A
 #
+#
 # Após esta etapa, o estado fica:
+#
 #
 #   |0,0,B,A⟩ → |0,A,B,A⟩
 #
@@ -1640,17 +2177,24 @@ qc.cx(0, 2)
 #
 # 2. OPERAÇÃO CNOT(B → SUM):
 #
+#
 # Matematicamente:
+#
 #
 #   |SUM,B⟩ → |SUM⊕B,B⟩
 #
+#
 # Como SUM = A, então:
+#
 #
 #   SUM = A⊕B
 #
+#
 # Após esta etapa, o estado fica:
 #
+#
 #   |0,A,B,A⟩ → |0,A⊕B,B,A⟩
+#
 #
 # O qubit SUM agora contém a soma binária sem carry (ver colunas 1, 2 e 3 da 
 # tabela verdade acima).
@@ -1664,17 +2208,24 @@ qc.cx(1, 2)
 #
 # 3. OPERAÇÃO CCX(A,B → CARRY):
 #
+#
 # Matematicamente:
-# 
+#
+#
 #   |C,B,A⟩ → |C⊕(A⋅B),B,A⟩
+#
 #
 # Como CARRY = |0⟩, então:
 #
+#
 #   CARRY = A⋅B
+#
 #
 # Após esta etapa, o estado fica:
 #
+#
 #   |0,A⊕B,B,A⟩ → |A⋅B,A⊕B,B,A⟩
+#
 #
 # O qubit CARRY agora contém o "vai um" resultante da operação A⋅B. Neste caso,
 # CARRY será |1⟩ somente quando A = |1⟩ e B = |1⟩.
@@ -1709,6 +2260,22 @@ state = Statevector.from_instruction(qc_no_meas) # Statevector(qc_no_meas)
 # ══════════════════════════════════════════════════════════════════════════════
 #
 # MEDIÇÃO DO CIRCUITO (COLAPSO DA FUNÇÃO DE ONDA)
+#
+#
+#       ┌─┐
+#   ────┤M├────────────────
+#       └╥┘
+#        ║  ┌─┐
+#   ─────╫──┤M├────────────
+#        ║  └╥┘
+#        ║   ║  ┌─┐
+#   ─────╫───╫──┤M├────────
+#        ║   ║  └╥┘
+#        ║   ║   ║  ┌─┐
+#   ─────╫───╫───╫──┤M├────
+#        ║   ║   ║  └╥┘
+#        ▼ 0 ▼ 1 ▼ 2 ▼ 3
+#   ═══════════════════════
 #
 #
 # A medição quântica é destrutiva e probabilística. A medição dos qubits A, B,
@@ -1781,6 +2348,7 @@ CARRY = int(bitstring[0])
 #
 #
 # Imprime os dados do circuito no prompt de comandos. Os dados impressos são:
+#
 #
 #   ● Diagrama de circuito quântico.
 #
@@ -1868,6 +2436,7 @@ print(line)
 #
 #
 # Exibe os gráficos do circuito. Os gráficos gerados são:
+#
 #
 #   ● Diagrama do circuito quântico.
 #
