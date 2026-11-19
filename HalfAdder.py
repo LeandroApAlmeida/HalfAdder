@@ -6,7 +6,7 @@
 
  Este programa implementa um Half Adder (meio somador) reversível de 2 qubits 
  de entrada (A e B) e 2 qubits auxiliares (SUM e CARRY), utilizando portas CNOT
- (Controlled-NOT gate) e CCX (Toffoli Gate), realizando a seguinte sequência de
+ (Controlled-NOT gate) e CCX (Toffoli gate), realizando a seguinte sequência de
  transformações unitárias no espaço de Hilbert de 4 qubits:
 
 
@@ -50,6 +50,12 @@
    |1111⟩
 
 
+ A base computacional é o conjunto de estados fundamentais utilizados para
+ representar e descrever os estados de um sistema quântico. Ela é formada pelas
+ combinações possíveis dos estados ∣0⟩ e ∣1⟩ de cada qubit. Por exemplo, para 2
+ qubits, temos: ℬ = {∣00⟩,∣01⟩,∣10⟩,∣11⟩}.
+
+
  SUPERPOSIÇÃO QUÂNTICA
 ​
 
@@ -80,7 +86,7 @@
  mais eficiente do que algoritmos clássicos em determinados tipos de problemas.
 
  Em termos matemáticos, o principio da superposição quântica diz que a combinação
- linear de dois ou mais vetores de estados no mesmo espaço de Hilbert, também é um
+ linear de dois ou mais vetores de estados no mesmo espaço de Hilbert também é um
  estado do sistema. Para entender isso, considere um sistema com um único qubit.
  Nele, os estados são representados pelos vetores:
 
@@ -384,10 +390,10 @@
  os estados. Em decorrência disso, podemos simular circuitos com relativamente
  poucos qubits usando um computador clássico com Qiskit ou outro ambiente para 
  simulação que utilize state vector, pois conforme adicionamos mais qubits, vai 
- se esgotando rapidamente toda a memória para representá-los. 
+ se esgotando rapidamente toda a memória para representá-los.
  
- Num computador com 32 Gigabytes livres de memória RAM, por exemplo, consegue-se
- simular 31 qubits apenas usando o Qiskit com state vector de precisão dupla 
+ Num computador com pouco 32 Gigabytes livres de memória RAM, por exemplo, consegue-se
+ simular 31 qubits apenas usando o Qiskit com state vector de precisão dupla
  (complex128):
  
  
@@ -399,8 +405,11 @@
     
    2³⁵ / 2³⁰ = 2⁵ Gigabytes ⇒ 32 Gigabytes
     
+
+ Os 32 gigabytes, no caso, seriam utilizados completamente somente para representar
+ o state vector, não as demais estruturas do programa.
  
- State vector armazena todas as 2ⁿ amplitudes na memória. Por isso o esgotamento 
+ O state vector armazena todas as 2ⁿ amplitudes na memória. Por isso o esgotamento 
  rápido dos recursos à medida que representamos mais qubits. Outros métodos de 
  representar as amplitudes como Tensor Network, Matrix Product State (MPS),
  Stabilizer State podem ocupar menos memória, portanto, permitem a representação
@@ -539,7 +548,7 @@
  A evolução linear é dada por:
 
 
-   |ψout⟩ = U_CCX(A,B → CARRY)⋅U_CNOT(B→SUM)⋅U_CNOT(A→SUM) |ψin⟩
+   |ψout⟩ = U_CCX(A,B,CARRY)⋅U_CNOT(B,SUM)⋅U_CNOT(A,SUM) |ψin⟩
 
 
  O circuito é inicializado em:
@@ -614,13 +623,11 @@
 
 
  EMARANHAMENTO QUÂNTICO
- 
+
 
  Emaranhamento quântico, ou entrelaçamento quântico, é um fenômeno em que dois ou
  mais sistemas quânticos passam a ser descritos por um único estado quântico conjunto,
  de modo que não é possível descrever completamente cada sistema de forma independente.
- Em termos matemáticos, um estado emaranhado não pode ser escrito como o produto dos
- estados individuais dos subsistemas.
 
  Diferente dos sistemas clássicos, que possuem propriedades definidas, os sistemas
  quânticos são descritos por uma função de onda. Essa função de onda não determina
@@ -630,7 +637,7 @@
  separada. Em vez disso, eles são descritos por uma única função de onda combinada
  que abrange ambos os sistemas. É essa função de onda compartilhada que resulta na
  forte correlação entre os sistemas entrelaçados.
- 
+
  Por exemplo, considere dois qubits inicialmente preparados em um estado emaranhado
  representado pelo estado de Bell:
 
@@ -796,7 +803,7 @@
       interferência).
 
 
- Em um hardware real afetado por ruído, como o IBMQ, por exemplo, o resultado 
+ Em um hardware real afetado por ruído, como o IBM Q, por exemplo, o resultado 
  final medido diverge das probabilidades ideais calculadas por este programa,
  logo, aqui estamos simulando um sistema ideal, não um real.
  
@@ -947,13 +954,13 @@
  sobre os estados de q₀ e q₁ em superposição.
   
  Como queremos marcar o estado ∣10⟩, temos que:
-    
-    
+
+
           ⎧ 1  x = 10
    f(x) = ⎨
           ⎩ 0  x ≠ 10
-             
-    
+
+
  Que resulta:
 
 
@@ -995,18 +1002,19 @@
                       
 
    1. A porta X transforma o estado desejado ∣10⟩ em ∣11⟩ temporariamente, invertendo
-      o valor do qubit A (q0).
+      o valor do qubit A (q0) na base computacional.
       
    2. A porta CZ inverte a fase da amplitude se os dois qubits forem 1. Nos demais
       casos, ela não altera nada.
       
    3. A segunda porta X desfaz a transformação inicial, invertendo novamente o valor
-      do qubit A (q0), porém a fase negativa permanece (−∣10⟩).
+      do qubit A (q0) na base computacional, porém a fase negativa permanece no estado
+      −∣10⟩ restaurado.
 
 
  Mostrando cada etapa da transformação em uma tabela:
-    
-    
+
+
    ┌────────────────┬────────┬─────────┬────────┐
    │ Estado inicial │ Após X │ Após CZ │ Após X │
    ╞════════════════╪════════╪═════════╪════════╡
@@ -1165,28 +1173,24 @@
 
 
    1. Aplica Hadamard nos qubits q0 e q1, preparando o sistema para a transformação
-      de difusão e estabelecendo a base de superposição.
+      de difusão.
 
-   2. Aplica a porta X nos dois qubits, realizando a inversão lógica dos estados
-      |0⟩ e |1⟩. Essa operação prepara os qubits para a reflexão de fase.
+   2. Aplica a porta X nos qubits q0 e q1, invertendo a base computacional. A
+      distribuição das amplitudes continua uniforme.
 
-   3. Aplica Hadamard no qubit q1, preparando-o para participar da operação controlada
-      CNOT.
+   3. Aplica Hadamard ao qubit 1, preparando a implementação de CZ.
 
-   4. Aplica CNOT entre q0 (controle) e q1 (alvo). A operação inverte o qubit alvo
-      quando o qubit de controle está no estado |1⟩.
+   4. Aplica CNOT. Com isto, o qubit 0 controla a operação X sobre o qubit 1.
 
-   5. Aplica novamente Hadamard no qubit q1. Em conjunto com a CNOT, essa sequência
-      equivale a uma porta CZ (Controlled-Z), que altera o sinal da amplitude do
-      estado |11⟩.
+   5. Aplica Hadamard novamente, convertendo a porta CNOT em CZ. Com isso marca o
+      estado |11⟩ como −|11⟩.
 
-   6. Aplica novamente X nos qubits q0 e q1, completando a transformação de fase
-      necessária para a reflexão.
+   6. Desfaz a inversão X aplicada no passo 2.
 
    7. Aplica Hadamard nos qubits q0 e q1, retornando à base computacional e completando
       o operador de difusão.
-         
-         
+
+
  Resumindo as amplitudes de probabilidade de cada estado a cada etapa do algoritmo
  de Grover:
 
@@ -1196,21 +1200,21 @@
    ╞══════════════════════╪══════════╪══════════╪══════════╪══════════╡
    │ Estado inicial       │    1     │    0     │    0     │    0     │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ H(0), H(1)           │  +1/2    │  +1/2    │  +1/2    │  +1/2    │
+   │ H(0), H(1)           │   1/2    │   1/2    │   1/2    │   1/2    │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ Oráculo              │  +1/2    │  +1/2    │  −1/2    │  +1/2    │
+   │ Oráculo              │   1/2    │   1/2    │  −1/2    │   1/2    │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ H(0), H(1)           │  +1/2    │  +1/2    │  −1/2    │  +1/2    │
+   │ H(0), H(1)           │   1/2    │   1/2    │  −1/2    │   1/2    │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ X(0), X(1)           │  +1/2    │  +1/2    │  −1/2    │  +1/2    │
+   │ X(0), X(1)           │   1/2    │   1/2    │  −1/2    │   1/2    │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ H(1)                 │ +0,7071  │ −0,7071  │    0     │    0     │
+   │ H(1)                 │  0,7071  │ −0,7071  │    0     │    0     │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ CNOT                 │ +0,7071  │ −0,7071  │    0     │    0     │
+   │ CNOT                 │  0,7071  │ −0,7071  │    0     │    0     │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ H(1)                 │  +1/2    │  +1/2    │  −1/2    │  −1/2    │
+   │ H(1)                 │   1/2    │   1/2    │  −1/2    │  −1/2    │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
-   │ X(0), X(1)           │  −1/2    │  −1/2    │  +1/2    │  −1/2    │
+   │ X(0), X(1)           │  −1/2    │  −1/2    │   1/2    │  −1/2    │
    ├──────────────────────┼──────────┼──────────┼──────────┼──────────┤
    │ H(0), H(1)           │    0     │    0     │   −1     │    0     │
    └──────────────────────┴──────────┴──────────┴──────────┴──────────┘
@@ -1221,7 +1225,7 @@
 
 
  INTERFERÊNCIA QUÂNTICA
- 
+
 
  O operador de difusão usa interferência destrutiva para os estados não desejados
  e interferência construtiva para o estado desejado. Interferência é um fenômeno
@@ -1259,7 +1263,7 @@
  circuito quântico abaixo:
 
                                                             
-       ├────────────── Algoritmo de Grover ─────────────┤ ├ Half Adder e Medição ─┤
+       ├───────────── Algoritmo de Grover ──────────────┤ ├ Half Adder e Medição ┤
 
 
         ┌──┐ ┌──┐   ┌──┐ ┌──┐ ┌──┐             ┌──┐ ┌──┐ ┊       ┊ ┌─┐                 
@@ -1433,7 +1437,7 @@
 
    ─────●─────          ─────●─────
         │                    │
-        │                  ┌───┐
+        │                  ┌─┴─┐
    ─────●─────          ───┤ Z ├───
                            └───┘
 
@@ -1821,6 +1825,36 @@
  multipartido - multipartite entanglement).
 
 
+ 6. Porta Controlled-Z (CZ) no operador de difusão
+
+
+   q0(A) ────────●────────
+                 │
+          ┌───┐  │  ┌───┐
+   q1(B) ─┤ H ├──⊕──┤ H ├─
+          └───┘     └───┘
+
+
+ No operador de difusão de Grover, temos a sequência de operações acima. Ela equivale
+ a uma porta CZ.
+
+ Funciona desta forma:
+
+
+   1. Uma porta Hadamard é aplicada ao qubit q1.
+
+   2. Uma porta CNOT é aplicada. Ela inverte o qubit alvo (q1) quando o qubit de
+      controle (q0) está no estado ∣1⟩.
+
+   3. Aplica novamente a porta Hadamard ao qubit q1.
+
+
+ Esse conjunto de operações equivale a uma porta CZ = (I⊗H)CNOT(I⊗H).
+
+ Igual à porta CZ padrão, modifica a fase da amplitude do estado ∣11⟩, mantendo
+ os demais estados inalterados.
+
+
  INSTALAÇÃO DO QISKIT E QISKIT-AER NO PYTHON
 
  
@@ -1843,7 +1877,7 @@
  Tecle ENTER e aguarde a instalação terminar.
 
  Com isso, é instalado o SDK para programação para o computador quântico da IBM
- (IBMQ) e o simulador, para testar o código na máquina local.
+ (IBM Q) e o simulador, para testar o código na máquina local.
 
  Para instalar os utilitários de visualização de gráficos, abra o terminal e 
  digite: 
