@@ -1314,14 +1314,15 @@
    ∣ψ⟩ = 1/2(|00⟩ + |01⟩ + |10⟩ + |11⟩)
 
 
- que se ramificará nos seguintes estados ao emaranhar q0, q1, q2 e q3:
+ que se ramificará nos seguintes estados ao emaranhar q0, q1, q2 e q3 na sequência
+ de operações unitárias do circuito:
 
 
    ∣ψ⟩ = 1/2(|0000⟩ + |0101⟩ + |0110⟩ + |1011⟩)
 
 
  Nesta condição, o circuito estará em superposição uniforme de todos os estados
- que representam uma soma A + B, com probabilidade de 25% cada:
+ que representam uma soma A + B, com probabilidade de 25% cada um:
 
 
    |0000⟩ ⇒ 25%
@@ -1333,17 +1334,20 @@
  Isso significa que se executá-lo 1000 vezes, ele colapsará aproximadamente 250
  vezes em cada estado ao fazer a medição. Este circuito não tem nenhuma função
  prática, no sentido de somar duas entradas com valores específicos, pois é uma
- mistura probabilística de todas as somas de A + B possíveis.
+ mistura probabilística de todas as somas de A + B possíveis, conforme a tabela-
+ verdade do circuito.
 
  O papel do algoritmo de Grover é a seleção de um ramo específico, no caso |0110⟩,
  que representa a soma de A = |0⟩ e B = |1⟩, uma vez que ele filtra o estado de
  entrada |10⟩ com amplitude próxima de 100% para o Half Adder, enquanto os demais
  estados estarão com amplitude próxima de 0%. Com isso, mesmo os qubits estando em
- superposição, o resultado do Half Adder será a soma de A = |0⟩ e B = |1⟩, com
- alta probabilidade (100% em um circuito ideal).
+ superposição, o resultado do Half Adder será a soma de A = |0⟩ e B = |1⟩ com
+ alta probabilidade (100% em um circuito ideal) de colapsar neste estado. A medição
+ dos qubits é feita na ordem: q0, q1, q2 e q3. Ao medir q0, o circuto colapsa no
+ estado filtrado pelo algoritmo de Grover e calculado pelo Half Adder.
 
  Para entender o circuito, é necessário entender as funções desempenhadas pelas
- portas quânticas que ele utiliza na sequência de transformações unitárias.
+ portas quânticas que ele utiliza na sequência de transformações unitárias:
 
 
  1. Porta Pauli-X (X)
@@ -1524,7 +1528,7 @@
    > Se o qubit de controle for |1⟩, o qubit alvo sofre uma operação NOT (inversão).
 
 
- Em termos matemáricos:
+ Em termos matemáticos:
 
 
    ∣a,b⟩ ⟶ ∣a,b⊕a⟩
@@ -1597,7 +1601,7 @@
 
  A operação CX também funciona para uma combinação linear dos estados.
 
- Por exemplo, seja:
+ Por exemplo, considere o estado inicial em ordem matemática:
 
             _
    ∣ψ⟩ = 1/√2(∣00⟩ + ∣10⟩)
@@ -1803,22 +1807,22 @@
 
  A operação CCX também funciona para uma combinação linear dos estados.
 
- Por exemplo, considere o estado inicial:
+ Por exemplo, considere o estado inicial em ordem matemática:
 
          
-   |ψ⟩ = 1/2 (|000⟩ + |001⟩ + |010⟩ + |011⟩)
+   |ψ⟩ = 1/2 (|000⟩ + |100⟩ + |010⟩ + |110⟩)
 
 
  Aplicando CCX:
 
 
-   CCX|ψ⟩ = 1/2 (CCX|000⟩ + CCX|001⟩ + CCX|010⟩ + CCX|011⟩)
+   CCX|ψ⟩ = 1/2 (CCX|000⟩ + CCX|100⟩ + CCX|010⟩ + CCX|110⟩)
 
 
  Temos:
 
 
-   |ψ'⟩ = 1/2 (|000⟩ + |001⟩ + |010⟩ + |111⟩)
+   |ψ'⟩ = 1/2 (|000⟩ + |100⟩ + |010⟩ + |111⟩)
 
 
  Nesse caso, a operação produz um estado emaranhado de três qubits (emaranhamento
@@ -1841,10 +1845,10 @@
  Funciona desta forma:
 
 
-   1. Uma porta Hadamard é aplicada ao qubit q1.
+   1. Aplica a porta Hadamard ao qubit q1.
 
-   2. Uma porta CNOT é aplicada. Ela inverte o qubit alvo (q1) quando o qubit de
-      controle (q0) está no estado ∣1⟩.
+   2. Aplica a porta CNOT. Ela inverte o qubit alvo (q1) quando o qubit de controle
+      (q0) está no estado ∣1⟩.
 
    3. Aplica novamente a porta Hadamard ao qubit q1.
 
