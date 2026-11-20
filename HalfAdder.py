@@ -50,10 +50,10 @@
    |1111⟩
 
 
- A base computacional é o conjunto de estados fundamentais utilizados para
- representar e descrever os estados de um sistema quântico. Ela é formada pelas
- combinações possíveis dos estados ∣0⟩ e ∣1⟩ de cada qubit. Por exemplo, para 2
- qubits, temos: ℬ = {∣00⟩,∣01⟩,∣10⟩,∣11⟩}.
+ A base computacional é o conjunto de estados fundamentais utilizados para representar
+ e descrever os estados de um sistema quântico. Ela é formada pelas combinações
+ possíveis dos estados ∣0⟩ e ∣1⟩ de cada qubit. Por exemplo, para 2 qubits, temos:
+ ℬ = {∣00⟩,∣01⟩,∣10⟩,∣11⟩}.
 
 
  SUPERPOSIÇÃO QUÂNTICA
@@ -1049,7 +1049,7 @@
  Depois do oráculo aplica-se o chamado operador de difusão (diffusion operator):
 
 
-   D = 2∣ψ⟩⟨ψ∣ − I
+   D = 2∣s⟩⟨s∣ − I
 
 
  Esse operador pode ser interpretado como uma inversão em relação à média das
@@ -1089,7 +1089,7 @@
  por:
 
 
-   −D = I − 2∣ψ⟩⟨ψ∣
+   −D = I − 2∣s⟩⟨s∣
       
       
  a nova amplitude é calculada pela expressão:
@@ -1235,10 +1235,10 @@
  Na física clássica, costumamos separar:
 
 
-   > Partículas → objetos localizados, como uma pequena esfera;
+   > Partículas → Objetos localizados, como uma pequena esfera;
 
 
-   > Ondas → fenômenos distribuídos, como ondas na água ou ondas sonoras.
+   > Ondas → Fenômenos distribuídos, como ondas na água ou ondas sonoras.
 
 
  Na mecânica quântica, essa separação deixa de funcionar completamente. Elétrons,
@@ -1343,7 +1343,7 @@
  estados estarão com amplitude próxima de 0%. Com isso, mesmo os qubits estando em
  superposição, o resultado do Half Adder será a soma de A = |0⟩ e B = |1⟩ com
  alta probabilidade (100% em um circuito ideal) de colapsar neste estado. A medição
- dos qubits é feita na ordem: q0, q1, q2 e q3. Ao medir q0, o circuto colapsa no
+ dos qubits é feita na ordem: q0, q1, q2 e q3. Ao medir q0, o circuito colapsa no
  estado filtrado pelo algoritmo de Grover e calculado pelo Half Adder.
 
  Para entender o circuito, é necessário entender as funções desempenhadas pelas
@@ -1505,16 +1505,16 @@
 
 
  A porta CZ altera exclusivamente a fase do estado ∣11⟩, multiplicando a sua amplitude
- por −1.
+ por −1 (−∣11⟩).
 
 
  4. Porta Controlled-NOT (CNOT ou CX)
 
 
-   ─────●─────
-        │
-        │
-   ─────⊕─────
+   a ─────●─────
+          │
+          │
+   b ─────⊕─────
  
 
  A porta quântica Controlled-NOT é uma porta de 2 qubits, sendo um qubit de controle
@@ -1537,11 +1537,11 @@
  Onde:
 
 
-   a: É o qubit de controle.
+   a: Qubit de controle.
 
-   b: É o qubit alvo.
+   b: Qubit alvo.
 
-   ⊕: Representa a operação XOR (Exclusive OR).
+   ⊕: Operação XOR (Exclusive OR).
 
 
  Sua representação matricial é:
@@ -1625,13 +1625,13 @@
  5. Porta Toffoli (CCNOT ou CCX)
 
 
-   ─────●─────
-        │
-        │
-   ─────●─────
-        │
-        │
-   ─────⊕─────
+   a ─────●─────
+          │
+          │
+   b ─────●─────
+          │
+          │
+   c ─────⊕─────
 
  
  A porta Toffoli utiliza três qubits, sendo dois qubits de controle e um qubit
@@ -1654,11 +1654,11 @@
  Onde:
 
 
-   a, b: São os qubits de controle.
+   a, b: Qubits de controle.
 
-   c: É o qubit alvo.
+   c: Qubit alvo.
 
-   ⊕: Representa a operação XOR (Exclusive OR).
+   ⊕: Operação XOR (Exclusive OR).
 
 
  Sua representação matricial é:
@@ -1795,15 +1795,6 @@
                 │ 0  0  0  0  0  0  1  0 ││ 1 │     │ 0 │
                 └                        ┘└   ┘     └   ┘
 
-
- O circuito possui quatro qubits. Portanto, a matriz completa da operação tem
- dimensão:
-
-
-   2⁴ × 2⁴ = 16 × 16
-
-
- Mas o qubit 2 permanece inalterado.
 
  A operação CCX também funciona para uma combinação linear dos estados.
 
@@ -2168,11 +2159,11 @@ qc.h(1)
 # As operações realizadas são as seguintes:
 #
 #
-#   CNOT(A, SUM)
+#   CNOT(A,SUM)
 #
-#   CNOT(B, SUM)
+#   CNOT(B,SUM)
 #
-#   CCX(A,B, CARRY)
+#   CCX(A,B,CARRY)
 #
 #
 # As entradas A e B continuam em superposição, porém, após a filtragem pelo
